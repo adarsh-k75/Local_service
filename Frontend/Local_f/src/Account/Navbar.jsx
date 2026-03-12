@@ -31,7 +31,7 @@ console.log(name)
         <li><Link to="/contact">Contact</Link></li>
 
         {name?.username? (
-          <li><Link to="/profile">{name.username}</Link></li>
+          <li><Link to="profile/">{name.username}</Link></li>
         ) : (
           <li><Link to="/profile">Profile</Link></li>
         )}

@@ -11,9 +11,9 @@ class CustomerSerlization(serializers.ModelSerializer):
         extra_kwargs={
             "password":{"write_only":True}
         }
-    def create(self,valiadate):
-        valiadate.pop("confirms")
-        user=Register.objects.create_user(**valiadate)
+    def create(self,valiadate_data):
+        valiadate_data.pop("confirms")
+        user=Register.objects.create_user(**valiadate_data)
         return user
         
 
