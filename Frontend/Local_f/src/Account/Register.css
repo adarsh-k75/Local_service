@@ -1,0 +1,66 @@
+/* Role Selection Toggle Styling */
+
+.role-selection {
+  display: flex;
+  background: rgba(255, 255, 255, 0.4);
+  padding: 5px;
+  border-radius: 12px;
+  gap: 5px;
+  margin: 10px 0;
+}
+
+.role-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+/* Highlight the selected role */
+.role-btn.active {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Adjusting the main submit button for registration */
+.register-submit {
+  margin-top: 15px;
+  width: 100%;
+}
+
+/* Ensuring inputs look sharp in the grid */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Custom placeholder color to match the premium theme */
+.login-input::placeholder {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+/* Link styling */
+.login-footer a {
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
+.input-error{
+  color:#ff3b3b;
+  font-size:13px;
+  margin-top:-5px;
+  margin-bottom:10px;
+}

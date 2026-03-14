@@ -1,0 +1,108 @@
+/* Container to center the card */
+.login-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* The Glass Card */
+.login-card {
+  background: rgba(255, 255, 255, 0.35); /* Very light white */
+  backdrop-filter: blur(16px); /* The frosted glass look */
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 3rem;
+  border-radius: 30px; /* Matching the soft rounded corners in the image */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Typography */
+.login-header h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.8px;
+}
+
+.login-header p {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Input Fields */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px; /* Softly rounded */
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.login-input::placeholder {
+  color: #999;
+}
+
+.login-input:focus {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #ffffff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+}
+
+/* Pill-Shaped Login Button */
+.login-btn {
+  background: #1a1a1a; /* Dark sleek color from the design */
+  color: #fff;
+  padding: 16px;
+  border: none;
+  border-radius: 50px; /* Full pill shape */
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: transform 0.2s active, opacity 0.2s ease;
+}
+
+.login-btn:hover {
+  opacity: 0.9;
+}
+
+.login-btn:active {
+  transform: scale(0.98);
+}
+
+/* Footer / Sign Up Link */
+.login-footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.login-footer a {
+  color: #000;
+  text-decoration: none;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}

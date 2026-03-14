@@ -8,7 +8,14 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser
 from .authtication import CookieJWTAuthentication
 from.models import Register
-
+from django.core.mail import send_mail
+from django.conf import settings
+from .utils import email_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.core.mail import send_mail
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_str
 class RegisterLogic(APIView):
 
     def get(self, request):
@@ -20,8 +27,23 @@ class RegisterLogic(APIView):
         serializer = CustomerSerlization(data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            user = serializer.save()
+            uid = urlsafe_base64_encode(force_bytes(user.id))
+            token = email_token_generator.make_token(user)
+
+            verification_link = f"http://localhost:8000/api/verify-email/{uid}/{token}/"
+
+            send_mail(
+                "Verify your Email",
+                f"Click this link to verify your email:\n{verification_link}",
+                settings.EMAIL_HOST_USER,
+                [user.email],
+                fail_silently=False
+            )
+            return Response(
+                {"message":"User created. Check your email."},
+                status=201
+            )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -39,7 +61,11 @@ class LoginLogic(APIView):
                 {"error": "invalid username or password"},
                 status=status.HTTP_401_UNAUTHORIZED
             )
-
+        if not user.is_veryfied:
+            return Response(
+                {"error": "Please verify your email first"},
+                status=status.HTTP_403_FORBIDDEN
+            )
         refresh = RefreshToken.for_user(user)
         response = Response(
             {"message": "login successfully"},
@@ -135,4 +161,22 @@ class Refrsh_token(APIView):
         except Exception:
             return Response({"error":"Invalid refresh token"}, status=401)
 
- 
+class VerifyEmail(APIView):
+
+    def get(self, request, uidb64, token):
+
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = Register.objects.get(pk=uid)
+
+            if email_token_generator.check_token(user, token):
+                user.is_veryfied=True
+                user.save()
+
+                return Response({"message":"Email verified successfully"})
+
+            else:
+                return Response({"error":"Invalid token"}, status=400)
+
+        except:
+            return Response({"error":"Invalid link"}, status=400)

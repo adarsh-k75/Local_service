@@ -10,5 +10,7 @@ class Register(AbstractUser):
 
     )
     role=models.CharField(max_length=30,choices=Role_choices,default="customer")
+    is_veryfied = models.BooleanField(default=False)
+
     
    

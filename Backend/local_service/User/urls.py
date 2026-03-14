@@ -10,6 +10,7 @@ urlpatterns = [
     path('rsetpassword/',views.Reset_password.as_view()),
     path('logout/',views.Logout.as_view()),
     path('refrsh/',views.Refrsh_token.as_view()),
+    path("verify-email/<uidb64>/<token>/", views.VerifyEmail.as_view()),
 
 
 ]

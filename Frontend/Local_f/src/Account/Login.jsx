@@ -1,6 +1,9 @@
  import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import './Login.css'
+import { Link } from "react-router-dom"
+import { toast } from "react-toastify";
 function Login(){
 
     const nav = useNavigate()
@@ -25,34 +28,49 @@ function Login(){
         })
         .then((res)=>{
             console.log(res.data)
-            nav("/home")
+            nav("/")
         })
         .catch((err)=>{
-            console.log(err.response.data)
+            toast.error(err.response.data.error);
             nav("/login")
         })
     }
 
     return(
         <>
-        <form onSubmit={onsubmit}>
+     <div className="login-page-container">
+      <div className="login-card">
+        <div className="login-header">
+          <h2>Welcome Back</h2>
+          <p>The new level of care for your home</p>
+        </div>
 
-            <input
-                name="username"
-                placeholder="Username"
-                onChange={onchange}
-            />
+        <form onSubmit={onsubmit} className="login-form">
+          <input
+            name="username"
+            placeholder="Username"
+            onChange={onchange}
+            className="login-input"
+            required
+          />
 
-            <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={onchange}
-            />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={onchange}
+            className="login-input"
+            required
+          />
 
-            <button type="submit">Login</button>
-
+          <button type="submit" className="login-btn">Login</button>
         </form>
+
+        <div className="login-footer">
+          <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
+        </div>
+      </div>
+    </div>
         </>
     )
 }

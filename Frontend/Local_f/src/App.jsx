@@ -12,14 +12,22 @@ import MainLayout from './layouts/MainLayout'
 import AuthLayout from './layouts/AuthLayout'
 import Reset_password from './Account/Reset_password'
 import Profile_edit from './Account/Profile_edit'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        theme="light"
+      />
+
        <Routes>
 
       <Route element={<AuthLayout/>}>
-        <Route path="/" element={<Register/>}/>
+        <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/Re-password" element={<Reset_password/>}/>
         <Route path="/profile_edit" element={<Profile_edit/>}/>
@@ -27,7 +35,7 @@ function App() {
       </Route>
 
       <Route element={<MainLayout/>}>
-        <Route path="/home" element={<Home/>}/>
+        <Route path="/" element={<Home/>}/>
         <Route path="/profile" element={<Profile/>}/>
       </Route>
 

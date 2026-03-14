@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  /* Exact Aurora Colors */
+  background: linear-gradient(
+    110deg, 
+    #b0cedb 0%,    /* Soft Blue */
+    #f2ede9 35%,   /* Warm White */
+    #f7e8d8 70%,   /* Soft Peach */
+    #cbd8df 100%   /* Muted Grey */
+  ) fixed;
+}

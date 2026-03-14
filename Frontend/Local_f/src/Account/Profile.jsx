@@ -27,7 +27,7 @@ function Profile(){
 
   return(
     <div className="profile-container">
-
+     {profile.role==="customer"&&(
         <div className="profile-card">
 
             <h2>User Profile</h2>
@@ -44,6 +44,30 @@ function Profile(){
             </div>
 
         </div>
+     )}
+
+      {profile.role==="provider"&&(
+
+        <div className="profile-card">
+
+            <h2>Employee Profile</h2>
+
+            <div className="profile-info">
+                <p><strong>Username:</strong> {profile.username}</p>
+                <p><strong>Email:</strong> {profile.email}</p>
+            </div>
+
+            <div className="profile-buttons">
+                <button onClick={()=>{Navigater('/Re-password')}} className="reset-btn">Reset Password</button>
+                <button onClick={()=>{Navigater('/profile_edit')}} className="reset-btn">Edit</button>
+                <button onClick={Logout} className="logout-btn">Logout</button>
+                <button onClick={Logout} className="logout-btn">Add Skill</button>
+
+            </div>
+
+        </div>
+     )}
+       
 
     </div>
   )

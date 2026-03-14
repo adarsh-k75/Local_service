@@ -5,7 +5,7 @@ class CustomerSerlization(serializers.ModelSerializer):
 
     class Meta:
         model=Register
-        fields=['id','username','email','password','confirms']
+        fields=['id','username','email','password','confirms','role']
         
 
         extra_kwargs={
