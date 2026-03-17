@@ -7,9 +7,7 @@ function Navbar() {
   let navigate = useNavigate()
 
   const [name,setname] = useState(null)
-
-  useEffect(() => {
-
+  useEffect(() =>{
     axios.get("http://localhost:8000/api/Navbar/",{
       withCredentials:true
     })
@@ -27,17 +25,15 @@ function Navbar() {
     <nav className="navbar-container">
       <div className="nav-content">
 
-        {/* Left Section */}
         <div className="nav-left">
           <ul className="nav-menu">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/about">About</Link></li>
-            <li><Link to="/service">Service</Link></li>
+            <li><Link to="/User_service">Service</Link></li>
             <li><Link to="/contact">Contact</Link></li>
           </ul>
         </div>
 
-        {/* Center Section */}
         <div className="nav-center">
           <div className="search-wrapper">
             <span className="search-icon">🔍</span>
@@ -45,8 +41,7 @@ function Navbar() {
           </div>
         </div>
 
-        {/* Right Section */}
-        {name ? (
+        {name ?(
           <div className="nav-right">
             <button 
               onClick={() => navigate('/profile')} 

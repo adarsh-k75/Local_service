@@ -1,0 +1,168 @@
+.marketplace-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.marketplace-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+  text-align: left;
+}
+
+.section-block {
+  margin-bottom: 50px;
+}
+
+/* Grid for Categories and Sub-services */
+.pill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+/* Base Card Style */
+.market-card {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 25px 15px;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.market-card h3 {
+  font-size: 1rem;
+  margin: 0;
+  color: #444;
+}
+
+.market-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Selection States */
+.category-card.selected {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.category-card.selected h3, 
+.category-card.selected .card-icon {
+  color: #fff;
+}
+
+.sub-service-card.selected-sub {
+  background: #22c1c3; /* A soft teal color */
+  border-color: #22c1c3;
+  color: #fff;
+}
+
+.sub-service-card.selected-sub h3 {
+  color: #fff;
+}
+
+/* Provider Glass Cards */
+.provider-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.provider-glass-card {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(15px);
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.provider-img-box {
+  position: relative;
+  height: 200px;
+}
+
+.provider-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.price-badge {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: #fff;
+  padding: 6px 15px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.provider-content {
+  padding: 20px;
+  text-align: left;
+}
+
+.provider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.provider-header h2 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.exp-tag {
+  font-size: 0.75rem;
+  background: rgba(34, 193, 195, 0.1);
+  color: #167d7e;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-weight: 600;
+}
+
+.provider-content p {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.book-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 50px;
+  border: none;
+  background: #1a1a1a;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.book-btn:hover {
+  opacity: 0.9;
+}
+
+/* Simple Animation */
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

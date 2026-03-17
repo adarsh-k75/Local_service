@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState } from "react"
 import './rest.css'
 import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 function Reset_password(){
   let Navigate=useNavigate()
   let [inputs,setinputs]=useState({
@@ -23,31 +24,46 @@ function Reset_password(){
     }
     
   return(<>
-     <div className="reset-container">
-
-        <form onSubmit={onsubmit} className="reset-card">
-
-            <h2>Reset Password</h2>
-
-            <input
-            type="password"
-            name="password"
-            placeholder="New Password"
-            onChange={onchange}
-            />
-
-            <input
-            type="password"
-            name="r_password"
-            placeholder="Confirm Password"
-            onChange={onchange}
-            />
-
-            <button type="submit">Change Password</button>
-
-        </form>
-
+   <div className="login-page-container">
+  <div className="login-card reset-card">
+    <div className="login-header">
+      <h2>Reset Password</h2>
+      <p>Please enter your new password below</p>
     </div>
+
+    <form onSubmit={onsubmit} className="login-form">
+      <div className="input-group">
+        <input
+          type="password"
+          name="password"
+          placeholder="New Password"
+          className="login-input"
+          onChange={onchange}
+          required
+        />
+      </div>
+
+      <div className="input-group">
+        <input
+          type="password"
+          name="r_password"
+          placeholder="Confirm Password"
+          className="login-input"
+          onChange={onchange}
+          required
+        />
+      </div>
+
+      <button type="submit" className="login-btn">
+        Change Password
+      </button>
+    </form>
+
+    <div className="login-footer">
+      <p>Remember your password? <Link to="/login">Back to Login</Link></p>
+    </div>
+  </div>
+</div>
   </>)
 }
 export default Reset_password

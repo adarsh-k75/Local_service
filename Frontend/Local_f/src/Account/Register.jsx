@@ -2,7 +2,11 @@ import './Register.css'
 import { useState } from 'react'
 import axios from "axios"
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { toast } from "react-toastify";
+
 function Register() {
+    let Naviagte=useNavigate()
    const [Role,setRole]=useState("customer")
     const [inputs,setinputs] = useState({
         username:"",
@@ -55,7 +59,8 @@ function Register() {
 
         })
         .then((res)=>{
-            console.log(res.data)
+            toast.success("Register Successfully");
+             Naviagte("/login")
         })
         .catch((err)=>{
             console.log(err.response.data)

@@ -14,6 +14,11 @@ import Reset_password from './Account/Reset_password'
 import Profile_edit from './Account/Profile_edit'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Services_selecter from './Services/Servies_selceter'
+import User_services from './Customer_pages/User_Services'
+import About from './Customer_pages/About'
+import Contact from './Customer_pages/Contact'
+import Specilal_nav from './Customer_pages/Specilal_nav'
 function App() {
 
   return (
@@ -25,7 +30,6 @@ function App() {
       />
 
        <Routes>
-
       <Route element={<AuthLayout/>}>
         <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
@@ -37,8 +41,12 @@ function App() {
       <Route element={<MainLayout/>}>
         <Route path="/" element={<Home/>}/>
         <Route path="/profile" element={<Profile/>}/>
-      </Route>
+        <Route path="/Services" element={<Services_selecter/>}/>
+        <Route path='/User_service' element={<User_services/>}/>
+        <Route path='/about' element={<About/>}/>
+        <Route path='/contact' element={<Contact/>}/>
 
+      </Route>
     </Routes>
     </>
   )

@@ -4,7 +4,6 @@ function Home(){
   <div className="hero-wrapper">
       <div className="hero-container">
         
-        {/* LEFT: Large Headline */}
         <div className="hero-text-side">
           <h1 className="main-title">
             The New <br />
@@ -17,7 +16,6 @@ function Home(){
           </div>
         </div>
 
-        {/* CENTER: The Service Man Image */}
         <div className="hero-image-center">
           <img 
             src="https://res.cloudinary.com/dwz6wpvak/image/upload/v1773399541/home_first_mssbd1.png" 
@@ -25,7 +23,6 @@ function Home(){
             className="man-image" 
           />
           
-          {/* Floating Pill near the Hammer (Up Hand) */}
           <div className="floating-pill pill-top-right">
             <div className="pill-icon">🛠️</div>
             <div className="pill-text">
@@ -34,7 +31,6 @@ function Home(){
             </div>
           </div>
 
-          {/* Floating Pill near the Toolbox (Down Hand) */}
           <div className="floating-pill pill-mid-left">
             <div className="pill-icon">📍</div>
             <div className="pill-text">
@@ -44,7 +40,6 @@ function Home(){
           </div>
         </div>
 
-        {/* RIGHT: Stats Card */}
         <div className="hero-stats-side">
           <div className="stats-card">
             <div className="user-avatars">

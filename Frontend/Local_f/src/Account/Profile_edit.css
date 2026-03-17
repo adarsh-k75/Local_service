@@ -1,0 +1,63 @@
+/* Card specific tweaks */
+.edit-profile-card {
+  max-width: 450px;
+}
+
+.edit-icon-circle {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-size: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Input Grouping */
+.input-group {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.input-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  margin-left: 5px;
+}
+
+/* Buttons */
+.save-btn {
+  margin-top: 10px;
+  background: #1a1a1a;
+  color: white;
+}
+
+.cancel-btn {
+  background: transparent;
+  border: none;
+  color: #666;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 10px;
+  transition: color 0.2s;
+}
+
+.cancel-btn:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+/* Specific input focus for Edit mode */
+.login-input:focus {
+  background: #ffffff;
+  border-color: #b0cedb; /* Matches your aurora blue */
+  box-shadow: 0 0 0 4px rgba(176, 206, 219, 0.2);
+}

@@ -1,0 +1,103 @@
+.add-service-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 100px 20px 40px;
+}
+
+.service-card {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 40px;
+  border-radius: 32px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+}
+
+.service-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.selection-section h3, 
+.service-form h3 {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* Category & Service Pills */
+.category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.select-pill {
+  padding: 10px 22px;
+  border-radius: 50px;
+  border: 1.5px solid #1a1a1a;
+  background: transparent;
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.select-pill.active {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.service-pill.active-service {
+  background: #27ae60; /* A soft green for the final service selection */
+  border-color: #27ae60;
+  color: #fff;
+}
+
+/* Form Styling */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.service-textarea {
+  min-height: 120px;
+  resize: vertical;
+  padding: 15px;
+}
+
+.file-upload-wrapper {
+  text-align: left;
+  margin: 10px 0;
+}
+
+.file-upload-wrapper label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #666;
+}
+
+.file-input {
+  width: 100%;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

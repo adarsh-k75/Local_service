@@ -55,7 +55,6 @@ class LoginLogic(APIView):
         password = request.data.get("password")
 
         user = authenticate(username=username, password=password)
-
         if user is None:
             return Response(
                 {"error": "invalid username or password"},
