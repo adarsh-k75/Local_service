@@ -19,6 +19,16 @@ import User_services from './Customer_pages/User_Services'
 import About from './Customer_pages/About'
 import Contact from './Customer_pages/Contact'
 import Specilal_nav from './Customer_pages/Specilal_nav'
+import Notfication from './Customer_pages/Notfication'
+import Booking_deatils from './Customer_pages/Booking_deatils'
+import Search from './Customer_pages/Search'
+import Admin_nav from './layouts/Admin_nav'
+import User_list from './Admin_pages/User_list'
+import Address_edit from './Account/Address_edit'
+import Rquestsview from './Admin_pages/Rquestsview'
+import Provider_list from './Admin_pages/Provider_list'
+import Provider_verification from './Admin_pages/Provider_verification'
+import Dashboard from './Admin_pages/Dashboard'
 function App() {
 
   return (
@@ -28,7 +38,6 @@ function App() {
         autoClose={3000}
         theme="light"
       />
-
        <Routes>
       <Route element={<AuthLayout/>}>
         <Route path="/register" element={<Register/>}/>
@@ -45,8 +54,20 @@ function App() {
         <Route path='/User_service' element={<User_services/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/contact' element={<Contact/>}/>
+        <Route path='/notfication' element={<Notfication/>}/>
+        <Route path='/Booking/:id' element={<Booking_deatils />}/>
+        <Route path='/Search/:query' element={<Search/>}/>
+        <Route path='/addres_edit' element={<Address_edit/>}/>
 
-      </Route>
+
+    </Route>
+         <Route element={<Admin_nav/>}>
+           <Route path='/All_user' element={<User_list/>}/>
+            <Route path='/booking_view/:id' element={<Rquestsview/>}/>
+              <Route path='/providers' element={<Provider_list/>}/>
+               <Route path='/providers_verifaction' element={<Provider_verification/>}/>
+               <Route path='/dashboard' element={<Dashboard/>}/>
+         </Route>
     </Routes>
     </>
   )

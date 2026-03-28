@@ -1,0 +1,118 @@
+.notifications-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 120px 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.page-header {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 30px;
+  letter-spacing: -1px;
+}
+
+.notifications-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* --- Glassmorphism Card --- */
+.notification-card {
+  background: rgba(255, 255, 255, 0.3); /* Transparent white */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.notification-card:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateX(5px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.time-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.notif-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  color: #666;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.notif-value {
+  margin: 0;
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 0.9rem;
+}
+
+/* --- Status Badges --- */
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.status-badge.pending { background: #fff3cd; color: #856404; }
+.status-badge.accepted { background: #d4edda; color: #155724; }
+.status-badge.completed { background: #e2e3e5; color: #383d41; }
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-text p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+/* --- Button Styling --- */
+.action-btn {
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.action-btn:hover {
+  opacity: 0.8;
+}
+
+/* Animation */
+.fade-in {
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}

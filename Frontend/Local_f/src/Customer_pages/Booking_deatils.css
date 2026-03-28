@@ -1,0 +1,340 @@
+.details-page-wrapper {
+  padding: 120px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.details-card {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 32px;
+  width: 100%;
+  max-width: 600px;
+  padding: 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+}
+
+.details-header {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 35px;
+  text-align: center;
+  letter-spacing: -1px;
+}
+
+.details-section {
+  margin-bottom: 25px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.section-title h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+/* Provider Styling */
+.provider-profile {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.details-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  object-fit: cover;
+  border: 4px solid #fff;
+}
+
+.label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #888;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.value {
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Info Grid */
+.grid-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Payment Box */
+.payment-box {
+  background: rgba(0, 0, 0, 0.03);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.amount {
+  font-size: 1.3rem;
+  color: #1a1a1a;
+}
+
+.pay-status {
+  text-transform: capitalize;
+  color: #d9534f; /* Red for pending */
+}
+
+.pay-status.paid {
+  color: #5cb85c; /* Green for paid */
+}
+
+/* Pay Button */
+.pay-now-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 16px;
+  border-radius: 50px;
+  border: none;
+  background: #1a1a1a;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.pay-now-btn:hover {
+  background: #333;
+  transform: translateY(-2px);
+}
+
+.divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 30px 0;
+}
+
+/* Animations */
+.fade-in {
+  animation: detailsAppear 0.8s ease-out forwards;
+}
+
+@keyframes detailsAppear {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Container Layout */
+.pv-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Header Card */
+.pv-header-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.pv-client-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.pv-avatar-small {
+  width: 60px;
+  height: 60px;
+  background: #1a1a1a;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.pv-client-name {
+  font-size: 1.4rem;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.pv-service-label {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 5px 0 0 0;
+}
+
+.pv-highlight {
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+/* Status Banner */
+.pv-status-banner {
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.pv-status-banner.pending { color: #856404; background: #fff3cd; }
+.pv-status-banner.accepted { color: #155724; background: #d4edda; }
+
+/* Grid Details */
+.pv-details-section {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  padding: 30px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.pv-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.pv-section-title h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.pv-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.pv-info-card {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 15px;
+  border-radius: 16px;
+}
+
+.pv-label { font-size: 0.65rem; text-transform: uppercase; color: #888; font-weight: 700; }
+.pv-value { font-weight: 700; font-size: 0.95rem; margin: 5px 0 0 0; }
+
+/* Action Area & Forms */
+.pv-action-area {
+  margin-top: 30px;
+}
+
+.pv-decision-box {
+  text-align: center;
+  background: #1a1a1a;
+  color: white;
+  padding: 30px;
+  border-radius: 24px;
+}
+
+.pv-prompt { margin-bottom: 20px; font-weight: 500; opacity: 0.9; }
+
+.pv-button-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.pv-billing-card {
+  background: white;
+  padding: 30px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.pv-bill-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pv-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pv-input {
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1.5px solid #eee;
+  background: #f9f9f9;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.pv-input:focus { border-color: #1a1a1a; }
+
+/* Common Buttons */
+.pv-btn {
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+}
+
+.pv-btn-accept { background: #27ae60; color: white; }
+.pv-btn-cancel { background: transparent; border: 1.5px solid #fff; color: white; }
+.pv-btn-primary { background: #1a1a1a; color: white; padding: 16px; }
+
+.pv-btn:hover { opacity: 0.8; transform: translateY(-2px); }
+
+@media (max-width: 600px) {
+  .pv-info-grid { grid-template-columns: 1fr; }
+  .pv-header-card { flex-direction: column; text-align: center; }
+}

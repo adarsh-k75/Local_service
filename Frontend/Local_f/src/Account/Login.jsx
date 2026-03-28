@@ -27,8 +27,13 @@ function Login(){
             withCredentials:true
         })
         .then((res)=>{
-            console.log(res.data)
-            nav("/")
+          if (res.data.role='admin'){
+             nav('/dashboard')
+          }else{
+           nav("/")
+          }
+
+            
         })
         .catch((err)=>{
             toast.error(err.response.data.error);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState ,useRef} from "react"
 import api from "../api/axios"
 import './Service.css'
 function Services_selecter(){
@@ -7,14 +7,13 @@ const [categories, setCategories] = useState([]);
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
-
+   const fileRef = useRef(null);
   const [formData, setFormData] = useState({
     price: "",
     experience: "",
-    description: ""
+    description: "",
+    work_image: null
   });
-
-  const [image, setImage] = useState(null);
 
   useEffect(() => {
     api.get("service_catgory/")
@@ -47,40 +46,42 @@ const [categories, setCategories] = useState([]);
   }
 
   function handleInputChange(e) {
+      const { name, value } = e.target;
 
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value
+  }));
   }
 
-  function handleImageChange(e) {
-    setImage(e.target.files[0]);
-  }
-
+  
 
   function handleSubmit(e) {
 
     e.preventDefault();
 
-    const data = new FormData();
-    data.append("service", selectedService);
-    data.append("price", formData.price);
-    data.append("experience", formData.experience);
-    data.append("description", formData.description);
-    data.append("work_image", image);
+  const file = fileRef.current.files[0];
 
-    api.post("ProviderServices/",data,{
-      withCredentials: true
-    })
-    .then((res) => {
-      console.log(res.data);
-      alert("Service Added Successfully");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
+  
+
+  const data = new FormData();
+  data.append("service", selectedService);
+  data.append("price", formData.price);
+  data.append("experience", formData.experience);
+  data.append("description", formData.description);
+  data.append("work_image", file);
+
+  api.post("ProviderServices/", data, {
+    withCredentials: true,
+  })
+  .then((res) => {
+    console.log(res.data);
+    alert("Service Added Successfully");
+  })
+  .catch((err) => {
+    console.log("ERROR:", err.response?.data);
+  });
 
   }
 
@@ -163,7 +164,8 @@ return (
           <input
             type="file"
             className="file-input"
-            onChange={handleImageChange}
+            ref={fileRef}
+             accept="image/*"
           />
         </div>
 

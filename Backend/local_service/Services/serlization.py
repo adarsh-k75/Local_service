@@ -14,14 +14,21 @@ class SubServiceSerliazer(serializers.ModelSerializer):
 
 
 class ProvideSerliazer(serializers.ModelSerializer):
-    service=SrvicesSerliazer(read_only=True)
-    work_image = serializers.SerializerMethodField()
+    service = serializers.PrimaryKeyRelatedField(
+        queryset=Service.objects.all()
+    )
+    service_name=SubServiceSerliazer(source="service",read_only=True)
+    provider_name = serializers.CharField(source="provider.username", read_only=True)
+    work_image_url = serializers.SerializerMethodField()
 
+    
     class Meta :
         model=ProviderService
         fields="__all__"
         read_only_fields = ["provider"]
 
     
-    def get_work_image(self, obj):
-        return obj.work_image.url
+    def get_work_image_url(self, obj):
+        if obj.work_image:
+            return obj.work_image.url
+        return None

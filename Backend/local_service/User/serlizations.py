@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Register
+from .models import Register,UserProfile
 class CustomerSerlization(serializers.ModelSerializer):
     confirms=serializers.CharField(write_only=True)
 
@@ -18,7 +18,16 @@ class CustomerSerlization(serializers.ModelSerializer):
         
 
 
-    
+class Profiledataserlizer(serializers.ModelSerializer):
+    class Meta:
+        model=UserProfile
+        fields="__all__"
+        read_only_fields = ["user"]
+        
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ["phone", "address", "pincode"]  
 
 
 

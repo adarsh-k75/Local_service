@@ -1,0 +1,116 @@
+/* Container for the entire screen since Navbar is gone */
+.full-page-verification-wrapper {
+  width: 100%;
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.verification-content-container {
+  max-width: 1200px;
+  width: 100%;
+}
+
+.page-main-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #1a1a1a; /* Dark text for your Aurora background */
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.page-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 60px;
+  font-weight: 500;
+}
+
+/* Responsive Grid */
+.verification-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 40px;
+}
+
+/* Dark Gray Glass Card */
+.verify-card {
+  background: rgba(40, 40, 40, 0.8); /* Dark Charcoal Glass */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 45px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.verify-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Image Styling */
+.id-image-section {
+  position: relative;
+  height: 220px;
+  background: #111;
+}
+
+.id-card-display {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+.status-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1a1a1a;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Content Area */
+.verify-details {
+  padding: 35px;
+  text-align: center;
+}
+
+.user-display-name {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.verify-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  width: 60%;
+  margin: 0 auto 25px;
+}
+
+/* Action Button */
+.btn-verify-confirm {
+  width: 100%;
+  background: #ffffff; /* Bright pop against dark card */
+  color: #1a1a1a;
+  border: none;
+  padding: 16px;
+  border-radius: 20px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-verify-confirm:hover {
+  background: #4ecdc4; /* Teal accent from your design */
+  color: white;
+  transform: scale(1.02);
+}

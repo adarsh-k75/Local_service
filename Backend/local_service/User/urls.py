@@ -11,6 +11,6 @@ urlpatterns = [
     path('logout/',views.Logout.as_view()),
     path('refrsh/',views.Refrsh_token.as_view()),
     path("verify-email/<uidb64>/<token>/", views.VerifyEmail.as_view()),
-
+    path("UserProfile/",views.Profileaddres.as_view()),
 
 ]

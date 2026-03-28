@@ -2,12 +2,12 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status,viewsets
-from .serlizations import CustomerSerlization
+from .serlizations import CustomerSerlization,Profiledataserlizer,UserProfileSerializer
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser
 from .authtication import CookieJWTAuthentication
-from.models import Register
+from.models import Register,UserProfile
 from django.core.mail import send_mail
 from django.conf import settings
 from .utils import email_token_generator
@@ -16,6 +16,8 @@ from django.utils.encoding import force_bytes
 from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
+from rest_framework.parsers import MultiPartParser, FormParser
+
 class RegisterLogic(APIView):
 
     def get(self, request):
@@ -67,7 +69,9 @@ class LoginLogic(APIView):
             )
         refresh = RefreshToken.for_user(user)
         response = Response(
-            {"message": "login successfully"},
+            {"message": "login successfully",
+              "role":user.role
+             },
             status=status.HTTP_200_OK
         )
 
@@ -93,7 +97,6 @@ class Navbarname(APIView):
 class Profile(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [CookieJWTAuthentication]
-    
     def patch(self,request):
         serlizaer=CustomerSerlization(request.user,data=request.data,partial=True)
         if serlizaer.is_valid():
@@ -179,3 +182,65 @@ class VerifyEmail(APIView):
 
         except:
             return Response({"error":"Invalid link"}, status=400)
+        
+class Profileaddres(APIView):
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[CookieJWTAuthentication]
+    parser_classes=[MultiPartParser, FormParser]
+
+    def get(self,request):
+        user = request.user
+        profile = UserProfile.objects.filter(user=user).first()
+       
+                            
+        if request.user.role == "provider":
+           serializer = Profiledataserlizer(profile)
+        else:
+           serializer = UserProfileSerializer(profile)
+        return Response({ "role": user.role,
+                          "profile": serializer.data},status=status.HTTP_200_OK)
+        
+
+
+    def post(self,request):
+        if request.user.role == "provider":
+           serializer = Profiledataserlizer(data=request.data)
+        else:
+           serializer = UserProfileSerializer(data=request.data)
+   
+        user = request.user
+        lat = float(request.data.get("latitude"))
+        lng = float(request.data.get("longitude"))
+        if not user :
+            return Response({"error":"user not found"})
+        if serializer.is_valid():
+            profile= serializer.save(user=user)
+            profile.latitude=lat
+            profile.longitude=lng
+            profile.save()
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+    def patch(self,request):
+        user = request.user
+        profile = UserProfile.objects.filter(user=user).first()
+
+        if request.user.role == "provider":
+           serializer = Profiledataserlizer(profile,data=request.data,partial=True)
+        else:
+           serializer = UserProfileSerializer(profile,data=request.data,partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message:upadte succesfully"},status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+    
+
+
+
+
+

@@ -1,6 +1,6 @@
 .marketplace-container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
   padding: 100px 20px;
   font-family: 'Inter', sans-serif;
 }
@@ -9,67 +9,38 @@
   font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 20px;
-  color: #1a1a1a;
-  text-align: left;
 }
 
 .section-block {
   margin-bottom: 50px;
 }
 
-/* Grid for Categories and Sub-services */
 .pill-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 15px;
 }
 
-/* Base Card Style */
 .market-card {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255,255,255,0.4);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  padding: 25px 15px;
+  padding: 20px;
   border-radius: 20px;
-  text-align: center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
 }
 
-.market-card h3 {
-  font-size: 1rem;
-  margin: 0;
-  color: #444;
+.market-card.selected {
+  background: black;
+  color: white;
 }
 
-.market-card:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.6);
+.market-card.selected-sub {
+  background: #22c1c3;
+  color: white;
 }
 
-/* Selection States */
-.category-card.selected {
-  background: #1a1a1a;
-  border-color: #1a1a1a;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-.category-card.selected h3, 
-.category-card.selected .card-icon {
-  color: #fff;
-}
-
-.sub-service-card.selected-sub {
-  background: #22c1c3; /* A soft teal color */
-  border-color: #22c1c3;
-  color: #fff;
-}
-
-.sub-service-card.selected-sub h3 {
-  color: #fff;
-}
-
-/* Provider Glass Cards */
+/* Provider */
 .provider-results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -77,17 +48,15 @@
 }
 
 .provider-glass-card {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255,255,255,0.4);
   backdrop-filter: blur(15px);
-  border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 25px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
 }
 
 .provider-img-box {
-  position: relative;
   height: 200px;
+  position: relative;
 }
 
 .provider-img-box img {
@@ -98,71 +67,74 @@
 
 .price-badge {
   position: absolute;
-  bottom: 15px;
-  right: 15px;
-  background: #fff;
-  padding: 6px 15px;
-  border-radius: 50px;
-  font-weight: 700;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  bottom: 10px;
+  right: 10px;
+  background: white;
+  padding: 5px 12px;
+  border-radius: 20px;
 }
 
 .provider-content {
   padding: 20px;
-  text-align: left;
 }
 
-.provider-header {
+/* Booking */
+.booking-section {
+  margin-top: 15px;
+}
+
+.date-picker-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+}
+
+/* Time Picker */
+.time-picker {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
-.provider-header h2 {
-  font-size: 1.2rem;
-  margin: 0;
+.time-picker select {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  cursor: pointer;
 }
 
-.exp-tag {
-  font-size: 0.75rem;
-  background: rgba(34, 193, 195, 0.1);
-  color: #167d7e;
-  padding: 4px 10px;
-  border-radius: 50px;
-  font-weight: 600;
+.time-picker select:focus {
+  outline: none;
+  border-color: #22c1c3;
 }
 
-.provider-content p {
-  font-size: 0.85rem;
-  color: #666;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
+/* Button */
 .book-btn {
   width: 100%;
   padding: 12px;
   border-radius: 50px;
   border: none;
-  background: #1a1a1a;
-  color: #fff;
-  font-weight: 600;
+  background: black;
+  color: white;
   cursor: pointer;
-  transition: opacity 0.2s;
 }
 
-.book-btn:hover {
-  opacity: 0.9;
+/* Datepicker */
+.react-datepicker {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-/* Simple Animation */
-.fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
+.react-datepicker__header {
+  background: black;
+  color: white;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.react-datepicker__day--selected {
+  background: #22c1c3 !important;
+  color: white;
 }

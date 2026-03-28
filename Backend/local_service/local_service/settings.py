@@ -60,6 +60,9 @@ INSTALLED_APPS = [
     'Services',
     "cloudinary",
     "cloudinary_storage",
+    'Booking',
+    'Notfications',
+    'admin_panel'
 ]
 
 MIDDLEWARE = [
@@ -157,3 +160,7 @@ EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
+import os
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

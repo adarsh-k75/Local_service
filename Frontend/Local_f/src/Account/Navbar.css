@@ -1,4 +1,4 @@
-/* Apply the Aurora colors to the whole page body */
+/* --- Global Page Setup --- */
 body {
   margin: 0;
   min-height: 100vh;
@@ -10,12 +10,14 @@ body {
     #cbd8df 100%   /* Muted Grey-Blue */
   ) fixed;
   font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* --- Navbar Container --- */
 .navbar-container {
   width: 100%;
   padding: 25px 0;
-  background: transparent; /* Second image has no solid bar background */
+  background: transparent; 
 }
 
 .nav-content {
@@ -23,23 +25,15 @@ body {
   margin: 0 auto;
   display: flex;
   align-items: center;
-  /* This pulls the left and right sides toward the center */
   justify-content: center; 
-  gap: 60px; /* Adjust this to control the total tightness of the nav */
+  gap: 50px; 
   padding: 0 40px;
 }
 
+/* --- Left Side Menu --- */
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 30px;
-}
-
-.logo {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1a1a1a;
-  white-space: nowrap;
 }
 
 .nav-menu {
@@ -54,23 +48,22 @@ body {
   text-decoration: none;
   color: #444;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
 
-/* Grouping Search and Login to keep them close together */
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px; /* Tight gap between search and login */
+.nav-menu a:hover {
+  color: #1a1a1a;
 }
 
+/* --- Center Search --- */
 .search-wrapper {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.2); /* Very subtle frosted look */
+  background: rgba(255, 255, 255, 0.25); 
   backdrop-filter: blur(10px);
   padding: 8px 16px;
-  border-radius: 50px; /* Pill shape from 'Get the App' button */
+  border-radius: 50px; 
   border: 1px solid rgba(255, 255, 255, 0.4);
   width: 200px;
 }
@@ -81,11 +74,56 @@ body {
   outline: none;
   width: 100%;
   font-size: 13px;
+  color: #1a1a1a;
 }
 
-.login-btn {
+/* --- Right Side Group --- */
+.nav-right-group {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+/* Notification Wrapper & Badge Logic */
+.notification-wrapper {
+  position: relative; /* Anchor for the absolute badge */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.notification-wrapper:hover {
+  transform: scale(1.1);
+}
+
+.bell-icon {
+  font-size: 20px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -6px;      /* Moves it above the bell */
+  right: -8px;    /* Moves it to the right corner */
+  background-color: #ff4d4f; /* Modern Red */
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #f2ede9; /* Separation border matching body color */
+  padding: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* --- Login/User Div Style --- */
+.user-div-btn {
   background: transparent;
-  border: 1.5px solid #1a1a1a; /* Matches the 'Get the App' border style */
+  border: 1.5px solid #1a1a1a; 
   padding: 8px 22px;
   border-radius: 50px;
   font-weight: 600;
@@ -93,9 +131,12 @@ body {
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  user-select: none;
 }
 
-.login-btn:hover {
+.user-div-btn:hover {
   background: #1a1a1a;
   color: #fff;
 }
