@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 import './Booking_deatils.css'
 import { useParams } from 'react-router-dom'
 import api from "../api/axios"
-
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 function Booking_deatils(){
+  let naigater=useNavigate()
  let [data,setdata]=useState({})
  let [user,setuser]=useState(null)
  let [bill,setbill]=useState({})
@@ -52,8 +54,9 @@ function Booking_deatils(){
       withCredentials:true
      })
      .then((res)=>{
-       alert("is good")
+      toast.success(res.data.message)
         setinputs({ amount: "", description: "" });
+        naigater('/notfication')
      })
    }
 
@@ -61,6 +64,35 @@ function Booking_deatils(){
    function onchange(e){
       setinputs({...inputs,[e.target.name]:e.target.value})
    }
+
+
+
+  const handlePayment = async (id) => {
+
+  const res = await api.post('create-order/', {
+    booking_id: id
+  });
+
+  const options = {
+    key: res.data.key,
+    amount: res.data.amount,
+    currency: "INR",
+    order_id: res.data.order_id,
+
+    handler: async function (response) {
+      await api.post('verify-payment/', {
+        booking_id: id,
+        order_id: response.razorpay_order_id,
+        payment_id: response.razorpay_payment_id,
+        signature: response.razorpay_signature
+      });
+    }
+  };
+
+  const rzp = new window.Razorpay(options);
+  rzp.open();
+};
+
 
 return(<>
 <div className="details-page-wrapper">
@@ -139,7 +171,7 @@ return(<>
         </div>
 
         {data.status === "completed" && data.payment_status === "pending" && (
-          <button className="pay-now-btn">
+          <button onClick={()=>{handlePayment(data.id)}} className="pay-now-btn">
             Securely Pay Now
           </button>
         )}

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import api from "../api/axios"
 import { useParams } from "react-router-dom"
 import "./Rquestsview.css"
-import Adminnavbar from "./Adminnavbar"
 function Rquestsview(){
  let [booking,setbooking]=useState([])
  let {id}=useParams()
@@ -10,10 +9,15 @@ function Rquestsview(){
     api.get(`Block_user/${id}/`)
     .then((res)=>{
         setbooking(res.data)
+    })
+
+    api.get(`provider_request/${id}/`)
+    .then((res)=>{
+        setbooking(res.data)
         console.log(res.data)
     })
 
- },[])
+ },[id])
 
 return(<>
   <div className="booking-details-page fade-in">

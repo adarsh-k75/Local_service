@@ -1,10 +1,27 @@
 import './Specilal_nav.css'
 import { useEffect,useState } from 'react';
-const Specilal_nav = () => {
-  const [showNav, setShowNav] = useState(false);
+import { useNavigate } from 'react-router-dom'
+import api from "../api/axios"
 
+const Specilal_nav = () => {
+    const [showNav, setShowNav] = useState(false);
+  const [services, setservices] = useState([]);
+  const navigate = useNavigate();
+
+  // ✅ Fisher-Yates Shuffle
+  const shuffleArray = (array) => {
+    let newArray = [...array];
+
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+
+    return newArray;
+  };
+
+  // ⏱ Show navbar after 3 sec
   useEffect(() => {
-    // 3-second delay before the navbar enters
     const timer = setTimeout(() => {
       setShowNav(true);
     }, 3000);
@@ -12,34 +29,61 @@ const Specilal_nav = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // 📡 Fetch services + shuffle
+  useEffect(() => {
+    api.get("Subservice/")
+      .then((res) => {
+        // 🔥 shuffle + limit (optional)
+        const shuffled = shuffleArray(res.data).slice(0, 10);
+        setservices(shuffled);
+      })
+      .catch((err) => {
+        console.log("Error fetching services", err);
+      });
+  }, []);
+
+  // 🚀 Navigate handler
+  const handleClick = (item) => {
+    // assuming item has category id
+    navigate(`/User_service/${item.category}/${item.id}`);
+  };
+
   return (
     <>
-      {showNav && (
-        <nav className="floating-navbar">
-          <div className="nav-pill">
-            
-            <div className="nav-train-container">
-              <div className="nav-train-track">
-                <div className="nav-item">Nominees</div>
-                <div className="nav-item">Courses</div>
-                <div className="nav-item">Collections</div>
-                <div className="nav-item">Directory</div>
-                <div className="nav-item">Market</div>
-                <div className="nav-item">Services</div>
-                <div className="nav-item">Pricing</div>
-                <div className="nav-item">Contact</div>
-                
-                <div className="nav-item">Nominees</div>
-                <div className="nav-item">Courses</div>
-                <div className="nav-item">Collections</div>
-                <div className="nav-item">Directory</div>
-              </div>
-            </div>
+    {showNav && (
+  <nav className="floating-navbar">
+    <div className="nav-pill">
 
-            <button className="nav-button">Visit Now</button>
-          </div>
-        </nav>
-      )}
+      <div className="nav-train-container">
+        <div className="nav-train-track">
+
+          {services.length > 0 ? (
+            [...services, ...services].map((item, index) => (
+              <div
+                key={index} 
+                className="nav-item"
+                onClick={() => handleClick(item)}
+              >
+                {item.name}
+              </div>
+            ))
+          ) : (
+            <div className="nav-item">Loading...</div>
+          )}
+
+        </div>
+      </div>
+
+      <button
+        className="nav-button"
+        onClick={() => navigate('/User_service')}
+      >
+        Visit Now
+      </button>
+
+    </div>
+  </nav>
+)}
     </>
   );
 };

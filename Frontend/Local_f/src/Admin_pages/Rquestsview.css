@@ -1,105 +1,176 @@
-/* Container to float the nav at the bottom center */
-.floating-navbar {
-  position: fixed;
-  bottom: 30px;
+/* 1. Main Page Container */
+.booking-details-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-main-title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 40px;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* 2. The Receipt Card - Squircle Glass */
+.booking-receipt-card {
+  background: rgba(40, 40, 40, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px; /* Squircle Curve */
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 320px 1fr; /* Sidebar and Body split */
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+  margin-bottom: 40px;
+}
+
+/* 3. Left Column: Sidebar */
+.receipt-sidebar {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.receipt-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: 25px;
+}
+
+.receipt-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px; /* Squircle */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.receipt-status-pill {
+  position: absolute;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 9999;
-  animation: slideUpReveal 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards;
-  opacity: 0;
-  width: auto;
-  max-width: 90vw; /* Keeps it from hitting screen edges */
-}
-
-/* The Pill Shape */
-.nav-pill {
-  background: rgba(26, 26, 26, 0.85);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 6px 12px;
+  background: #4ecdc4; /* Teal Accent */
+  color: #1a1a1a;
+  padding: 6px 18px;
   border-radius: 100px;
-  display: flex;
-  align-items: center;
-  overflow: hidden; /* Hides the extra train items */
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-}
-
-.nav-logo {
-  color: #ffffff;
+  font-size: 11px;
   font-weight: 800;
-  padding: 0 20px;
-  font-size: 18px;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(26, 26, 26, 0.5);
-  z-index: 10; /* Keeps logo above the moving train */
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-/* The Train Movement Logic */
-.nav-train-container {
-  overflow: hidden; /* Only shows what fits in the pill */
-  width: 400px; /* Adjust this width based on how much you want visible */
-  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+.receipt-id-tag {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  font-family: monospace;
+  margin-top: 15px;
 }
 
-.nav-train-track {
+/* 4. Right Column: Body */
+.receipt-body {
+  padding: 40px;
   display: flex;
-  white-space: nowrap;
-  animation: trainMove 15s linear infinite; /* Adjust '15s' for speed */
+  flex-direction: column;
+  gap: 35px;
 }
 
-/* Pause the train when user hovers */
-.nav-train-container:hover .nav-train-track {
-  animation-play-state: paused;
+.group-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #4ecdc4;
+  margin-bottom: 20px;
+  opacity: 0.8;
 }
 
-.nav-item {
-  color: #a0a0a0;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 10px 20px;
-  transition: color 0.3s ease;
-  cursor: pointer;
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
 }
 
-.nav-item:hover {
+.grid-label {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 5px;
+}
+
+.grid-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.grid-value.highlight {
+  color: #4ecdc4;
+}
+
+.receipt-description {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 5. Footer */
+.receipt-footer {
+  margin-top: auto;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.receipt-footer p {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+.receipt-footer strong {
   color: #ffffff;
 }
 
-.nav-button {
+.download-receipt-btn {
   background: #ffffff;
-  color: #000000;
+  color: #1a1a1a;
   border: none;
-  padding: 10px 22px;
-  border-radius: 100px;
-  font-weight: 700;
-  font-size: 12px;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 13px;
   cursor: pointer;
-  z-index: 10;
-  margin-left: 10px;
-  white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
-/* Keyframe for Horizontal Train Scroll */
-@keyframes trainMove {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    /* Adjust this percentage based on your total item width */
-    transform: translateX(-50%);
-  }
+.download-receipt-btn:hover {
+  background: #4ecdc4;
+  color: #ffffff;
+  transform: translateY(-2px);
 }
 
-/* Entrance Animation */
-@keyframes slideUpReveal {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, 40px);
+/* 6. Responsive Layout */
+@media (max-width: 850px) {
+  .booking-receipt-card {
+    grid-template-columns: 1fr;
   }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, 0);
+  
+  .receipt-sidebar {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 }

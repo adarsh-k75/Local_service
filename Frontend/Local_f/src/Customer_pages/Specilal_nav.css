@@ -44,8 +44,8 @@
 
 .nav-train-track {
   display: flex;
-  white-space: nowrap;
-  animation: trainMove 15s linear infinite; /* Adjust '15s' for speed */
+  width: max-content;
+  animation: trainMove 20s linear infinite;
 }
 
 /* Pause the train when user hovers */

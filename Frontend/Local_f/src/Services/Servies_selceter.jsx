@@ -1,7 +1,10 @@
 import { useEffect, useState ,useRef} from "react"
 import api from "../api/axios"
 import './Service.css'
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 function Services_selecter(){
+  let naviagter=useNavigate()
 const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
 
@@ -76,11 +79,12 @@ const [categories, setCategories] = useState([]);
     withCredentials: true,
   })
   .then((res) => {
-    console.log(res.data);
-    alert("Service Added Successfully");
+    toast.success(res.data.message)
+     naviagter("/profile")
+      window.location.reload();
   })
   .catch((err) => {
-    console.log("ERROR:", err.response?.data);
+    toast.error("ERROR:", err.response?.data?.error);
   });
 
   }

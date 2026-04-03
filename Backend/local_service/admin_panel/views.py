@@ -10,6 +10,7 @@ from .serliazer import Userserlizer
 from rest_framework.response import Response
 from rest_framework import status
 
+
 class Allusers(APIView):
     def get(self,request):
         user=UserProfile.objects.filter(user__role="customer")
@@ -42,8 +43,6 @@ class BlockuserandList(APIView):
          return Response(selizer.data,status=status.HTTP_200_OK)
 
          
-
-
 class verify_id(APIView):
     def patch(self,request,id):
         try:
@@ -55,7 +54,15 @@ class verify_id(APIView):
         serlizer=Userserlizer(user)
         return Response(serlizer.data)
 
-
-
+class Provider_booking(APIView):
+    def get(self,request,id):
+         try:
+             booking=Booking.objects.filter(provider__provider__id=id)
+         except Booking.DoesNotExist:
+             return Response({"error":"no booking"})
+         selizer=Bokkingserliazer(booking,many=True)
+         return Response(selizer.data,status=status.HTTP_200_OK)
     
+
+
 

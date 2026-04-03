@@ -5,20 +5,21 @@ import axios from "axios"
 import './User_services.css'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+import { toast } from "react-toastify"
+import { useParams } from "react-router-dom"
 function  User_services(){
+  let {catId,subId}=useParams()
   let [Catagery,setCatgery]=useState([])
  let [Subservices,setServices]=useState([])
  let [Provider,setprovider]=useState([])
  let [id_catgory,setid_catgrory]=useState(null)
  let [id_provider,idsetprovider]=useState(null)
 
-// ✅ DATE + TIME STATES
  let [selectedDate,setSelectedDate]=useState(null)
  let [hour,setHour]=useState("")
  let [minute,setMinute]=useState("")
  let [ampm,setAmpm]=useState("")
 
-// ✅ CONVERT TIME → 24 FORMAT
  function convertTo24Hour(hour, minute, ampm){
   let h = parseInt(hour)
 
@@ -32,7 +33,6 @@ function  User_services(){
   return `${String(h).padStart(2,"0")}:${minute}`
 }
 
-// ✅ BOOKING
  function Bookings(id){
 
   if(!selectedDate || !hour || !minute || !ampm){
@@ -61,7 +61,23 @@ function  User_services(){
    .then((res)=>{
       setCatgery(res.data)
    })
+
  },[])
+
+ useEffect(()=>{
+        if (catId) {
+    setid_catgrory(catId);
+
+
+        if (subId) {
+          idsetprovider(subId);
+
+          api.get(`user_provider_view/${subId}/`)
+            .then((res) => setprovider(res.data));
+        }
+      ;
+  }
+ },[catId,subId])
 
  function catagory_click(C){
    setid_catgrory(C)
@@ -77,14 +93,17 @@ function  User_services(){
   api.get(`user_provider_view/${P}/`)
   .then((res)=>{
     setprovider(res.data)
-    console.log(res.data)
+  })
+  .catch((err)=>{
+     toast.error(err.response?.data?.error|| "Something went wrong")
   })
  }
 
  return(
  <div className="marketplace-container">
 
-  {/* Category */}
+  
+  
   <div className="section-block">
     <h2 className="marketplace-title">Select a Category</h2>
     <div className="pill-grid">
@@ -122,9 +141,10 @@ function  User_services(){
   {id_provider && (
     <div className="section-block fade-in">
       <h2 className="marketplace-title">Available Professionals</h2>
-
       <div className="provider-results-grid">
-        {Provider.map((data)=>(
+        {Provider.length> 0?(
+          <>
+           {Provider.map((data)=>(
           <div className="provider-glass-card" key={data.id}>
 
             <div className="provider-img-box">
@@ -196,6 +216,14 @@ function  User_services(){
 
           </div>
         ))}
+          </>
+
+        ):(
+          <>
+          <h2>Employee is not available</h2>
+          </>
+        )}
+       
       </div>
     </div>
   )}

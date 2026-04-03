@@ -1,0 +1,136 @@
+/* --- Centering Wrapper --- */
+.security-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* --- The Glass Card --- */
+.security-card-panel {
+  background: rgba(255, 255, 255, 0.55); 
+  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  border-radius: 28px;
+  padding: 45px 35px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* --- Header Section --- */
+.security-status-icon {
+  font-size: 45px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.security-main-title {
+  font-size: 28px;
+  font-weight: 900; 
+  color: #000000; /* Solid Black */
+  margin: 0 0 10px 0;
+  letter-spacing: -0.5px;
+}
+
+.security-sub-text {
+  color: #000000; 
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 35px;
+}
+
+/* --- Form Body --- */
+.security-form-body {
+  text-align: left;
+}
+
+.security-input-group {
+  margin-bottom: 20px;
+}
+
+.security-input-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 800; 
+  color: #000000; /* Solid Black Label */
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.security-custom-input {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: 14px;
+  border: 2px solid #000000; /* Solid Black Border */
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.security-custom-input::placeholder {
+  color: #666666; /* Darker dots placeholder */
+}
+
+.security-custom-input:focus {
+  background: #ffffff;
+  box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.08);
+  transform: scale(1.01);
+}
+
+/* --- Action Button --- */
+.security-submit-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 16px;
+  background: #000000; /* Black Button */
+  color: #ffffff; 
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.security-submit-btn:hover {
+  background: #222222;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.security-submit-btn:active {
+  transform: translateY(-1px);
+}
+
+/* --- Footer --- */
+.security-footer-note {
+  margin-top: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #000000; /* Solid Black Footer Note */
+}
+
+/* --- Entry Animation --- */
+.fade-in-up {
+  animation: fadeInUp 0.7s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

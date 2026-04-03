@@ -41,7 +41,7 @@ class ProviderServices(APIView):
         serlizer=ProvideSerliazer(data=request.data)
         if serlizer.is_valid():
             serlizer.save(provider=request.user)
-            return Response(serlizer.data,status=status.HTTP_201_CREATED)
+            return Response({"message":"Service Added Successfully"},status=status.HTTP_201_CREATED)
         return Response(serlizer.errors,status=status.HTTP_400_BAD_REQUEST)
         
 class UserProviderView(APIView):
@@ -57,11 +57,13 @@ class Get_near_provider(APIView):
     def get(self,request,id):
         user=request.user
         user_profile=UserProfile.objects.filter(user=user).first()
-        user_profile
+        if not user_profile or not user_profile.latitude:
+            return Response({"error":"First Update your profile"})
         providers=ProviderService.objects.filter(service_id=id).select_related("provider__userprofile")
-        if not providers:
-            return Response({"error":"there is no provider"})
 
+        if not providers:
+            return Response([])
+       
         near_by=[]
 
         for p in providers:
@@ -86,7 +88,15 @@ class  Search(APIView):
         service=ProviderService.objects.filter(service__name__icontains=query)
         serlizer=ProvideSerliazer(service,many=True)
         return Response(serlizer.data,status=status.HTTP_200_OK)
-        
+
+class Subservice_navbar(APIView):
+    def get(self,request):
+        services=Service.objects.all()
+        serlizer=SubServiceSerliazer(services,many=True)
+        return Response(serlizer.data,status=status.HTTP_200_OK)
+
+         
+
 
 
 

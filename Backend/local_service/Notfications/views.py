@@ -21,7 +21,7 @@ class Bookingdeatils(APIView):
     permission_classes=[IsAuthenticated]
     authentication_classes=[CookieJWTAuthentication]
     def get(self,request,id):
-        objects=Booking.objects.filter(id=id).filter(Q(user=request.user)| Q(provider__provider=request.user)).first()
+        objects=Booking.objects.filter(id=id).filter(Q(user=request.user)|Q(provider__provider=request.user)).first()
         if not objects:
           return Response({"error": "Not allowed"}, status=404)
         serlizer=Bokkingserliazer(objects)

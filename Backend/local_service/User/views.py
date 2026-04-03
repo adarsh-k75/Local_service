@@ -17,7 +17,14 @@ from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 from rest_framework.parsers import MultiPartParser, FormParser
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from dj_rest_auth.registration.views import SocialLoginView
+import os
+from dotenv import load_dotenv
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
+
+load_dotenv()
 class RegisterLogic(APIView):
 
     def get(self, request):
@@ -78,13 +85,17 @@ class LoginLogic(APIView):
         response.set_cookie(
             "access_token",
             str(refresh.access_token),
-            httponly=True
+            httponly=True,
+            secure=True,
+            samesite="Lax"
         )
 
         response.set_cookie(
             "refresh_token",
             str(refresh),
-            httponly=True
+            httponly=True,
+            secure=True,
+            samesite="Lax"
         )
         
         return response
@@ -191,8 +202,6 @@ class Profileaddres(APIView):
     def get(self,request):
         user = request.user
         profile = UserProfile.objects.filter(user=user).first()
-       
-                            
         if request.user.role == "provider":
            serializer = Profiledataserlizer(profile)
         else:
@@ -232,11 +241,140 @@ class Profileaddres(APIView):
 
         if serializer.is_valid():
             serializer.save()
-            return Response({"message:upadte succesfully"},status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"upadte succesfully"},status=status.HTTP_200_OK)
+        return Response({"error": "Invalid data"},status=status.HTTP_400_BAD_REQUEST)
+
+from django.contrib.auth import get_user_model
+import requests
+import json
+User = get_user_model()
+from django.conf import settings
+
+GOOGLE_CLIENT_ID=os.getenv("GOOGLE_CLIENT_ID")
+class GoogleLoginAPIView(APIView):
+   
+
+    def post(self, request):
+        token = request.data.get("token")
+        role = request.data.get("role")
+
+        if not token:
+            return Response({"error": "Token is required"}, status=status.HTTP_400_BAD_REQUEST)
+        if not role:
+            return Response({"error": "Role is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verify Google token
+        google_verify_url = f"https://oauth2.googleapis.com/tokeninfo?id_token={token}"
+        resp = requests.get(google_verify_url)
+        if resp.status_code != 200:
+            return Response({"error": "Invalid Google token"}, status=status.HTTP_400_BAD_REQUEST)
+
+        google_data = resp.json()
+        email = google_data.get("email")
+        name = google_data.get("name")
+        aud = google_data.get("aud") 
+
+        if aud != GOOGLE_CLIENT_ID:
+            return Response({"error": "Token not valid for this client"}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+        if not email:
+            return Response({"error": "Email not found in Google token"}, status=status.HTTP_400_BAD_REQUEST)
+
+        user, created = User.objects.get_or_create(
+            email=email,
+            defaults={"username": email, "is_verified": True}
+        )
+        if created and name:
+            user.first_name = name
+            user.save()
+        if not user.role:
+            user.role = role
+            user.is_verified = True
+            user.save()
+        else:
+            if user.role != role:
+                return Response({"error": f"You are already registered as {user.role}"}, status=status.HTTP_400_BAD_REQUEST)
+
+        refresh = RefreshToken.for_user(user)
+        response = Response({
+            "message": "Login successful",
+            "role": user.role,
+        })
+
+        response.set_cookie("access_token", str(refresh.access_token), httponly=True)
+        response.set_cookie("refresh_token", str(refresh), httponly=True)
+
+        return response
+
+password_token=PasswordResetTokenGenerator()
+
+class Forgett_password(APIView):
+    def post(self,request):
+        email=request.data.get("email")
+        if not email:
+            return Response({"error":"email required"})
+        
+        user=Register.objects.filter(email=email).first()
+       
+        if user:
+            token=password_token.make_token(user)
+            uid=user.id
+            reset_link=f"http://localhost:5173/forget_reset/{uid}/{token}"
+
+            send_mail(
+                 "Reset your password",
+                    f"Click this link to reset your password: {reset_link}",
+                    "no-reply@yourdomain.com",
+                    [user.email],
+                    fail_silently=False,
+            )
+        return Response({"message": "If the email exists, a reset link has been sent"})
+
+
+class Reset_password(APIView):
+
+    def post(self,request,uid,token):
+        password = request.data.get("password")
+        r_password = request.data.get("r_password")
+
+        if password != r_password:
+            return Response({"error": "Passwords do not match"}, status=400)
+        
+        user=Register.objects.filter(id=uid).first()
+        if not user:
+            return Response({"error": "Invalid user"}, status=400)
+
+        if not  password_token.check_token(user,token):
+            return  Response({"error": "Invalid or expired token"})
+        user.set_password(password)
+        user.save()
+        return Response({"message": "Password reset successfully"})
+        
 
 
 
+
+            
+
+    
+
+        
+        
+
+        
+
+        
+                                                                                                                                                                                                                                                                                                                                    
+          
+
+
+
+
+
+
+     
 
     
 

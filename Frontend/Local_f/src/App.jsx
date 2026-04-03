@@ -29,6 +29,8 @@ import Rquestsview from './Admin_pages/Rquestsview'
 import Provider_list from './Admin_pages/Provider_list'
 import Provider_verification from './Admin_pages/Provider_verification'
 import Dashboard from './Admin_pages/Dashboard'
+import Email from './Account/Email'
+import Forget_reset from './Account/Forget_reset'
 function App() {
 
   return (
@@ -44,6 +46,8 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/Re-password" element={<Reset_password/>}/>
         <Route path="/profile_edit" element={<Profile_edit/>}/>
+        <Route path='/email' element={<Email/>}/>
+        <Route path='/forget_reset/:uid/:token' element={<Forget_reset/>}/>
 
       </Route>
 
@@ -51,6 +55,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/Services" element={<Services_selecter/>}/>
+        <Route path="/User_service/:catId/:subId" element={<User_services />} />
         <Route path='/User_service' element={<User_services/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/contact' element={<Contact/>}/>
@@ -58,7 +63,6 @@ function App() {
         <Route path='/Booking/:id' element={<Booking_deatils />}/>
         <Route path='/Search/:query' element={<Search/>}/>
         <Route path='/addres_edit' element={<Address_edit/>}/>
-
 
     </Route>
          <Route element={<Admin_nav/>}>

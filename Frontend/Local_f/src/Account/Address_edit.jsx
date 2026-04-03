@@ -64,12 +64,13 @@ function Address_edit(){
         withCredentials: true
       })
       .then((res) => {
-        toast.message(res.data.message)
+        toast.success(res.data.message)
         naviagter("/profile")
+         window.location.reload();
           
       })
       .catch((err) => {
-        toast.error(err.data.response?.error)
+        toast.error(err.response?.data?.error||"Something went wrong")
       });
 
     }, (error) => {

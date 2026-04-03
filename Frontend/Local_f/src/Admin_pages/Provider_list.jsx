@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import api from "../api/axios"
-
+import { useNavigate } from "react-router-dom"
 function Provider_list(){
+  let navigater=useNavigate()
 let [providr,setprovider]=useState([])
 useEffect(()=>{
     api.get("All_provider/")
