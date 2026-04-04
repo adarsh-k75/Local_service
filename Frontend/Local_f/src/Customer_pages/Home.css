@@ -169,3 +169,197 @@
   color: #555; /* RESTORED OLD COLOR */
   line-height: 1.5;
 }
+
+
+/* smoke*/
+/* --- SECTION WRAPPER --- */
+.process-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.process-container {
+  max-width: 1300px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end; /* This forces the image and content to stay at the bottom */
+  gap: 80px;
+}
+
+/* --- IMAGE POSITIONING (Left Side) --- */
+.process-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Locks image to the bottom baseline */
+}
+
+.provider-image-small {
+  /* Reduced size to make it "narrower" and not too big */
+  height: 700px; 
+  width: auto;
+  object-fit: contain;
+  
+  /* POSITION SHIFT: Pushes him down approx 2cm */
+  margin-top: 75px; 
+  transform: translateY(20px); /* Extra nudge to ensure he feels low */
+  
+  filter: drop-shadow(0 15px 30px rgba(0,0,0,0.12));
+  z-index: 5;
+}
+
+/* --- CONTENT POSITIONING (Right Side) --- */
+.process-content {
+  flex: 1.2;
+  padding-bottom: 80px; /* Keeps the text floating nicely while image is at bottom */
+}
+
+/* --- REALISTIC SMOKE TYPOGRAPHY --- */
+.content-title {
+  font-size: 62px;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Individual letter styling for the smoke effect */
+.content-title span {
+  display: inline-block;
+  will-change: filter, opacity, transform;
+}
+
+.content-desc {
+  font-size: 16px;
+  color: #666;
+  max-width: 480px;
+  margin-bottom: 50px;
+  line-height: 1.7;
+}
+
+/* --- ROADMAP PATH --- */
+.roadmap-path {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.path-line {
+  position: absolute;
+  left: 21px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  /* Gradient line looks cleaner than solid */
+  background: linear-gradient(to bottom, #1a1a1a 0%, rgba(0,0,0,0.05) 100%);
+}
+
+.roadmap-step {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  transition: transform 0.3s ease;
+}
+
+/* Step Hover Effect */
+.roadmap-step:hover {
+  transform: translateX(10px);
+}
+
+.step-dot {
+  min-width: 42px;
+  height: 42px;
+  background: #1a1a1a;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 14px;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+
+
+/* icons animation
+
+
+/* This controls how long the user has to scroll to finish the animation */
+.stack-wrapper {
+  height: 500vh; /* Long scroll to handle the "stays visible" stacking */
+}
+
+.stack-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.stack-physics-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.stack-icon-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 55px;
+  height: 55px;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  color: #111;
+  margin-left: -27px; /* Center alignment adjustment */
+  margin-top: -27px;
+}
+
+/* --- THE STACKING LOGIC --- */
+.stack-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Space between the stacked lines */
+  align-items: center;
+}
+
+.stack-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stack-num {
+  font-size: 72px; /* Slightly smaller to fit 3 lines on screen */
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0;
+  letter-spacing: -3px;
+  line-height: 1;
+}
+
+.stack-sub {
+  font-size: 18px;
+  font-weight: 600;
+  color: #999;
+  margin-top: 5px;
+}

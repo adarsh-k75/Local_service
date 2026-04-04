@@ -1,0 +1,141 @@
+.footer-wrapper {
+  width: 100%;
+  margin-top: 80px;
+  /* Top-left curved boundary from your reference image */
+  border-top-left-radius: 120px;
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  color: #000;
+  padding: 80px 0 30px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 50px;
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 220px;
+}
+
+.footer-logo {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 25px;
+}
+
+.col-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+/* Styled underline with the moving block look */
+.title-underline {
+  width: 60px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.title-underline span {
+  width: 20px;
+  height: 100%;
+  background: #000;
+  position: absolute;
+  border-radius: 10px;
+}
+
+.footer-col p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.footer-nav-list {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-nav-list li {
+  margin-bottom: 12px;
+}
+
+.footer-nav-list a {
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+}
+
+/* Form Styling */
+.newsletter-input-group {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #000;
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+.newsletter-input-group input {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0 12px;
+  width: 100%;
+  color: #000;
+}
+
+.input-icon, .submit-arrow {
+  color: #000;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Social Icon Circles */
+.social-media-row {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icon-circle {
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.social-icon-circle:hover {
+  transform: translateY(-5px);
+}
+
+.footer-divider-line {
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 50px 0 20px;
+}
+
+.copyright-notice {
+  text-align: center;
+  font-size: 13px;
+  color: #444;
+}

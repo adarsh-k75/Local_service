@@ -284,14 +284,14 @@ class GoogleLoginAPIView(APIView):
 
         user, created = User.objects.get_or_create(
             email=email,
-            defaults={"username": email, "is_verified": True}
+            defaults={"username": email, "is_veryfied": True} 
         )
         if created and name:
             user.first_name = name
             user.save()
         if not user.role:
             user.role = role
-            user.is_verified = True
+            user.is_veryfied = True
             user.save()
         else:
             if user.role != role:

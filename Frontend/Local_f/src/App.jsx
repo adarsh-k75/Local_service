@@ -5,7 +5,6 @@ import './App.css'
 import  Register from './Account/Register'
 import Login from './Account/Login'
 import {Route,Routes} from "react-router-dom";
-import Home from './Customer_pages/Home'
 import Navbar from './Account/Navbar'
 import Profile from './Account/Profile'
 import MainLayout from './layouts/MainLayout'
@@ -31,6 +30,8 @@ import Provider_verification from './Admin_pages/Provider_verification'
 import Dashboard from './Admin_pages/Dashboard'
 import Email from './Account/Email'
 import Forget_reset from './Account/Forget_reset'
+import Homes from './Customer_pages/Home'
+import Fq from './Customer_pages/Fq'
 function App() {
 
   return (
@@ -52,7 +53,7 @@ function App() {
       </Route>
 
       <Route element={<MainLayout/>}>
-        <Route path="/" element={<Home/>}/>
+        <Route path="/" element={<Homes/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/Services" element={<Services_selecter/>}/>
         <Route path="/User_service/:catId/:subId" element={<User_services />} />
@@ -63,6 +64,8 @@ function App() {
         <Route path='/Booking/:id' element={<Booking_deatils />}/>
         <Route path='/Search/:query' element={<Search/>}/>
         <Route path='/addres_edit' element={<Address_edit/>}/>
+        <Route path='/fq' element={<Fq/>}/>
+
 
     </Route>
          <Route element={<Admin_nav/>}>
