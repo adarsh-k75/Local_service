@@ -23,8 +23,8 @@ import os
 from dotenv import load_dotenv
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
-
 load_dotenv()
+
 class RegisterLogic(APIView):
 
     def get(self, request):
@@ -77,7 +77,8 @@ class LoginLogic(APIView):
         refresh = RefreshToken.for_user(user)
         response = Response(
             {"message": "login successfully",
-              "role":user.role
+              "role":user.role,
+              "access": str(refresh.access_token),
              },
             status=status.HTTP_200_OK
         )

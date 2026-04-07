@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'User',
     'Services',
+    "Chat",
     "cloudinary",
     "cloudinary_storage",
     'Booking',
@@ -70,9 +71,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'rest_framework.authtoken',
     'allauth.socialaccount.providers.google',
-
+     
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    'drf_yasg',
+     "channels",
+     
 ]
 SITE_ID = 1
 
@@ -192,4 +196,11 @@ SOCIALACCOUNT_PROVIDERS = {
             "key": ""
         }
     }
+}
+ASGI_APPLICATION = "local_service.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
 }

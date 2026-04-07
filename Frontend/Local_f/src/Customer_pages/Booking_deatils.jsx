@@ -21,7 +21,7 @@ function Booking_deatils(){
    })
    .then((res)=>{
     setdata(res.data)
-    console.log("hello",res.data)
+    console.log(res.data)
    })
     api.get('profile/',{
       withCredentials:true
@@ -34,7 +34,6 @@ function Booking_deatils(){
     })
     .then((res)=>{
       setbill(res.data)
-      console.log(res.data)
     })
  },[])
    function update(status){
@@ -92,7 +91,10 @@ function Booking_deatils(){
   const rzp = new window.Razorpay(options);
   rzp.open();
 };
+   function Chates(id){
+    naigater(`/chat/${id}`)
 
+   }
 
 return(<>
 <div className="details-page-wrapper">
@@ -150,7 +152,6 @@ return(<>
 
     <div className="divider"></div>
 
-    {/* 💰 Payment Section */}
     <section className="details-section">
       <div className="section-title">
         <span className="icon">💰</span>
@@ -176,12 +177,15 @@ return(<>
           </button>
         )}
       </div>
+        <button onClick={()=>Chates(data.provider_details?.id)} >Chat</button>
     </section>
   </div>
    )}
     {user?.role === "provider" && (
   <div className="pv-container fade-in">
     {/* --- Header Section --- */}
+       <button onClick={()=>Chates(data.user)}>chat</button>
+
     <div className="pv-header-card">
       <div className="pv-client-info">
         <div className="pv-avatar-small">{data.user_name?.charAt(0)}</div>
@@ -261,11 +265,13 @@ return(<>
             <button type='submit' className="pv-btn pv-btn-primary">
               Complete Service & Send Bill
             </button>
+            
           </form>
         </div>
       )}
     </div>
   </div>
+
 )}
 </div>
 </>)

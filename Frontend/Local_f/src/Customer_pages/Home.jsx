@@ -124,7 +124,7 @@ const [isSplit, setIsSplit] = useState(false);
             <span className="line-animation line-3">For Your Home</span>
           </h1>
           <div className="rating">
-            <span className="stars">★★★★★</span>
+          <span className="stars">★★★★★</span> 
             <span className="reviews">5.0 (2.7k Reviews)</span>
           </div>
         </div>
@@ -237,11 +237,10 @@ const [isSplit, setIsSplit] = useState(false);
 
     {/* RIGHT SIDE: Roadmap Content */}
 
- <div ref={containerRef} className="stack-wrapper">
+    {/*<div ref={containerRef} className="stack-wrapper">
       <div className="stack-sticky">
         
-        {/* BOUNCING ICONS LAYER */}
-        <div className="stack-physics-bg">
+        <div className="stack-physics-bg"> 
           {iconsList.map((item, i) => (
             <BouncingIcon 
               key={i} 
@@ -252,10 +251,8 @@ const [isSplit, setIsSplit] = useState(false);
           ))}
         </div>
 
-        {/* THE STACKING TEXT (No Vanishing) */}
         <div className="stack-content">
           
-          {/* Headline 1: Visible immediately after split */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: isSplit ? 1 : 0 }}
@@ -265,7 +262,6 @@ const [isSplit, setIsSplit] = useState(false);
             <p className="stack-sub">Services and Providers</p>
           </motion.div>
 
-          {/* Headline 2: Slides in and joins the stack */}
           <motion.div 
             style={{ y: text2Y, opacity: text2Opacity }} 
             className="stack-item"
@@ -274,7 +270,6 @@ const [isSplit, setIsSplit] = useState(false);
             <p className="stack-sub">Trust Users..</p>
           </motion.div>
 
-          {/* Headline 3: Slides in and joins the stack */}
           <motion.div 
             style={{ y: text3Y, opacity: text3Opacity }} 
             className="stack-item"
@@ -286,7 +281,7 @@ const [isSplit, setIsSplit] = useState(false);
         </div>
       </div>
     </div>
-
+     */}
     </>
   );
 }
@@ -338,5 +333,6 @@ const BouncingIcon = ({ Icon, index, isSplit }) => {
     </motion.div>
   );
 };
+
 
 export default Homes

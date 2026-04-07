@@ -32,6 +32,7 @@ import Email from './Account/Email'
 import Forget_reset from './Account/Forget_reset'
 import Homes from './Customer_pages/Home'
 import Fq from './Customer_pages/Fq'
+import ChatPage from './Chat/ChatPage'
 function App() {
 
   return (
@@ -49,7 +50,7 @@ function App() {
         <Route path="/profile_edit" element={<Profile_edit/>}/>
         <Route path='/email' element={<Email/>}/>
         <Route path='/forget_reset/:uid/:token' element={<Forget_reset/>}/>
-
+        <Route path='/chat/:id' element={<ChatPage/>}/>
       </Route>
 
       <Route element={<MainLayout/>}>

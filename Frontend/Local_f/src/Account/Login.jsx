@@ -31,6 +31,7 @@ let [role,setrole]=useState("")
             withCredentials:true
         })
         .then((res)=>{
+           localStorage.setItem("access_token", res.data.access);
           if (res.data.role=='admin'){
              nav('/dashboard')
           }else{
