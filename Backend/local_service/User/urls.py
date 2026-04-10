@@ -13,7 +13,6 @@ urlpatterns = [
     path("verify-email/<uidb64>/<token>/", views.VerifyEmail.as_view()),
     path("UserProfile/",views.Profileaddres.as_view()),
     
-
     path('google-login/', views.GoogleLoginAPIView.as_view()),
 
     path('forgot-password/', views.Forgett_password.as_view()),

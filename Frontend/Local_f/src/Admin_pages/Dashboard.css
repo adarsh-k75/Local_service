@@ -1,0 +1,139 @@
+.dashboard-wrapper {
+  padding: 40px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+}
+
+.stat-card {
+  /* Glassmorphism Effect */
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  
+  padding: 30px;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.03);
+}
+
+.stat-icon-box {
+  width: 60px;
+  height: 600px; /* Big height to ensure the man image scale is consistent if used elsewhere, but here we cap it */
+  max-height: 60px;
+  background: #fff;
+  color: #000;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+}
+
+.stat-info .stat-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-number {
+  margin: 5px 0 0 0;
+  font-size: 32px;
+  font-weight: 900; /* Big Black Text style */
+  color: #000;
+  line-height: 1;
+}
+
+/* Optional: Subtle glow for the icons */
+.stat-card:nth-child(1) .stat-icon-box { color: #3498db; }
+.stat-card:nth-child(2) .stat-icon-box { color: #e67e22; }
+.stat-card:nth-child(3) .stat-icon-box { color: #2ecc71; }
+.stat-card:nth-child(4) .stat-icon-box { color: #9b59b6; }
+
+
+
+.graph-card-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 30px;
+  
+  /* Glassmorphism Effect */
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.03);
+}
+
+.graph-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.graph-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #000; /* Project Font Color */
+  margin: 0;
+}
+
+/* Custom react-icons Legend Styling */
+.custom-legend {
+  display: flex;
+  gap: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #000; /* Black Font */
+}
+
+.legend-item.cyan span { color: rgb(0, 200, 200); }
+.legend-item.purple span { color: rgb(130, 80, 240); }
+.legend-item.yellow span { color: rgb(240, 200, 0); }
+
+.legend-item span {
+    color: #444; /* Fallback slightly lighter black for legend labels */
+}
+
+/* Color override for react-icons FaCircle */
+.legend-item.cyan svg { color: rgb(0, 220, 220); }
+.legend-item.purple svg { color: rgb(140, 90, 250); }
+.legend-item.yellow svg { color: rgb(250, 220, 0); }
+
+
+.chart-container {
+  width: 100%;
+  height: 350px; /* Matching the relative size from the reference image */
+  position: relative;
+}

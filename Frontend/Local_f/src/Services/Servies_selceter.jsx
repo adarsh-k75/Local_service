@@ -143,7 +143,6 @@ return (
             placeholder="Price (₹)"
             className="login-input"
             onChange={handleInputChange}
-            required
           />
           <input
             type="number"

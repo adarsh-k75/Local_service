@@ -73,9 +73,10 @@ function Address_edit(){
         toast.error(err.response?.data?.error||"Something went wrong")
       });
 
-    }, (error) => {
-      console.error("Location error:", error);
-      alert("Please allow location access");
+    }, 
+    
+    (error) => {
+      toast.error("Please allow location access");
     });
   }
 

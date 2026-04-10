@@ -69,7 +69,7 @@ class LoginLogic(APIView):
                 {"error": "invalid username or password"},
                 status=status.HTTP_401_UNAUTHORIZED
             )
-        if not user.is_veryfied:
+        if user.role == "customer" and not user.is_veryfied:
             return Response(
                 {"error": "Please verify your email first"},
                 status=status.HTTP_403_FORBIDDEN

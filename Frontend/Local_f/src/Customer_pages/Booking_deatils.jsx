@@ -177,7 +177,7 @@ return(<>
           </button>
         )}
       </div>
-        <button onClick={()=>Chates(data.provider_details?.id)} >Chat</button>
+        <button onClick={()=>Chates(data.provider_details?.provider)} >Chat</button>
     </section>
   </div>
    )}

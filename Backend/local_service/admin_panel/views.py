@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from User.models import Register,UserProfile
 from Booking.models import Booking
 from Booking.serlization import Bokkingserliazer
-
+from Services.models import Service
 
 
 from .serliazer import Userserlizer
@@ -62,6 +62,20 @@ class Provider_booking(APIView):
              return Response({"error":"no booking"})
          selizer=Bokkingserliazer(booking,many=True)
          return Response(selizer.data,status=status.HTTP_200_OK)
+    
+class Countes(APIView):
+    def get(self,request):
+        total_users=Register.objects.filter(role="customer").count()
+        total_provider=Register.objects.filter(role="provider").count()
+        total_services=Service.objects.count()
+        total_booking=Booking.objects.count()
+        return Response({"total_users":total_users,
+                           "toatl_provider":total_provider,
+                           "toatl_services":total_services,
+                           "toatl_booking":total_booking
+                         },status=status.HTTP_200_OK)
+
+
     
 
 

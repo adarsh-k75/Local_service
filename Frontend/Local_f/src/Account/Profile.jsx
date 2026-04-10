@@ -79,7 +79,8 @@ function Profile(){
       withCredentials:true
      })
      .then((res)=>{
-       alert("profile data completed")
+      toast.success("Profile Set Sucessfuly")
+      window.location.reload();
      })
 
   })
@@ -151,7 +152,6 @@ function Profile(){
           </div>
         </aside>
 
-        {/* Right: Bookings Feed */}
         <main className="profile-content-feed">
           <h2 className="feed-title">My Recent Bookings</h2>
           <div className="notifications-container">
@@ -267,7 +267,6 @@ function Profile(){
                 <div className="skill-item-card fade-in" key={index}>
                   <div className="skill-img-box">
                     <img src={data.work_image_url} alt="work" />
-                    <span className="price-tag">₹{data.price}</span>
                   </div>
                   <div className="skill-text-box">
                     <h3>{data.service_name.name}</h3>

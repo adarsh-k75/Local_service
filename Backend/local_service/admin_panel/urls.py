@@ -8,5 +8,7 @@ urlpatterns = [
     path("All_provider/",views.Allprovider.as_view()),
     path("verfication/<int:id>/",views.verify_id.as_view()),
     path("provider_request/<int:id>/",views.Provider_booking.as_view()),
+    path("Dashboarc_count/",views.Countes.as_view()),
+
 
 ]

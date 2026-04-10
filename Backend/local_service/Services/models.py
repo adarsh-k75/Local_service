@@ -13,7 +13,7 @@ class Service(models.Model):
 class ProviderService(models.Model):
     provider = models.ForeignKey(Register, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.DecimalField(max_digits=8, decimal_places=2 ,blank=True,null=True)
     experience = models.PositiveIntegerField()
     work_image = CloudinaryField("image")
     description = models.TextField(blank=True)

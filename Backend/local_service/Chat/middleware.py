@@ -35,7 +35,6 @@ class JWTAuthMiddleware:
 
             # decode JWT token
             access_token = AccessToken(token)
-            print("ashin",access_token)
             # get user_id from token payload
             user_id = access_token["user_id"]
 
