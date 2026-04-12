@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from .serlization import NotificationSerializer
 from .models import Notfication
 from django.db.models import Q
+from  Chat.models import Message
 class Bookingview(APIView):
     permission_classes=[IsAuthenticated]
     authentication_classes=[CookieJWTAuthentication]
@@ -42,10 +43,21 @@ class Unread_count(APIView):
     permission_classes=[IsAuthenticated]
     authentication_classes=[CookieJWTAuthentication]
     def get(self,request):
-        count=Notfication.objects.filter(
+        Request_count=Notfication.objects.filter(
             recipient=request.user,
                is_read=False).count()
-        return Response({"count":count})
+        
+        chat_count = Message.objects.filter(
+            receiver=request.user,
+            is_read=False
+        ).count()
+
+        total = Request_count + chat_count
+
+        return Response({"count":total,
+                         "request_count":Request_count,
+                          "chat_count" :chat_count
+                         })
     
 class Mark_read(APIView):
     permission_classes=[IsAuthenticated]
@@ -58,5 +70,16 @@ class Mark_read(APIView):
       return Response({"message": "done"})
 
 
+class MarkChatRead(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CookieJWTAuthentication]
 
+    def post(self, request, user_id):
+        Message.objects.filter(
+            sender_id=user_id,
+            receiver=request.user,
+            is_read=False
+        ).update(is_read=True)
+
+        return Response({"message": "chat read"})
      

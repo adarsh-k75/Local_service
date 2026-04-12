@@ -26,7 +26,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 load_dotenv()
 
 class RegisterLogic(APIView):
-
+    
     def get(self, request):
         users = Register.objects.all()
         serializer = CustomerSerlization(users, many=True)
@@ -38,10 +38,8 @@ class RegisterLogic(APIView):
         if serializer.is_valid():
             user = serializer.save()
             uid = urlsafe_base64_encode(force_bytes(user.id))
-            token = email_token_generator.make_token(user)
-
-            verification_link = f"http://localhost:8000/api/verify-email/{uid}/{token}/"
-
+            token = email_token_generator.make_token(user)    
+            verification_link = f"http://localhost:8000/api/verify-email/{uid}/{token}/"    
             send_mail(
                 "Verify your Email",
                 f"Click this link to verify your email:\n{verification_link}",
@@ -78,6 +76,7 @@ class LoginLogic(APIView):
         response = Response(
             {"message": "login successfully",
               "role":user.role,
+               "user":user.username,
               "access": str(refresh.access_token),
              },
             status=status.HTTP_200_OK
@@ -147,6 +146,7 @@ class Logout(APIView):
         )
         response.delete_cookie("access_token")
         response.delete_cookie("refresh_token")
+
         return response
 
 

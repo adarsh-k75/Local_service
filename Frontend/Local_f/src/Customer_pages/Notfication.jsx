@@ -12,6 +12,7 @@ function Notfication(){
     })
     .then((res) => {
       setNotifications(res.data);
+      console.log(res.data)
     })
     .catch((err) => {
       console.log(err);
@@ -60,6 +61,7 @@ function Notfication(){
               {/* Body */}
               <div className="card-body">
                 <div className="status-text">
+                  <p>{n.sender_name}</p>
                   <p>{n.message}</p>
                 </div>
 

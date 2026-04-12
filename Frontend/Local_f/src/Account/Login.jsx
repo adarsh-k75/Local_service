@@ -6,8 +6,10 @@ import { Link } from "react-router-dom"
 import { toast } from "react-toastify";
 import api from "../api/axios"
 import { GoogleLogin } from "@react-oauth/google";
-
+import { AuthContext } from "./Authcontext"
+import { useContext } from "react"
 function Login(){
+  let {setUser}=useContext(AuthContext)
 let [role,setrole]=useState("")
     const nav = useNavigate()
    
@@ -32,6 +34,8 @@ let [role,setrole]=useState("")
         })
         .then((res)=>{
            localStorage.setItem("access_token", res.data.access);
+           setUser("login hi",res.data.user)
+           console.log(res.data.user)
           if (res.data.role=='admin'){
              nav('/dashboard')
           }else{

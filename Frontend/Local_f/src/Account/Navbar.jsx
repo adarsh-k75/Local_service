@@ -4,41 +4,52 @@ import { useState ,useEffect} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios"
-
+ import { AuthContext } from "./Authcontext";
+ import { useContext } from "react";
 function Navbar() {
+  let {user}=useContext(AuthContext)
   let navigate = useNavigate();
   let [Count, setCount] = useState(0);
-  const [name, setname] = useState(null);
   const [inputs,setinputs]=useState("")
-
+  let [notificationCount, setNotificationCount] = useState(0);
+  let [chatCount, setChatCount] = useState(0);
+   
   useEffect(() => {
-    // Fetch User Profile
-    axios.get("http://localhost:8000/api/Navbar/", {
+    
+       
+     axios.get("http://localhost:8000/api/unread-count/", {
       withCredentials: true
     })
-    .then((res) => {
-      setname(res.data);
+    .then((res) => {setNotificationCount(res.data.request_count),
+                    setChatCount(res.data.chat_count)
     })
     .catch((err) => console.log(err));
 
-    // Fetch Notification Count
-    axios.get('http://localhost:8000/api/unread-count/', {
-      withCredentials: true
-    })
-    .then((res) => {
-      setCount(res.data.count);
-    })
-    .catch((err) => console.log(err));
 
       
   }, []);
+
+
+  useEffect(() => {
+  const socket = new WebSocket("ws://127.0.0.1:8000/ws/notifications/");
+
+  socket.onmessage = (e) => {
+    const data = JSON.parse(e.data);
+
+    if (data.type === "count_update") {
+      setChatCount(data.count);
+    }
+  };
+
+  return () => socket.close();
+}, []);
 
   function countrest() {
     api.post('mark-read/',{},{
       withCredentials:true
     })
     .then((res)=>{
-      setCount(0)
+      setNotificationCount(0)
       navigate('/notfication');
     })
     
@@ -49,6 +60,9 @@ function Navbar() {
       if (!inputs.trim()) return
        navigate(`/Search/${inputs}`)
     }
+
+    const count=notificationCount + chatCount;
+    console.log("toatal",count)
 
   return (
     <nav className="navbar-container">
@@ -81,19 +95,19 @@ function Navbar() {
           {/* Notification Icon with Floating Badge */}
           <div onClick={countrest} className="notification-wrapper" title="Notifications">
             <span className="bell-icon">🔔</span>
-            {Count > 0 &&(
-              <span className="notification-badge">{Count}</span>
+            {user && count > 0 &&(
+              <span className="notification-badge">{count}</span>
             )}
           </div>
 
           {/* User Profile / Login Div-Button */}
-          {name ? (
+          {user?(
             <div className="nav-right">
               <div 
                 onClick={() => navigate('/profile')} 
                 className="user-div-btn"
               >
-                👤 Hi {name.username}
+                👤 Hi 
               </div>
             </div>
           ) : (

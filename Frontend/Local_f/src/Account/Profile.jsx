@@ -4,9 +4,11 @@ import { data, useNavigate } from "react-router-dom"
 import { useFetcher } from "react-router-dom"
 import api from "../api/axios"
 import { toast } from "react-toastify";
-
+import { useContext } from "react"
+import { AuthContext } from "./Authcontext"
 import './Profile.css'
 function Profile(){
+  let {setUser}=useContext(AuthContext)
   let Navigater = useNavigate();
 
   let [profile, setprofile] = useState({});
@@ -50,12 +52,14 @@ function Profile(){
   }, []);
 
   function Logout() {
+    
     axios.post("http://localhost:8000/api/logout/", {}, {
       withCredentials: true
     })
     .then(() => {
+      setUser(null)
+      localStorage.removeItem("access_token");
       Navigater('/');
-      window.location.reload();
     });
   }
   function onchangeinput(e){

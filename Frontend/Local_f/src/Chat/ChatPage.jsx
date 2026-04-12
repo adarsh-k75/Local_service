@@ -23,7 +23,6 @@ export default function ChatPage() {
     })
     .then((response) => {
       setMessages(response.data.messages);   
-      console.log(response.data.messages)
       setCurrentUserId(response.data.current_user);
     });
 
@@ -34,7 +33,13 @@ export default function ChatPage() {
 
     socketRef.current.onmessage = (e) => {
       const data = JSON.parse(e.data);
-      setMessages((prev) => [...prev, data]);
+      
+  setMessages((prev) => {
+    const exists = prev.some(m => m.id === data.id);
+    if (exists) return prev;
+
+    return [...prev, data];
+  });
     };
 
     return () => socketRef.current.close();

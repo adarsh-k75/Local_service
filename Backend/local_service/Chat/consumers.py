@@ -18,6 +18,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_name,
             self.channel_name
         )
+        self.user_group = f"user_{self.user.id}"
+        await self.channel_layer.group_add(
+        self.user_group,
+        self.channel_name
+         )
 
         await self.accept()
 
@@ -55,9 +60,61 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }
         )
 
+        unread_count = await sync_to_async(Message.objects.filter(
+            receiver_id=self.receiver_id,
+            is_read=False
+        ).count)()
+
+        await self.channel_layer.group_send(
+            f"user_{self.receiver_id}",
+            {
+                "type": "chat_count_update",
+                "count": unread_count
+            }
+        )
+
     async def chat_message(self, event):
         await self.send(text_data=json.dumps({
             "message": event["message"],
             "sender": event["sender"],
             "sender_id": event["sender_id"],
+        }))
+
+    async def chat_count_update(self, event):
+     await self.send(text_data=json.dumps({
+        "type": "count_update",
+        "count": event["count"]
+    }))
+     
+
+class NotificationConsumer(AsyncWebsocketConsumer):
+
+    async def connect(self):
+        self.user = self.scope["user"]
+
+        if self.user.is_anonymous:
+            await self.close()
+            return
+
+        # 🔥 personal room
+        self.room_name = f"user_{self.user.id}"
+
+        await self.channel_layer.group_add(
+            self.room_name,
+            self.channel_name
+        )
+
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        if hasattr(self, "room_name"):   # ✅ prevent crash
+            await self.channel_layer.group_discard(
+                self.room_name,
+                self.channel_name
+            )
+
+    async def chat_count_update(self, event):
+        await self.send(text_data=json.dumps({
+            "type": "count_update",
+            "count": event["count"]
         }))

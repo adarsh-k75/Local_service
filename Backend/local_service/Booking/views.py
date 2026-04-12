@@ -40,12 +40,14 @@ class BookingView(APIView):
         if serializer.is_valid():
             booking = serializer.save(user=request.user)  # ✅ FIXED
             Notfication.objects.create(
+                sender=booking.provider.provider,
                 recipient=booking.user,
                 message="Your booking has been placed",
                 related_booking=booking
             )
 
             Notfication.objects.create(
+                sender=booking.user,
                 recipient=booking.provider.provider,
                 message="You received a new booking",
                 related_booking=booking
