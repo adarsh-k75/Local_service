@@ -7,10 +7,12 @@ import { toast } from "react-toastify";
 import { useContext } from "react"
 import { AuthContext } from "./Authcontext"
 import './Profile.css'
+import Loading from "../Loading/Loading"
 function Profile(){
   let {setUser}=useContext(AuthContext)
   let Navigater = useNavigate();
-
+  const [isloading, setisloading] = useState(false);
+const [profileImage, setProfileImage] = useState(null);
   let [profile, setprofile] = useState({});
   let [services, setservices] = useState([]);
   let [bookinview, setbookingview] = useState([]);
@@ -70,15 +72,20 @@ function Profile(){
       e.preventDefault();
   navigator.geolocation.getCurrentPosition((position)=>{
        
-      let newdata=new FormData()
+     let newdata=new FormData()
      newdata.append("address",inputs.address)
      newdata.append("pincode",inputs.pincode)
      newdata.append("phone",inputs.phone)
      newdata.append("id_card",images)
-     newdata.append("id_card",images)
      newdata.append("latitude", position.coords.latitude);
      newdata.append("longitude", position.coords.longitude);
 
+      if (profileImage) {
+      newdata.append("profile_image", profileImage);
+    }
+
+        
+     setLoading(true)
      api.post("UserProfile/",newdata,{
       withCredentials:true
      })
@@ -86,14 +93,17 @@ function Profile(){
       toast.success("Profile Set Sucessfuly")
       window.location.reload();
      })
-
+      .finally(()=>{
+        setLoading(false)
+      })
   })
   
 
   }
    
 
-  return (
+  return (<>
+  {isloading && <loading/>}
    <div className="profile-page-wrapper">
   <div className="profile-container">
 
@@ -142,6 +152,12 @@ function Profile(){
                 <input onChange={onchangeinput} type="text" name="address" placeholder="Address" className="glass-input"/>
                 <input onChange={onchangeinput} type="text" name="phone" placeholder="Phone number" className="glass-input"/>
                 <input onChange={onchangeinput} type="text" name="pincode" placeholder="Pincode" className="glass-input"/>
+                <input
+                  type="file"
+                  onChange={(e) => setProfileImage(e.target.files[0])}
+                  className="glass-file-input"
+                 />
+
                 <button type="submit" className="save-btn">Update Details</button>
               </form>
               )}
@@ -246,6 +262,12 @@ function Profile(){
                     <input onChange={onchangeinput} type="text" name="phone" placeholder="Contact" className="glass-input"/>
                    <input onChange={onchangeinput} type="text" name="pincode" placeholder="Pincode" className="glass-input"/>
                    <div className="file-upload-wrapper">
+                       <input
+                        type="file"
+                        onChange={(e) => setProfileImage(e.target.files[0])}
+                        className="glass-file-input"
+                        />
+
                       <label className="file-label">ID Verification</label>
                       <input onChange={(e)=>setimage(e.target.files[0])} type="file" className="glass-file-input"/>
                    </div>
@@ -288,7 +310,7 @@ function Profile(){
     )}
   </div>
 </div>
-  );
+  </>);
 }
 
 export default Profile

@@ -22,6 +22,13 @@ class UserProfile(models.Model):
     pincode = models.CharField(max_length=6, blank=True, null=True)
     latitude = models.FloatField(null=True, blank=True)  
     longitude = models.FloatField(null=True, blank=True)
+    is_online = models.BooleanField(default=False)
+    last_seen = models.DateTimeField(null=True, blank=True)
+    Bio =models.ImageField(upload_to="provider_profiles/", blank=True, null=True)
+
+
+
+
 
     
    

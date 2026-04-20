@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import api from "../api/axios"
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { FaCommentDots } from 'react-icons/fa'; 
 function Booking_deatils(){
   let naigater=useNavigate()
  let [data,setdata]=useState({})
@@ -96,7 +97,44 @@ function Booking_deatils(){
 
    }
 
+const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 2000);
+
+    return () => clearTimeout(timer); // Cleanup timer on unmount
+  }, []);
+
+
+
 return(<>
+   {isVisible && (
+      <div className="chat-button-container fade-in-up">
+
+         {user?.role==="customer"?(
+           <button 
+          className="chat-fab" 
+          onClick={() => Chates(data.provider_details?.provider)}
+        >
+          <FaCommentDots size={28} />
+        </button>
+
+         ):(
+           <button 
+          className="chat-fab" 
+          onClick={() => Chates(data.user)}
+        >
+          <FaCommentDots size={28} />
+        </button>
+
+         )}
+        
+
+
+      </div>
+    )}
 <div className="details-page-wrapper">
 
    {user?.role==="customer"&&(
@@ -110,7 +148,7 @@ return(<>
       </div>
       <div className="provider-profile">
         <img 
-          src={data.provider?.profile_image || "/default-avatar.png"} 
+          src={data.provider_details?.work_image_url || "/default-avatar.png"} 
           alt="provider" 
           className="details-img"
         />
@@ -177,14 +215,12 @@ return(<>
           </button>
         )}
       </div>
-        <button onClick={()=>Chates(data.provider_details?.provider)} >Chat</button>
     </section>
   </div>
    )}
     {user?.role === "provider" && (
   <div className="pv-container fade-in">
     {/* --- Header Section --- */}
-       <button onClick={()=>Chates(data.user)}>chat</button>
 
     <div className="pv-header-card">
       <div className="pv-client-info">

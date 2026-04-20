@@ -3,10 +3,13 @@ import api from "../api/axios"
 import './Service.css'
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Loading/Loading";
 function Services_selecter(){
   let naviagter=useNavigate()
 const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+      const [isloading, setisloading] = useState(false);
+
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
@@ -74,7 +77,7 @@ const [categories, setCategories] = useState([]);
   data.append("experience", formData.experience);
   data.append("description", formData.description);
   data.append("work_image", file);
-
+   setisloading(true)
   api.post("ProviderServices/", data, {
     withCredentials: true,
   })
@@ -85,14 +88,19 @@ const [categories, setCategories] = useState([]);
   })
   .catch((err) => {
     toast.error("ERROR:", err.response?.data?.error);
-  });
+  })
+
+  .finally(()=>{
+    setisloading(false)
+  })
+  
 
   }
 
 
 
-return (
-
+return (<>
+        {isloading && <Loading />}
 <div className="add-service-wrapper">
   <div className="service-card">
     <div className="service-header">
@@ -179,6 +187,7 @@ return (
     )}
   </div>
 </div>
+</>
   );
 
 }

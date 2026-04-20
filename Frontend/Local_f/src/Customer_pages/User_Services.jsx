@@ -7,6 +7,9 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { toast } from "react-toastify"
 import { useParams } from "react-router-dom"
+import RadarLoader from "../mapping/Mapping"
+import { FaCommentDots } from 'react-icons/fa'; 
+import { useNavigate } from "react-router-dom"
 function  User_services(){
   let {catId,subId}=useParams()
   let [Catagery,setCatgery]=useState([])
@@ -19,7 +22,10 @@ function  User_services(){
  let [hour,setHour]=useState("")
  let [minute,setMinute]=useState("")
  let [ampm,setAmpm]=useState("")
+let navigater=useNavigate()
+let [imageshow,setimage_show]=useState(null)
 
+const [isSearching, setIsSearching] = useState(false);
  function convertTo24Hour(hour, minute, ampm){
   let h = parseInt(hour)
 
@@ -49,10 +55,10 @@ function  User_services(){
     booking_time:formattedTime
   },{withCredentials:true})
   .then((res)=>{
-    alert("Booking Successful")
+    toast.success("Booking Successful")
   })
   .catch((err)=>{
-    alert(err.response?.data?.error || "Error")
+    toast.error(err.response?.data?.error || "Error")
   })
  }
 
@@ -71,9 +77,12 @@ function  User_services(){
 
         if (subId) {
           idsetprovider(subId);
-
           api.get(`user_provider_view/${subId}/`)
-            .then((res) => setprovider(res.data));
+            .then((res) => setprovider(res.data))
+            .catch((err)=>{
+                console.log("provider no")
+            });
+           
         }
       ;
   }
@@ -90,6 +99,9 @@ function  User_services(){
 
  function provider(P){
   idsetprovider(P)
+  setIsSearching(true)
+    const startTime = Date.now();
+
   api.get(`user_provider_view/${P}/`)
   .then((res)=>{
     setprovider(res.data)
@@ -97,12 +109,55 @@ function  User_services(){
   .catch((err)=>{
      toast.error(err.response?.data?.error|| "Something went wrong")
   })
+  
+    .finally(()=>{
+      const elapsed = Date.now() - startTime;
+      const remainingTime = Math.max(0, 1500 - elapsed);
+              setTimeout(() => {
+        setIsSearching(false);
+      },remainingTime);
+     })
  }
 
+  function Chates(id){
+    navigater
+    (`/chat/${id}`)
+
+   }
+
  return(
+  <>
+         {isSearching && <RadarLoader/>}
+
+        
  <div className="marketplace-container">
 
-  
+      
+    {imageshow&& (
+  <div 
+    className="image-modal-overlay" 
+    onClick={() => setimage_show(null)}
+  >
+    <div 
+      className="image-modal-content" 
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button 
+        className="close-modal-btn" 
+        onClick={() => setimage_show(null)}
+      >
+        ×
+      </button>
+
+      <img 
+        src={imageshow} 
+        alt="Work proof" 
+        className="big-image-view"
+      />
+    </div>
+  </div>
+)}
+
   
   <div className="section-block">
     <h2 className="marketplace-title">Select a Category</h2>
@@ -144,12 +199,17 @@ function  User_services(){
       <div className="provider-results-grid">
         {Provider.length> 0?(
           <>
+          
            {Provider.map((data)=>(
           <div className="provider-glass-card" key={data.id}>
+              
+            
 
             <div className="provider-img-box">
-              <img src={data.work_image_url} alt="work"/>
-              <div className="price-badge">₹{data.price}</div>
+              <img onClick={()=>setimage_show(data.work_image_url)} src={data.work_image_url} alt="work"/>
+                 
+
+              <div onClick={()=>Chates(data.provider)} className="price-badge"><FaCommentDots size={25}/></div>
             </div>
 
             <div className="provider-content">
@@ -229,6 +289,7 @@ function  User_services(){
   )}
 
  </div>
+ </>
  )
 }
 

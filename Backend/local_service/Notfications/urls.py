@@ -8,5 +8,5 @@ urlpatterns = [
     path('notifications/', views.Notfications.as_view()),
     path('unread-count/', views.Unread_count.as_view()),
     path('mark-read/', views.Mark_read.as_view()),
-    path("mark_read_chat/" ,views.MarkChatRead.as_view())
+    path("mark_read_chat/<int:user_id>" ,views.MarkChatRead.as_view())
 ]

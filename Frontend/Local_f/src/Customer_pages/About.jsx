@@ -1,9 +1,10 @@
 
 import './About.css'
+import Loading from '../Loading/Loading'
+import { useState ,useEffect} from 'react';
 function About(){
-
+  
     return(
-
         <div className="about-page-wrapper">
   {/* Hero Section */}
   <section className="about-hero">

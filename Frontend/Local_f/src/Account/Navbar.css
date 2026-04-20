@@ -140,3 +140,16 @@ body {
   background: #1a1a1a;
   color: #fff;
 }
+
+/* Center icons vertically with text */
+.search-icon, .bell-icon, .user-div-btn svg {
+  vertical-align: middle;
+  display: inline-flex;
+  margin-right: 8px; /* Adds space between icon and text */
+}
+
+/* Ensure the wrapper handles the flex layout */
+.search-wrapper, .user-div-btn {
+  display: flex;
+  align-items: center;
+}

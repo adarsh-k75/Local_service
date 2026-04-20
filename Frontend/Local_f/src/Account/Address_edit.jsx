@@ -3,9 +3,10 @@ import api from "../api/axios"
 import './Address_edit.css'
 import { useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";
-
+import Loading from "../Loading/Loading";
 function Address_edit(){
   let naviagter=useNavigate()
+  const [isloading, setisloading] = useState(false);
  const [inputs, setinputs] = useState({
     phone: "",
     address: "",
@@ -59,7 +60,7 @@ function Address_edit(){
 
       formData.append("latitude", position.coords.latitude);
       formData.append("longitude", position.coords.longitude);
-
+      setisloading(true)
       api.patch("UserProfile/", formData, {
         withCredentials: true
       })
@@ -71,7 +72,12 @@ function Address_edit(){
       })
       .catch((err) => {
         toast.error(err.response?.data?.error||"Something went wrong")
-      });
+      })
+
+      .finally(()=>{
+          setisloading(false)
+      })
+
 
     }, 
     
@@ -80,7 +86,8 @@ function Address_edit(){
     });
   }
 
-  return (
+  return (<>
+   {isloading && <Loading/>}
    <div className="update-profile-wrapper fade-in">
   <div className="update-glass-card">
     <div className="update-header">
@@ -151,6 +158,7 @@ function Address_edit(){
     </form>
   </div>
 </div>
+</>
   );
 }
 export default Address_edit

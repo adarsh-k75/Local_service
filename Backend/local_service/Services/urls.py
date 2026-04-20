@@ -8,5 +8,8 @@ urlpatterns = [
     path("ProviderServices/",views.ProviderServices.as_view()),
     path("user_provider_view/<int:id>/",views.Get_near_provider.as_view()),
     path("search/",views.Search.as_view()),
-    path("Subservice/",views.Subservice_navbar.as_view())
+    path("Subservice/",views.Subservice_navbar.as_view()),
+    path('service_provider/',views.Service_provider.as_view())
+
+    
 ]

@@ -8,7 +8,7 @@ const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 import { AuthProvider } from './Account/Authcontext.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+ 
      <GoogleOAuthProvider clientId={clientId}>
          <BrowserRouter>
      <AuthProvider>
@@ -17,5 +17,4 @@ createRoot(document.getElementById('root')).render(
        
     </BrowserRouter >
      </GoogleOAuthProvider>
-  </StrictMode>,
 )

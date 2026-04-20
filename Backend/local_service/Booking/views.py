@@ -10,6 +10,8 @@ from Notfications.models import Notfication
 from rest_framework.exceptions import PermissionDenied
 from .models import Bill
 from User.models import UserProfile
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 class BookingView(APIView):
     permission_classes = [IsAuthenticated]
@@ -24,6 +26,10 @@ class BookingView(APIView):
 
         if not profile or not profile.phone or not profile.address or not profile.pincode:
             return Response({"error": "Complete your profile first"}, status=400)
+        
+        if request.user.role=="provider":
+            print("hello",request.user.role)
+            return Response({"error":"User can  only book"},status=status.HTTP_400_BAD_REQUEST)
 
         exist = Booking.objects.filter(
             provider=provider,
@@ -34,28 +40,83 @@ class BookingView(APIView):
 
         if exist:
             return Response({"error": "slot already booked"}, status=status.HTTP_400_BAD_REQUEST)
-
+        
         serializer = Bokkingserliazer(data=request.data)
 
         if serializer.is_valid():
-            booking = serializer.save(user=request.user)  # ✅ FIXED
-            Notfication.objects.create(
+            booking = serializer.save(user=request.user)  
+            channel_layer = get_channel_layer()
+
+            user_notification =Notfication.objects.create(
                 sender=booking.provider.provider,
                 recipient=booking.user,
                 message="Your booking has been placed",
                 related_booking=booking
             )
+            
+            async_to_sync(channel_layer.group_send)(
+              f"user_{booking.user.id}",
+              {
+                  "type": "booking_notification",
+                  "message": user_notification.message,
+                  "sender": booking.provider.provider.username,
+                  "sender_id": booking.provider.provider.id,
+                  "booking_id": booking.id,
+                  "created_at": str(user_notification.created_at)
+              }
+                )
+            
+            user_unread_count = Notfication.objects.filter(
+                  recipient=booking.user,
+                  is_read=False
+                  ).count()
 
-            Notfication.objects.create(
+            async_to_sync(channel_layer.group_send)(
+                f"user_{booking.user.id}",
+                {
+                    "type": "booking_count_update",
+                    "count": user_unread_count
+                }
+            )
+
+
+            provider_notification= Notfication.objects.create(
                 sender=booking.user,
                 recipient=booking.provider.provider,
                 message="You received a new booking",
                 related_booking=booking
             )
 
-            return Response({"message": "booked successfully"})
+            async_to_sync(channel_layer.group_send)(
+            f"user_{booking.provider.provider.id}",
+            {
+                "type": "booking_notification",
+                "message": provider_notification.message,
+                "sender": booking.user.username,
+                "sender_id": booking.user.id,
+                "booking_id": booking.id,
+                "created_at": str(provider_notification.created_at)
+            }
+                 )
+            
+            provider_unread_count = Notfication.objects.filter(
+              recipient=booking.provider.provider,
+              is_read=False
+              ).count()
 
+            async_to_sync(channel_layer.group_send)(
+                f"user_{booking.provider.provider.id}",
+                {
+                    "type": "booking_count_update",
+                    "count": provider_unread_count
+                }
+            )
+             
+            
+            return Response({"message": "booked successfully"})
+    
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
     
 class UpdateStatus(APIView):
      permission_classes=[IsAuthenticated]

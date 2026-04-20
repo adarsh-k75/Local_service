@@ -94,6 +94,15 @@ class Subservice_navbar(APIView):
         services=Service.objects.all()
         serlizer=SubServiceSerliazer(services,many=True)
         return Response(serlizer.data,status=status.HTTP_200_OK)
+    
+class Service_provider(APIView):
+    def get(self,request):
+        objects=ProviderService.objects.all()
+        serlizer=ProvideSerliazer(objects,many=True)
+        return Response(serlizer.data,status=status.HTTP_200_OK)
+
+
+
 
          
 

@@ -363,3 +363,84 @@
   color: #999;
   margin-top: 5px;
 }
+
+
+
+.marquee-section {
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.marquee-headline {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800; /* Big Black Text style */
+  color: #000;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.marquee-container {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-content {
+  display: flex;
+  gap: 30px;
+  /* Adjust 40s to make the "train" go faster or slower */
+  animation: scrollTrain 40s linear infinite;
+}
+
+/* Pause animation on hover so user can click */
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+.service-train-card {
+  flex-shrink: 0;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.4); /* Glassmorphism */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  padding: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+.service-train-card:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.service-img-wrapper {
+  width: 100%;
+  height: 180px;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.service-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-train-card h3 {
+  color: #000; /* Consistent Black theme */
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* THE INFINITE ANIMATION */
+@keyframes scrollTrain {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* Slides exactly half way (one full set) */
+}

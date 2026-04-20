@@ -15,10 +15,8 @@ const Footer = () => {
           <div className="footer-col brand-info">
             <h2 className="footer-logo">Just</h2>
             <p>
-              Subscribe to Easy Tutorials YouTube channel to 
-              watch more videos on website development 
-              and press the bell icon to get immediate 
-              notifications of latest videos.
+            We connect you with verified local service providers for home and personal services. 
+Fast booking, secure payments, and reliable professionals — all in one place.
             </p>
           </div>
 
@@ -39,10 +37,9 @@ const Footer = () => {
             <div className="title-underline"><span></span></div>
             <ul className="footer-nav-list">
               <li><Link to="/">Home</Link></li>
-              <li><Link to="/services">Services</Link></li>
-              <li><Link to="/about">About Us</Link></li>
-              <li><Link to="/features">Features</Link></li>
-              <li><Link to="/contacts">Contacts</Link></li>
+              <li><Link to="/Services">Services</Link></li>
+              <li><Link to='/fq'>Fq</Link></li>
+              <li><Link to='/contact'>Support</Link></li>
             </ul>
           </div>
 

@@ -102,8 +102,10 @@ class LoginLogic(APIView):
 class Navbarname(APIView):
      authentication_classes=[CookieJWTAuthentication]
      permission_classes=[IsAuthenticated]
+     
      def get(self, request):
-            return Response({"username": request.user.username})
+            return Response({"username": request.user.username,
+                               "role":request.user.role})
 
 class Profile(APIView):
     permission_classes = [IsAuthenticated]
@@ -118,7 +120,7 @@ class Profile(APIView):
         
     def get(self, request):
         serializer = CustomerSerlization(request.user)
-        return Response(serializer.data)
+        return Response(serializer.data,status=status.HTTP_200_OK)
 
 class Reset_password(APIView):
     permission_classes=[IsAuthenticated]

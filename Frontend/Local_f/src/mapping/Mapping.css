@@ -1,0 +1,107 @@
+.radar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* Glassmorphism Background */
+  background: rgba(255, 255, 255, 0.2); 
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.radar-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* User Center Pin Styling */
+.center-pin {
+  color: #000; /* Matching project's bold black text */
+  position: relative;
+  animation: floatPin 2s ease-in-out infinite;
+  z-index: 10;
+}
+
+.user-dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #000;
+    border-radius: 50%;
+    bottom: -1px;
+    left: 20px;
+}
+
+/* Radar Pulse Animations */
+.pulse-circle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #000;
+  opacity: 0;
+  animation: pulseRadar 2.5s linear infinite;
+}
+
+.c1 { animation-delay: 0s; }
+.c2 { animation-delay: 0.8s; }
+.c3 { animation-delay: 1.6s; }
+
+/* The "Providers" appearing like boat radar dots */
+.provider-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #000;
+  border-radius: 50%;
+  border: 2px solid #fff; /* White ring for contrast */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  opacity: 0;
+}
+
+/* Smooth fade-in for dots */
+.fade-in-dot {
+    animation: fadeInPoint 1s ease-out forwards;
+}
+
+/* Radar Text Styling */
+.radar-text {
+  position: absolute;
+  bottom: -60px;
+  font-weight: 800; /* Matching Big Black Text style */
+  font-size: 16px;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Animations */
+@keyframes pulseRadar {
+  0% { transform: scale(0.5); opacity: 0; }
+  10% { opacity: 0.6; }
+  100% { transform: scale(25); opacity: 0; }
+}
+
+@keyframes fadeInPoint {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes floatPin {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}

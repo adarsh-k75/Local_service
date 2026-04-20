@@ -1,7 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
-
+from django.utils import timezone
 class ChatConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
@@ -23,6 +23,19 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.user_group,
         self.channel_name
          )
+        
+        if self.user.is_authenticated:
+         await sync_to_async(self.set_online)()
+ 
+         # 🔥 notify other user
+         await self.channel_layer.group_send(
+             f"user_{self.receiver_id}",
+             {
+                 "type": "user_status",
+                 "status": "online",
+                 "user_id": self.user.id
+             }
+         )
 
         await self.accept()
 
@@ -31,6 +44,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_name,
             self.channel_name
         )
+
+        if self.user.is_authenticated:
+           await sync_to_async(self.set_offline)()
+   
+           # 🔥 notify other user
+           await self.channel_layer.group_send(
+               f"user_{self.receiver_id}",
+               {
+                   "type": "user_status",
+                   "status": "offline",
+                   "user_id": self.user.id
+               }
+           )
+
+
+
 
     async def receive(self, text_data):
         from django.contrib.auth import get_user_model
@@ -51,14 +80,26 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
         await self.channel_layer.group_send(
-            self.room_name,
+            self.room_name ,
             {
                 "type": "chat_message",
                 "message": message_text,
                 "sender": self.user.username if self.user.is_authenticated else "Anonymous",
                 "sender_id": self.user.id,
+                "created_at": str(timezone.now())
             }
         )
+
+        await self.channel_layer.group_send(
+         f"user_{self.receiver_id}",
+         {
+             "type": "chat_message",
+             "message": message_text,
+             "sender": self.user.username,
+             "sender_id": self.user.id,
+             "created_at": str(timezone.now())
+         }
+              )
 
         unread_count = await sync_to_async(Message.objects.filter(
             receiver_id=self.receiver_id,
@@ -68,23 +109,42 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             f"user_{self.receiver_id}",
             {
-                "type": "chat_count_update",
+                "type": "count_update",
                 "count": unread_count
             }
         )
 
     async def chat_message(self, event):
         await self.send(text_data=json.dumps({
-            "message": event["message"],
+            "message": event.get("message"),  
+            "image": event.get("image"),    
             "sender": event["sender"],
             "sender_id": event["sender_id"],
         }))
 
-    async def chat_count_update(self, event):
+    async def count_update(self, event):
      await self.send(text_data=json.dumps({
         "type": "count_update",
         "count": event["count"]
     }))
+     
+    async def user_status(self, event):
+        await self.send(text_data=json.dumps({
+            "type": "user_status",
+            "status": event["status"],
+            "user_id": event["user_id"]
+        }))
+
+    def set_online(self):
+        profile = self.user.userprofile
+        profile.is_online = True
+        profile.save()
+
+    def set_offline(self):
+        profile = self.user.userprofile
+        profile.is_online = False
+        profile.last_seen = timezone.now()
+        profile.save()
      
 
 class NotificationConsumer(AsyncWebsocketConsumer):
@@ -107,14 +167,46 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
-        if hasattr(self, "room_name"):   # ✅ prevent crash
+        if hasattr(self, "room_name"):   
             await self.channel_layer.group_discard(
                 self.room_name,
                 self.channel_name
             )
 
-    async def chat_count_update(self, event):
+    async def count_update(self, event):
         await self.send(text_data=json.dumps({
             "type": "count_update",
             "count": event["count"]
         }))
+
+    async def booking_count_update(self, event):  # 🔥 ADD THIS
+        await self.send(text_data=json.dumps({
+            "type": "booking_count_update",
+            "count": event["count"]
+        }))
+
+    async def chat_message(self, event):
+        await self.send(text_data=json.dumps({
+            "type": "new_message",
+            "message": event["message"],
+            "sender": event["sender"],
+            "sender_id": event["sender_id"],
+            "created_at": event["created_at"]
+        }))
+
+    async def booking_notification(self, event):
+     await self.send(text_data=json.dumps({
+         "type": "booking",
+         "message": event["message"],
+         "sender": event["sender"],
+         "sender_id": event["sender_id"],
+         "related_booking": event["booking_id"],
+         "created_at": event["created_at"]
+     }))
+
+    async def user_status(self, event):
+      await self.send(text_data=json.dumps({
+          "type": "user_status",
+          "status": event["status"],
+          "user_id": event["user_id"]
+      }))

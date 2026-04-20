@@ -36,8 +36,30 @@ class Notfications(APIView):
         qs = Notfication.objects.filter(
             recipient=request.user
         ).order_by("-created_at")
-        serializer=NotificationSerializer(qs,many=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        booking_data=NotificationSerializer(qs,many=True).data
+
+        messages = Message.objects.filter(
+            receiver=request.user
+        ).order_by("-timestamp")[:20]
+
+        chat_data = [
+            {
+                "type": "chat",
+                "id": m.id,
+                "message": m.content,
+                "sender_name": m.sender.username,
+                "sender_id": m.sender.id,
+                "created_at": m.timestamp.isoformat(),
+                "is_read": m.is_read
+            }
+            for m in messages
+        ]
+
+        for b in booking_data:
+            b["type"] = "booking"
+        data = booking_data + chat_data
+        data.sort(key=lambda x: x["created_at"], reverse=True)
+        return Response(data,status=status.HTTP_200_OK)
         
 class Unread_count(APIView):
     permission_classes=[IsAuthenticated]
@@ -71,6 +93,7 @@ class Mark_read(APIView):
 
 
 class MarkChatRead(APIView):
+    print("hits")
     permission_classes = [IsAuthenticated]
     authentication_classes = [CookieJWTAuthentication]
 

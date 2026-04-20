@@ -4,9 +4,10 @@ import axios from "axios"
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";
-
+import Loading from '../Loading/Loading'
 function Register() {
     let Naviagte=useNavigate()
+    const [isloading, setisloading] = useState(false);
    const [Role,setRole]=useState("customer")
     const [inputs,setinputs] = useState({
         username:"",
@@ -50,6 +51,7 @@ function Register() {
         if(!valiadation()){
           return
         }
+         setisloading(true);
         axios.post('http://localhost:8000/api/register/',{
             username:inputs.username,
             email:inputs.email,
@@ -65,10 +67,14 @@ function Register() {
         .catch((err)=>{
             console.log(err.response.data)
         })
+        .finally(() => {
+        setisloading(false); 
+    });
     }
 
     return(
         <>
+        {isloading && <Loading />}
      <div className="login-page-container">
 
 <div className="login-card">

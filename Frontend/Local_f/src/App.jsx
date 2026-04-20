@@ -33,6 +33,9 @@ import Forget_reset from './Account/Forget_reset'
 import Homes from './Customer_pages/Home'
 import Fq from './Customer_pages/Fq'
 import ChatPage from './Chat/ChatPage'
+import ProtectedRoute from './Protection.jsx/ProtectedRoute'
+import ProtectedLayout from './layouts/ProtectedLayout'
+import RoleProtectedRoute from './Protection.jsx/RoleProtectedRoute'
 function App() {
 
   return (
@@ -42,41 +45,61 @@ function App() {
         autoClose={3000}
         theme="light"
       />
-       <Routes>
+  <Routes>
       <Route element={<AuthLayout/>}>
         <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/Re-password" element={<Reset_password/>}/>
-        <Route path="/profile_edit" element={<Profile_edit/>}/>
         <Route path='/email' element={<Email/>}/>
         <Route path='/forget_reset/:uid/:token' element={<Forget_reset/>}/>
-        <Route path='/chat/:id' element={<ChatPage/>}/>
+        
       </Route>
+     
 
       <Route element={<MainLayout/>}>
         <Route path="/" element={<Homes/>}/>
-        <Route path="/profile" element={<Profile/>}/>
-        <Route path="/Services" element={<Services_selecter/>}/>
-        <Route path="/User_service/:catId/:subId" element={<User_services />} />
         <Route path='/User_service' element={<User_services/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/notfication' element={<Notfication/>}/>
-        <Route path='/Booking/:id' element={<Booking_deatils />}/>
         <Route path='/Search/:query' element={<Search/>}/>
-        <Route path='/addres_edit' element={<Address_edit/>}/>
         <Route path='/fq' element={<Fq/>}/>
+      </Route>
+    
+        <Route element={<ProtectedRoute />}>    
+              <Route element={<ProtectedLayout />}>
+                  <Route path='/addres_edit' element={<Address_edit/>}/>
+                  <Route path="/User_service/:catId/:subId" element={<User_services />} />
+                  <Route path="/profile_edit" element={<Profile_edit/>}/>
+                  <Route path='/chat/:id' element={<ChatPage/>}/>
+                  <Route path="/Re-password" element={<Reset_password/>}/>
+                  <Route path="/profile" element={<Profile/>}/>
+                  <Route path='/Booking/:id' element={<Booking_deatils />}/>
+              </Route>
+        </Route>
 
 
-    </Route>
-         <Route element={<Admin_nav/>}>
-           <Route path='/All_user' element={<User_list/>}/>
-            <Route path='/booking_view/:id' element={<Rquestsview/>}/>
+        <Route element={<RoleProtectedRoute allowedRoles={["provider"]} />}>
+              <Route element={<ProtectedLayout />}>
+        
+                  <Route path="/Services" element={<Services_selecter/>}/>
+                      
+              </Route>
+        </Route>
+
+
+      <Route element={<RoleProtectedRoute allowedRoles={["admin"]} />}>
+        <Route element={<Admin_nav/>}>
+              <Route path='/All_user' element={<User_list/>}/>
+              <Route path='/booking_view/:id' element={<Rquestsview/>}/>
               <Route path='/providers' element={<Provider_list/>}/>
-               <Route path='/providers_verifaction' element={<Provider_verification/>}/>
-               <Route path='/dashboard' element={<Dashboard/>}/>
-         </Route>
-    </Routes>
+              <Route path='/providers_verifaction' element={<Provider_verification/>}/>
+              <Route path='/dashboard' element={<Dashboard/>}/>
+        </Route>
+       </Route>
+
+
+  
+  </Routes>
     </>
   )
 }

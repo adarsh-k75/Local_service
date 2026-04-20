@@ -1,5 +1,7 @@
 import './Home.css'
 import  { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
+
  import {Cctv,SoapDispenserDroplet,WifiSync } from"lucide-react";
  import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -7,7 +9,7 @@ import {
   Wrench, Home, Droplets, Zap, ShieldCheck, 
   Hammer, Settings, Paintbrush, Construction 
 } from 'lucide-react';
-// smoke
+import api from "../api/axios"
  const smokeVariants = {
   hidden: { 
     opacity: 0, 
@@ -59,7 +61,8 @@ const iconsList = [
 // smoke
 function Homes(){
 const [count, setCount] = useState(0);
-
+let [services,setservices]=useState([])
+let navigate=useNavigate()
   // Counter Logic: 1 to 2700
   useEffect(() => {
     let start = 0;
@@ -77,8 +80,16 @@ const [count, setCount] = useState(0);
       }
     }, 16);
     return () => clearInterval(timer);
+      
   }, []);
-
+   
+  useEffect(()=>{
+     api.get('service_provider/')
+    .then((res)=>{
+      setservices(res.data)
+      console.log(res.data)
+    })
+  },[])
 // the smoke
         
 const steps = [
@@ -234,6 +245,42 @@ const [isSplit, setIsSplit] = useState(false);
 
   </div>
 </section>
+
+    <div className="marquee-section">
+      <h2 className="marquee-headline">Our Featured Services</h2>
+      
+      <div className="marquee-container">
+        <div className="marquee-content">
+          {/* First set of services */}
+          {services.map((data, index) => (
+            <div 
+              className="service-train-card" 
+              key={`set1-${index}`}
+              onClick={() => navigate(`/service/${data.id}`)}
+            >
+              <div className="service-img-wrapper">
+                <img src={data.work_image_url} alt={data.service_name.name} />
+              </div>
+              <h3>{data.service_name.name}</h3>
+            </div>
+          ))}
+
+          {/* Duplicate set for infinite loop */}
+          {services.map((data, index) => (
+            <div 
+              className="service-train-card" 
+              key={`set2-${index}`}
+              onClick={() => navigate(`/service/${data.id}`)}
+            >
+              <div className="service-img-wrapper">
+                <img src={data.work_image_url} alt={data.service_name.name} />
+              </div>
+              <h3>{data.service_name.name}</h3>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
 
     {/* RIGHT SIDE: Roadmap Content */}
 
