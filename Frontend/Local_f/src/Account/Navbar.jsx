@@ -74,50 +74,60 @@ function Navbar() {
     const count=notificationCount + chatCount;
 
   return (
-  <nav className="navbar-container">
-  <div className="nav-content">
-    <div className="nav-left">
-      <ul className="nav-menu">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/fq">FQ</Link></li>
-        <li><Link to="/User_service">Service</Link></li>
-        <li><Link to="/contact">Support</Link></li>
-      </ul>
-    </div>
-
-    {/* Center: Search Bar */}
-    <div className="nav-center">
-      <div className="search-wrapper">
-        <HiSearch className="search-icon" size={20} /> {/* Replaced Emoji */}
-        <form onSubmit={search}>
-          <input onChange={(e)=>setinputs(e.target.value)} type="text" placeholder="Search by Inspiration"/>
-        </form>
-      </div>
-    </div>
-
-    {/* Right: Actions Group */}
-    <div className="nav-right-group">
-      
-      {/* Notification Icon */}
-      <div onClick={countrest} className="notification-wrapper" title="Notifications">
-        <HiBell className="bell-icon" size={22} /> {/* Replaced Emoji */}
-        {user && count > 0 &&(
-          <span className="notification-badge">{count}</span>
-        )}
-      </div>
-
-      {/* User Profile / Login */}
-      <div className="nav-right">
-        <div 
-          onClick={() => navigate(user ? '/profile' : '/login')} 
-          className="user-div-btn"
-        >
-          <HiUser size={20} /> {user ? "Hi" : "Log in"} {/* Replaced Emoji */}
+ <nav className="navbar-container">
+      <div className="nav-content">
+        
+        {/* Left: Logo + Menu */}
+        <div className="nav-left">
+          <div className="logo-text">
+    <span className="logo-sure">Sure</span>
+    <span className="logo-serve">Serve</span>
         </div>
+          <ul className="nav-menu">
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/fq">FQ</Link></li>
+            <li><Link to="/User_service">Service</Link></li>
+            <li><Link to="/contact">Support</Link></li>
+          </ul>
+        </div>
+
+        {/* Center: Search Bar */}
+        <div className="nav-center">
+          <div className="search-wrapper">
+            <HiSearch className="search-icon" size={20} />
+            <form onSubmit={search}>
+               <input 
+                 onChange={(e) => setinputs(e.target.value)} 
+                 type="text" 
+                 placeholder="Search by Inspiration"
+               />
+            </form>
+          </div>
+        </div>
+
+        {/* Right: Actions Group */}
+        <div className="nav-right-group">
+          {/* Notification Icon */}
+          <div onClick={countrest} className="notification-wrapper" title="Notifications">
+            <HiBell className="bell-icon" size={24} />
+            {user && count > 0 && (
+              <span className="notification-badge">{count}</span>
+            )}
+          </div>
+
+          {/* User Profile / Login */}
+          <div className="nav-right">
+            <div 
+              onClick={() => navigate(user ? '/profile' : '/login')} 
+              className="user-div-btn"
+            >
+              <HiUser size={20} /> {user ? "Hi" : "Log in"}
+            </div>
+          </div>
+        </div>
+
       </div>
-    </div>
-  </div>
-</nav>
+    </nav>
   );
 }
 

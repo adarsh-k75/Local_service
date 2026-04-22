@@ -23,7 +23,6 @@ const [profileImage, setProfileImage] = useState(null);
          pincode: "",
          phone:""
   })
-  const [images,setimage]=useState(null)
   useEffect(() => {
     Promise.all([
       api.get("profile/", { withCredentials: true }),
@@ -38,6 +37,7 @@ const [profileImage, setProfileImage] = useState(null);
         setservices(serviceRes.data);
         setbookingview(bookingRes.data);
         setaddres(addressres.data)
+        console.log(addressres.data)
 
         
       })
@@ -81,7 +81,7 @@ const [profileImage, setProfileImage] = useState(null);
      newdata.append("longitude", position.coords.longitude);
 
       if (profileImage) {
-      newdata.append("profile_image", profileImage);
+      newdata.append("bio", profileImage);
     }
 
         
@@ -114,7 +114,7 @@ const [profileImage, setProfileImage] = useState(null);
         <aside className="profile-sidebar">
           <div className="profile-card">
             <div className="profile-header">
-              <div className="profile-avatar">{profile.username?.charAt(0)}</div>
+              <div className="profile-avatar"><img  src={`http://127.0.0.1:8000${addres.profile.bio}`}/></div>
               <h2>User Profile</h2>
             </div>
 
@@ -222,7 +222,7 @@ const [profileImage, setProfileImage] = useState(null);
          <aside className="profile-sidebar">
             <div className="profile-card provider-variant">
               <div className="profile-header">
-                <div className="profile-avatar employee-avatar">E</div>
+                <div className="profile-avatar employee-avatar"><img  src={`http://127.0.0.1:8000${addres.profile.bio}`}/></div>
                 <h2>Employee Panel</h2>
               </div>
 

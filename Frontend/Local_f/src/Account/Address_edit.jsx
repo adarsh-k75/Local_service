@@ -14,11 +14,13 @@ function Address_edit(){
   });
   let [role,setrole]=useState({})
   const [id_card, setid_card] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
+
 
   useEffect(() => {
     api.get("UserProfile/", {
       withCredentials: true
-    })
+    }) 
     .then((res) => {
       setinputs({
         phone: res.data.profile.phone || "",
@@ -54,6 +56,10 @@ function Address_edit(){
       formData.append("pincode", inputs.pincode);
       formData.append("phone", inputs.phone);
 
+      if(profileImage){
+        formData.append("bio",profileImage)
+      }
+
       if (id_card) {
         formData.append("id_card", id_card); 
       }
@@ -67,7 +73,6 @@ function Address_edit(){
       .then((res) => {
         toast.success(res.data.message)
         naviagter("/profile")
-         window.location.reload();
           
       })
       .catch((err) => {
@@ -98,6 +103,12 @@ function Address_edit(){
     <form className="update-form-layout" onSubmit={handlesubmit}>
       
       <div className="input-group">
+          <label className="input-label">Profile image</label>
+        <input
+                  type="file"
+                  onChange={(e) => setProfileImage(e.target.files[0])}
+                  className="glass-file-input"
+                 />
         <label className="input-label">Physical Address</label>
         <input
           type="text"

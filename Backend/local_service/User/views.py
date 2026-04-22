@@ -236,7 +236,7 @@ class Profileaddres(APIView):
     def patch(self,request):
         user = request.user
         profile = UserProfile.objects.filter(user=user).first()
-
+        
         if request.user.role == "provider":
            serializer = Profiledataserlizer(profile,data=request.data,partial=True)
         else:

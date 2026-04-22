@@ -10,6 +10,10 @@ from .serlization import NotificationSerializer
 from .models import Notfication
 from django.db.models import Q
 from  Chat.models import Message
+import os
+from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+
 class Bookingview(APIView):
     permission_classes=[IsAuthenticated]
     authentication_classes=[CookieJWTAuthentication]
@@ -106,3 +110,45 @@ class MarkChatRead(APIView):
 
         return Response({"message": "chat read"})
      
+class ContactAPIView(APIView):
+
+    def post(self, request):
+        name = request.data.get("name")
+        email = request.data.get("email")
+        message = request.data.get("message")
+
+        if not name or not email or not message:
+            return Response(
+                {"error": "All fields are required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        full_message = f"""
+Name: {name}
+Email: {email}
+
+Message:
+{message}
+"""
+       
+        try:
+            email_message = EmailMessage(
+                subject="New Contact Message",
+                body=full_message,
+                from_email=os.getenv("EMAIL_HOST_USER"),
+                to=[os.getenv("RECEIVER_EMAIL")],
+                reply_to=[email],  # ✅ works here
+            )
+
+            email_message.send()
+
+            return Response(
+                {"success": "Message sent successfully"},
+                status=status.HTTP_200_OK
+            )
+
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

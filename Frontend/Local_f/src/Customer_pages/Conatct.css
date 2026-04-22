@@ -87,6 +87,14 @@
   padding: 18px 22px;
 }
 
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2b7a78; /* Match this to your primary brand color */
+  margin-right: 15px;
+}
+
 /* Tablet & Mobile Responsiveness */
 @media (max-width: 900px) {
   .contact-container {
