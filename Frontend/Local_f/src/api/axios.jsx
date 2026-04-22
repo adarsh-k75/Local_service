@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000/api/",
+  // Point this to your live Render API
+  baseURL: "https://local-service-lmek.onrender.com/api/",
   withCredentials: true,
 });
 
@@ -12,7 +13,7 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // ❌ skip if already retry OR refresh API itself
+    // Handle 401 Unauthorized (Expired Tokens)
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
@@ -24,11 +25,13 @@ api.interceptors.response.use(
         isRefreshing = true;
 
         try {
+          // This will now call https://local-service-lmek.onrender.com/api/refresh/
           await api.post("refresh/");
           isRefreshing = false;
           return api(originalRequest);
         } catch (err) {
           isRefreshing = false;
+          // Redirect to login if the refresh token is also expired or invalid
           window.location.href = "/login";
           return Promise.reject(err);
         }
