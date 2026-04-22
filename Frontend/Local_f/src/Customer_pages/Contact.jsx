@@ -1,4 +1,4 @@
-import './conatct.css'
+import './Conatct.css'
 import { HiOutlineLocationMarker, HiOutlineMail } from "react-icons/hi";
 import { useState } from 'react';
 import api from '../api/axios';
