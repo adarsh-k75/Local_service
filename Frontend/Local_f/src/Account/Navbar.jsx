@@ -4,7 +4,7 @@ import { useState ,useEffect,useRef} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios"
- import { AuthContext } from "./Authcontext";
+import { AuthContext } from "./Authcontext";
  import { useContext } from "react";
  import { HiSearch, HiBell, HiUser } from 'react-icons/hi';
 function Navbar() {
