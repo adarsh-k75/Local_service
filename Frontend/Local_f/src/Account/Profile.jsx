@@ -37,7 +37,6 @@ const [profileImage, setProfileImage] = useState(null);
         setservices(serviceRes.data);
         setbookingview(bookingRes.data);
         setaddres(addressres.data)
-        console.log(addressres.data)
 
         
       })
@@ -55,7 +54,7 @@ const [profileImage, setProfileImage] = useState(null);
 
   function Logout() {
     
-    axios.post("http://localhost:8000/api/logout/", {}, {
+    api.post("logout/", {}, {
       withCredentials: true
     })
     .then(() => {
@@ -91,7 +90,6 @@ const [profileImage, setProfileImage] = useState(null);
      })
      .then((res)=>{
       toast.success("Profile Set Sucessfuly")
-      window.location.reload();
      })
       .finally(()=>{
         setLoading(false)
