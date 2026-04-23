@@ -112,7 +112,9 @@ class Navbarname(APIView):
 class Profile(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [CookieJWTAuthentication]
+
     def patch(self,request):
+        print("hello",request.user.id)
         serlizaer=CustomerSerlization(request.user,data=request.data,partial=True)
         if serlizaer.is_valid():
             serlizaer.save()

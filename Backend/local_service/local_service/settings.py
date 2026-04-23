@@ -40,7 +40,7 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 SECRET_KEY = 'django-insecure-+lb+!#%v!y-6sipvtlxha9^7!fzhzdqg+%a37sjblsfctmthb_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -212,3 +212,9 @@ CHANNEL_LAYERS = {
 CSRF_TRUSTED_ORIGINS = [
     "https://local-service-nu.vercel.app"
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "User.authtication.CookieJWTAuthentication",  # 👈 adjust if file is elsewhere
+    ),
+}
