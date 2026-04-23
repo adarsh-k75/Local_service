@@ -172,7 +172,7 @@ AUTH_USER_MODEL = "User.Register"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    'https://local-service-nu.vercel.app/'
+    'https://local-service-nu.vercel.app'
 ]
 CORS_ALLOW_CREDENTIALS = True
 
