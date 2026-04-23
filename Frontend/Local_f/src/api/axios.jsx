@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   // Point this to your live Render API
-  baseURL: "https://local-service-lmek.onrender.com/api/",
+  baseURL: "http://localhost:8000/api/",
   withCredentials: true,
 });
 

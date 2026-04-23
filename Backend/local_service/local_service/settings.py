@@ -126,7 +126,7 @@ DATABASES = {
         'PASSWORD': os.getenv("DB_PASSWORD"),
         'HOST': os.getenv("DB_HOST"),
         'PORT': os.getenv("DB_PORT", "5432"),
-        'OPTIONS': {
+          'OPTIONS': {
             'sslmode': 'require',  # VERY IMPORTANT for Render Postgres
         }
     }
@@ -172,6 +172,7 @@ AUTH_USER_MODEL = "User.Register"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    'https://local-service-nu.vercel.app/'
 ]
 CORS_ALLOW_CREDENTIALS = True
 
