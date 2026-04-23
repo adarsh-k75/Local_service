@@ -16,7 +16,10 @@ export const AuthProvider = ({ children }) => {
     }
 
     api.get("Navbar/", {
-      withCredentials:true
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     })
     .then((res) => {
       setUser(res.data);
