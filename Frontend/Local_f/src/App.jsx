@@ -33,9 +33,9 @@ import Forget_reset from './Account/Forget_reset'
 import Homes from './Customer_pages/Home'
 import Fq from './Customer_pages/Fq'
 import ChatPage from './Chat/ChatPage'
-import ProtectedRoute from './Protection.jsx/ProtectedRoute'
+import ProtectedRoute from './Protection/ProtectedRoute'
 import ProtectedLayout from './layouts/ProtectedLayout'
-import RoleProtectedRoute from './Protection.jsx/RoleProtectedRoute'
+import RoleProtectedRoute from './Protection/RoleProtectedRoute'
 function App() {
 
   return (
