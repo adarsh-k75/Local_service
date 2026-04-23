@@ -8,25 +8,17 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-
-    api.get("Navbar/", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+     api.get("Navbar/", {
+    withCredentials: true,   // ✅ use cookies
+  })
+    .then((res) => {
+      setUser(res.data);
     })
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch(() => {
-        setUser(null);
-      })
-      .finally(() => setLoading(false));
+    .catch((err) => {
+      console.log("AUTH ERROR:", err.response?.status);
+      setUser(null);
+    })
+    .finally(() => setLoading(false));
   }, []);
 
   return (
