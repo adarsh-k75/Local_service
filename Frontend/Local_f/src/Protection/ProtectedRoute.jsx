@@ -3,12 +3,12 @@ import { useContext } from "react";
 import { AuthContext } from "../Account/Authcontext";
 
 const ProtectedRoute = () => {
-   const { user, loading } = useContext(AuthContext);
+    const { loading } = useContext(AuthContext);
   const token = localStorage.getItem("access_token");
 
   if (loading) return <div>Loading...</div>;
 
-  if (!user && !token) {
+  if (!token) {
     return <Navigate to="/login" replace />;
   }
 
