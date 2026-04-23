@@ -8,7 +8,6 @@ import api from "../api/axios"
 import { GoogleLogin } from "@react-oauth/google";
 import { AuthContext } from "./Authcontext"
 import { useContext } from "react"
-import api from "../api/axios"
 function Login(){
   let {setUser}=useContext(AuthContext)
 let [role,setrole]=useState("")
