@@ -7,7 +7,6 @@ import api from "../api/axios"
  import { AuthContext } from "./Authcontext";
  import { useContext } from "react";
  import { HiSearch, HiBell, HiUser } from 'react-icons/hi';
- import api from "../api/axios";
 function Navbar() {
   let {user}=useContext(AuthContext)
   let navigate = useNavigate();
