@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   
   useEffect(()=>{
-      axios.get("http://localhost:8000/api/Navbar/", {
+      api.get("Navbar/", {
       withCredentials: true
     })
     .then((res) => {
