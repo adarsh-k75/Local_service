@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 import api from "../api/axios";
-
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -8,14 +8,24 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get("Navbar/", { withCredentials: true })
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch(() => {
-        setUser(null);
-      })
-      .finally(() => setLoading(false));
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
+    api.get("Navbar/", {
+      withCredentials:true
+    })
+    .then((res) => {
+      setUser(res.data);
+    })
+    .catch(() => {
+      setUser(null);
+    })
+    .finally(() => setLoading(false));
+
   }, []);
 
   return (
