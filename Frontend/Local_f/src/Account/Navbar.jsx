@@ -7,6 +7,7 @@ import api from "../api/axios"
  import { AuthContext } from "./Authcontext";
  import { useContext } from "react";
  import { HiSearch, HiBell, HiUser } from 'react-icons/hi';
+ import api from "../api/axios";
 function Navbar() {
   let {user}=useContext(AuthContext)
   let navigate = useNavigate();
@@ -17,7 +18,7 @@ function Navbar() {
   useEffect(() => {
     
        
-     axios.get("http://localhost:8000/api/unread-count/", {
+     axios.get("unread-count/", {
       withCredentials: true
     })
     .then((res) => {setNotificationCount(res.data.request_count),

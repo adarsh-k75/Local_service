@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";
 import Loading from '../Loading/Loading'
+import api from '../api/axios'
 function Register() {
     let Naviagte=useNavigate()
     const [isloading, setisloading] = useState(false);
@@ -52,7 +53,7 @@ function Register() {
           return
         }
          setisloading(true);
-        axios.post('http://localhost:8000/api/register/',{
+        axios.post('register/',{
             username:inputs.username,
             email:inputs.email,
             password:inputs.password,

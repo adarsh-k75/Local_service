@@ -8,6 +8,7 @@ import api from "../api/axios"
 import { GoogleLogin } from "@react-oauth/google";
 import { AuthContext } from "./Authcontext"
 import { useContext } from "react"
+import api from "../api/axios"
 function Login(){
   let {setUser}=useContext(AuthContext)
 let [role,setrole]=useState("")
@@ -29,7 +30,7 @@ let [role,setrole]=useState("")
     function onsubmit(e){
         e.preventDefault()
 
-        axios.post('http://localhost:8000/api/login/',inputs,{
+        api.post('login/',inputs,{
             withCredentials:true
         })
         .then((res)=>{

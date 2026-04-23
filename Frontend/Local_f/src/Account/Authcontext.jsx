@@ -1,13 +1,14 @@
 import { createContext, useEffect, useState } from "react";
 import api from "../api/axios";
 import axios from "axios";
+import api from "../api/axios";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   
   useEffect(()=>{
-      axios.get("http://localhost:8000/api/Navbar/", {
+      axios.get("Navbar/",{
       withCredentials: true
     })
     .then((res) => {
