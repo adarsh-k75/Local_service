@@ -20,7 +20,7 @@ api.interceptors.response.use(
         // 1. Call your Django refresh endpoint
         // This works because your refresh_token is in the HttpOnly cookies
         await axios.post(
-          "https://local-service-lmek.onrender.com/api/token/refresh/", 
+          "https://local-service-lmek.onrender.com/api/refresh/", 
           {}, 
           { withCredentials: true }
         );
