@@ -17,7 +17,7 @@ function Navbar() {
   useEffect(() => {
     
        
-     axios.get("unread-count/", {
+     api.get("unread-count/", {
       withCredentials: true
     })
     .then((res) => {setNotificationCount(res.data.request_count),
