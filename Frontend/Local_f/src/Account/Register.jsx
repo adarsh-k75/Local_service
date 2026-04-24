@@ -53,7 +53,7 @@ function Register() {
           return
         }
          setisloading(true);
-        axios.post('register/',{
+        api.post('register/',{
             username:inputs.username,
             email:inputs.email,
             password:inputs.password,
