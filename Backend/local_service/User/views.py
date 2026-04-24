@@ -88,7 +88,6 @@ class LoginLogic(APIView):
             httponly=True,
             secure=True,
             samesite="None",
-             domain=".onrender.com"
         )
 
         response.set_cookie(
@@ -97,7 +96,6 @@ class LoginLogic(APIView):
             httponly=True,
             secure=True,
             samesite="None",
-             domain=".onrender.com"
         )
         
         return response
