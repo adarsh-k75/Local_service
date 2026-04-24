@@ -10,7 +10,6 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // ❌ DO NOT retry refresh multiple times
     if (error.response?.status === 401) {
       console.log("401 error → stopping loop");
 

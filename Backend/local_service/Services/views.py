@@ -13,12 +13,16 @@ from geopy.distance import geodesic
 
 
 class ServicesCatagory(APIView):
+    authentication_classes = [CookieJWTAuthentication]
+    permission_classes = [AllowAny]
     def get(self,request):
         Service=ServiceCategory.objects.all()
         serliaze=SrvicesSerliazer(Service,many=True)
         return Response(serliaze.data,status=status.HTTP_200_OK)
     
 class SubServices(APIView):
+    authentication_classes = [CookieJWTAuthentication]
+    permission_classes = [AllowAny]
     def get(self,request,id):
         SubService=Service.objects.filter(category_id=id)
         serlizer=SubServiceSerliazer(SubService,many=True)
