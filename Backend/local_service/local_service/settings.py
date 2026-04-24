@@ -172,7 +172,8 @@ AUTH_USER_MODEL = "User.Register"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    'https://local-service-nu.vercel.app'
+    'https://local-service-nu.vercel.app',
+    "https://local-service-git-main-adarsh-k75s-projects.vercel.app"
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -211,11 +212,15 @@ CHANNEL_LAYERS = {
 }
 CSRF_TRUSTED_ORIGINS = [
     "https://local-service-nu.vercel.app"
+    "https://local-service-git-main-adarsh-k75s-projects.vercel.app",
+    "https://local-service-lmek.onrender.com",
+    
 ]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "User.authtication.CookieJWTAuthentication",  # 👈 adjust if file is elsewhere
+        "User.authtication.CookieJWTAuthentication", 
+         "rest_framework.authentication.SessionAuthentication", # 👈 adjust if file is elsewhere
     ),
      "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.AllowAny",
