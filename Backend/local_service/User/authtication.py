@@ -3,16 +3,16 @@ from rest_framework_simplejwt.exceptions import InvalidToken, AuthenticationFail
 
 class CookieJWTAuthentication(JWTAuthentication):
     def authenticate(self, request):
-        # 🔥 First check header
         header = self.get_header(request)
+
         if header is not None:
             raw_token = self.get_raw_token(header)
         else:
-            # 🔥 Fallback to cookie
             raw_token = request.COOKIES.get("access_token")
 
+        # 🔥 IMPORTANT FIX
         if raw_token is None:
-            return None
+            raise AuthenticationFailed("No access token provided")
 
         try:
             validated_token = self.get_validated_token(raw_token)

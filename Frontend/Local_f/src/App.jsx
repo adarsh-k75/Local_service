@@ -65,6 +65,7 @@ function App() {
         <Route path='/fq' element={<Fq/>}/>
       </Route>
     
+        <Route element={<ProtectedRoute />}>    
               <Route element={<ProtectedLayout />}>
                   <Route path='/addres_edit' element={<Address_edit/>}/>
                   <Route path="/User_service/:catId/:subId" element={<User_services />} />
@@ -74,6 +75,7 @@ function App() {
                   <Route path="/profile" element={<Profile/>}/>
                   <Route path='/Booking/:id' element={<Booking_deatils />}/>
               </Route>
+        </Route>
 
 
         <Route element={<RoleProtectedRoute allowedRoles={["provider"]} />}>
