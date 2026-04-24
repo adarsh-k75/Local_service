@@ -16,6 +16,8 @@ class ServicesCatagory(APIView):
     authentication_classes = [CookieJWTAuthentication]
     permission_classes = [AllowAny]
     def get(self,request):
+        print("USER:", request.user)
+        print("AUTH:", request.auth)
         Service=ServiceCategory.objects.all()
         serliaze=SrvicesSerliazer(Service,many=True)
         return Response(serliaze.data,status=status.HTTP_200_OK)

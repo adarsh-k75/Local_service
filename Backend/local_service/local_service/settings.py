@@ -218,6 +218,6 @@ REST_FRAMEWORK = {
         "User.authtication.CookieJWTAuthentication",  # 👈 adjust if file is elsewhere
     ),
      "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.AllowAny",
     ),
 }
