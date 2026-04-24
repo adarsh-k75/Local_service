@@ -10,14 +10,16 @@ class CookieJWTAuthentication(JWTAuthentication):
         else:
             raw_token = request.COOKIES.get("access_token")
 
-        # 🔥 IMPORTANT FIX
+        # ✅ FIX: Return None instead of raising an error for Guest users
         if raw_token is None:
-            raise AuthenticationFailed("No access token provided")
+            return None 
 
         try:
             validated_token = self.get_validated_token(raw_token)
             user = self.get_user(validated_token)
-        except InvalidToken:
-            raise AuthenticationFailed("Invalid access token")
+        except (InvalidToken, AuthenticationFailed):
+            # For public pages, you might still want to return None here 
+            # so an expired cookie doesn't block a public view.
+            return None 
 
         return (user, validated_token)
