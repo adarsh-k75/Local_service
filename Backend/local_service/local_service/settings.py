@@ -211,7 +211,7 @@ CHANNEL_LAYERS = {
     },
 }
 CSRF_TRUSTED_ORIGINS = [
-    "https://local-service-nu.vercel.app"
+    "https://local-service-nu.vercel.app",
     "https://local-service-git-main-adarsh-k75s-projects.vercel.app",
     "https://local-service-lmek.onrender.com",
     
@@ -226,3 +226,9 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.AllowAny",
     ),
 }
+
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SAMESITE = 'None'
