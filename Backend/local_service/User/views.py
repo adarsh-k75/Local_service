@@ -32,27 +32,27 @@ class RegisterLogic(APIView):
         serializer = CustomerSerlization(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post(self, request):
-        serializer = CustomerSerlization(data=request.data)
-
-        if serializer.is_valid():
-            user = serializer.save()
-            uid = urlsafe_base64_encode(force_bytes(user.id))
-            token = email_token_generator.make_token(user)    
-            verification_link = f"http://localhost:8000/api/verify-email/{uid}/{token}/"    
-            send_mail(
-                "Verify your Email",
-                f"Click this link to verify your email:\n{verification_link}",
-                settings.EMAIL_HOST_USER,
-                [user.email],
-                fail_silently=False
-            )
-            return Response(
-                {"message":"User created. Check your email."},
-                status=201
-            )
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #def post(self, request):
+    #    serializer = CustomerSerlization(data=request.data)
+#
+    #    if serializer.is_valid():
+    #        user = serializer.save()
+    #        uid = urlsafe_base64_encode(force_bytes(user.id))
+    #        token = email_token_generator.make_token(user)    
+    #        verification_link = f"http://localhost:8000/api/verify-email/{uid}/{token}/"    
+    #        send_mail(
+    #            "Verify your Email",
+    #            f"Click this link to verify your email:\n{verification_link}",
+    #            settings.EMAIL_HOST_USER,
+    #            [user.email],
+    #            fail_silently=False
+    #        )
+    #        return Response(
+    #            {"message":"User created. Check your email."},
+    #            status=201
+    #        )
+#
+    #    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 class LoginLogic(APIView):
@@ -67,11 +67,11 @@ class LoginLogic(APIView):
                 {"error": "invalid username or password"},
                 status=status.HTTP_401_UNAUTHORIZED
             )
-        if user.role == "customer" and not user.is_veryfied:
-            return Response(
-                {"error": "Please verify your email first"},
-                status=status.HTTP_403_FORBIDDEN
-            )
+       # if user.role == "customer" and not user.is_veryfied:
+       #     return Response(
+       #         {"error": "Please verify your email first"},
+       #         status=status.HTTP_403_FORBIDDEN
+       #     )
         refresh = RefreshToken.for_user(user)
         response = Response(
             {"message": "login successfully",
