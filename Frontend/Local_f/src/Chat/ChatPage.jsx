@@ -30,8 +30,10 @@ export default function ChatPage() {
       setreciver(response.data.reciver)
     });
 
+    const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
+  const backendHost = "local-service-lmek.onrender.com";
   socket = new WebSocket(
-    `ws://127.0.0.1:8000/ws/chat/${id}/?token=${token}`
+    `${wsScheme}://${backendHost}/ws/chat/${id}/`
   );
 
   socketRef.current = socket;
@@ -140,7 +142,11 @@ export default function ChatPage() {
                 <div className={`message-bubble ${isMe ? "me" : "other"}`}>
                   {m.message}
                     {m.image && (
-               <img   width="200" src={`http://127.0.0.1:8000${m.image}`}  style={{ width: "200px" ,borderRadius: "10px" }} />
+               <img 
+    src={m.image.startsWith('http') ? m.image : `https://local-service-lmek.onrender.com${m.image}`} 
+    alt="chat-attachment"
+    style={{ width: "200px", borderRadius: "10px" }} 
+  />
                    )}
                   <span className="message-time">{m.timestamp}</span>
                 </div>
