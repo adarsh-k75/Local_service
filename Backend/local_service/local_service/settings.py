@@ -207,7 +207,7 @@ ASGI_APPLICATION = "local_service.asgi.application"
 
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "BACKEND":"channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             "hosts": [os.environ.get("REDIS_URL")],
         },
@@ -217,16 +217,15 @@ CSRF_TRUSTED_ORIGINS = [
     "https://local-service-nu.vercel.app",
     "https://local-service-git-main-adarsh-k75s-projects.vercel.app",
     "https://local-service-lmek.onrender.com",
-    
 ]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "User.authtication.CookieJWTAuthentication", 
-         "rest_framework.authentication.SessionAuthentication", # 👈 adjust if file is elsewhere
+         "rest_framework.authentication.SessionAuthentication", 
     ),
      "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.AllowAny",
+        "rest_framework.permissions.AllowAny", 
     ),
 }
 
