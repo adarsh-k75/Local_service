@@ -33,7 +33,7 @@ export default function ChatPage() {
     const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
   const backendHost = "local-service-lmek.onrender.com";
   socket = new WebSocket(
-    `${wsScheme}://${backendHost}/ws/chat/${id}/`
+    `${wsScheme}://${backendHost}/ws/chat/${id}/?token=${token}`
   );
 
   socketRef.current = socket;
