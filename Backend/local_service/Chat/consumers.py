@@ -62,59 +62,57 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 
     async def receive(self, text_data):
-        from django.contrib.auth import get_user_model
-        from .models import Message
-
-        User = get_user_model()
-
-        data = json.loads(text_data)
-        message_text = data.get("message")
-    
-        # 1. STOP if no message OR user is not logged in
-        # This prevents the "AnonymousUser" crash
-        if not message_text or not self.user.is_authenticated:
-            print("DEBUG: Message rejected - User not authenticated or empty message")
-            return
-    
-        # 2. Save to DB (Safe now because we checked authentication)
-        await sync_to_async(Message.objects.create)(
-            sender=self.user,
-            receiver_id=int(self.receiver_id),
-            content=message_text
-        )
-    
-        # 3. Send to Room Group (For the current chat window)
-        await self.channel_layer.group_send(
-            self.room_name,
-            {
-                "type": "chat_message",
-                "message": message_text,
-                "sender": self.user.username,
-                "sender_id": self.user.id,
-                "created_at": str(timezone.now())
-            }
-        )
-    
-        # 4. Update the Unread Count for the Receiver
-        unread_count = await sync_to_async(Message.objects.filter(
-            receiver_id=self.receiver_id,
-            is_read=False
-        ).count)()
-    
-        await self.channel_layer.group_send(
-            f"user_{self.receiver_id}",
-            {
-                "type": "count_update",
-                "count": unread_count
-            }
-        )
-
+       from django.utils import timezone
+       from .models import Message
+       import json
+   
+       data = json.loads(text_data)
+       message_text = data.get("message")
+   
+       # 1. STOP if no message OR user is not logged in
+       # This prevents the "AnonymousUser" crash
+       if not message_text or not self.user.is_authenticated:
+           print("DEBUG: Message rejected - User not authenticated or empty message")
+           return
+   
+       # 2. Save to DB (Safe now because we checked authentication)
+       await sync_to_async(Message.objects.create)(
+           sender=self.user,
+           receiver_id=int(self.receiver_id),
+           content=message_text
+       )
+   
+       # 3. Send to Room Group (For the current chat window)
+       await self.channel_layer.group_send(
+           self.room_name,
+           {
+               "type": "chat_message",
+               "message": message_text,
+               "sender": self.user.username,
+               "sender_id": self.user.id,
+               "created_at": str(timezone.now())
+           }
+       )
+   
+       # 4. Update the Unread Count for the Receiver
+       unread_count = await sync_to_async(Message.objects.filter(
+           receiver_id=self.receiver_id,
+           is_read=False
+       ).count)()
+   
+       await self.channel_layer.group_send(
+           f"user_{self.receiver_id}",
+           {
+               "type": "count_update",
+               "count": unread_count
+           }
+       )
     async def chat_message(self, event):
         await self.send(text_data=json.dumps({
-            "message": event["message"],
-            "sender_id": event["sender_id"],
+            "message": event.get("message"),  
+            "image": event.get("image"),    
             "sender": event["sender"],
-            "image": event.get("image")
+            "sender_id": event["sender_id"],
         }))
 
     async def count_update(self, event):
