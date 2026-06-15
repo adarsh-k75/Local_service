@@ -1,7 +1,15 @@
 import axios from "axios";
 
+// This checks if you are running locally or on Vercel
+const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+
+// Fallback to your live AWS EC2 Public IP when deployed on Vercel
+const BASE_URL = isLocal 
+  ? "http://localhost:8000/api/" 
+  : "http://13.48.70.152:8000/api/";
+
 const api = axios.create({
-  baseURL: "http://localhost:8000/api/",
+  baseURL: BASE_URL,
   withCredentials: true,
 });
 
@@ -16,20 +24,21 @@ api.interceptors.response.use(
       try {
         console.log("Access token expired. Attempting refresh...");
         
-       
+        // Dynamic path for the token refresh endpoint too
+        const refreshUrl = isLocal 
+          ? "http://localhost:8000/api/refresh/" 
+          : "http://13.48.70.152:8000/api/refresh/";
+
         await axios.post(
-          "http://localhost:8000/api/refresh/",
+          refreshUrl,
           {},
-          { withCredentials:true}
+          { withCredentials: true }
         );
 
         console.log("Refresh successful! Retrying original request...");
-
         return api(originalRequest);
       } catch (refreshError) {
         console.log("Refresh token expired or invalid. Logging out.");
-        
-        
         return Promise.reject(refreshError);
       }
     }
