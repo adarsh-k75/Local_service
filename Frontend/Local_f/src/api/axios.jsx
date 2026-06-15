@@ -18,9 +18,9 @@ api.interceptors.response.use(
         
        
         await axios.post(
-          "http://localhost:8000/api/refresh/", 
-          {}, 
-          { withCredentials: true }
+          "http://localhost:8000/api/refresh/",
+          {},
+          { withCredentials:true}
         );
 
         console.log("Refresh successful! Retrying original request...");
