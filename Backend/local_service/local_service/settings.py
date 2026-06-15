@@ -42,7 +42,7 @@ SECRET_KEY = 'django-insecure-+lb+!#%v!y-6sipvtlxha9^7!fzhzdqg+%a37sjblsfctmthb_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['13.48.70.152', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -128,7 +128,7 @@ DATABASES = {
         'HOST': os.getenv("DB_HOST"),
         'PORT': os.getenv("DB_PORT", "5432"),
           'OPTIONS': {
-            'sslmode': 'disable',  # VERY IMPORTANT for Render Postgres
+            'sslmode': 'require',  # VERY IMPORTANT for Render Postgres
         }
     }
 }
