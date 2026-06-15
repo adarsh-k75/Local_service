@@ -262,7 +262,6 @@ class GoogleLoginAPIView(APIView):
     def post(self, request):
         token = request.data.get("token")
         role = request.data.get("role")
-
         if not token:
             return Response({"error": "Token is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not role:
@@ -287,10 +286,19 @@ class GoogleLoginAPIView(APIView):
         if not email:
             return Response({"error": "Email not found in Google token"}, status=status.HTTP_400_BAD_REQUEST)
 
-        user, created = User.objects.get_or_create(
-            email=email,
-            defaults={"username": email, "is_veryfied": True} 
-        )
+        user = User.objects.filter(email=email).first()
+        created = False
+
+        if not user:
+            user = User.objects.create(
+                email=email,
+                username=email,
+                is_active=True
+            )
+            user.is_veryfied = True
+            user.save()
+            created = True
+
         if created and name:
             user.first_name = name
             user.save()
@@ -305,7 +313,13 @@ class GoogleLoginAPIView(APIView):
         refresh = RefreshToken.for_user(user)
         response = Response({
             "message": "Login successful",
-            "role": user.role,
+           "access": str(refresh.access_token), 
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "role": user.role  # ✅ Keep this one!
+            }
         })
 
         response.set_cookie("access_token", str(refresh.access_token), httponly=True)

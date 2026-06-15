@@ -59,13 +59,21 @@ let [role,setrole]=useState("")
       api.post('google-login/',{
           token:googletoken,
           role:role
+      },{
+        withCredentials: true
       })
       .then((res)=>{
-         if (res.data.role=='admin'){
-              nav('/dashboard')
-         }else{
-           nav("/")
-          }
+         // Tell Context the user logged in, just like you did for standard login!
+         localStorage.setItem("access_token", res.data.access);
+         setUser("login hi", res.data.user);
+         
+         // Use window.location.href instead of nav() to force a page reload 
+         // so the Navbar updates perfectly!
+       if (res.data.user.role === 'admin'){
+              nav('/dashboard');
+         } else {
+              nav('/');
+         }
       })
        .catch((err)=>{
             toast.error(err.response.data.error);

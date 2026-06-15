@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://local-service-lmek.onrender.com/api/",
+  baseURL: "http://127.0.0.1:8000/api/",
   withCredentials: true,
 });
 
@@ -18,7 +18,7 @@ api.interceptors.response.use(
         
        
         await axios.post(
-          "https://local-service-lmek.onrender.com/api/refresh/", 
+          "http://127.0.0.1:8000/api/refresh/", 
           {}, 
           { withCredentials: true }
         );

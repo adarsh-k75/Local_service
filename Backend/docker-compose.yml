@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # 1. Redis Server for your Django Channels / Chat WebSockets
+  db:                       # 👈 Changed nickname to 'db' so your Django 'HOST' setting matches
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    env_file:
+      - ./local_service/.env # 👈 Adjusted folder path to match your layout from image_e132ba.png
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command: postgres -c wal_level=logical
+
+  redis:
+    image: redis:7-alpine
+    container_name: sure_serve_redis
+    ports:
+      - "6379:6379"
+
+  # 2. Your Django App (Daphne)
+  backend:
+    build: ./local_service  # 👈 Tells Docker Compose to look inside local_service for your Dockerfile
+    container_name: sure_serve_backend
+    volumes:
+      - ./local_service:/app  # Maps your local code updates directly into the container
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+
+volumes:
+  postgres_data:

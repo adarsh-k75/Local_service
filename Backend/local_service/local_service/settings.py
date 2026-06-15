@@ -40,7 +40,7 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 SECRET_KEY = 'django-insecure-+lb+!#%v!y-6sipvtlxha9^7!fzhzdqg+%a37sjblsfctmthb_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -48,6 +48,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -127,7 +128,7 @@ DATABASES = {
         'HOST': os.getenv("DB_HOST"),
         'PORT': os.getenv("DB_PORT", "5432"),
           'OPTIONS': {
-            'sslmode': 'require',  # VERY IMPORTANT for Render Postgres
+            'sslmode': 'disable',  # VERY IMPORTANT for Render Postgres
         }
     }
 }
@@ -168,6 +169,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # 👈 ADD THIS LINE HERE
 AUTH_USER_MODEL = "User.Register"
 
 CORS_ALLOWED_ORIGINS = [
@@ -205,14 +207,25 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 ASGI_APPLICATION = "local_service.asgi.application"
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND":"channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [os.environ.get("REDIS_URL")],
+
+if DEBUG:
+    # Local laptop configuration (No Redis/Docker needed)
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels.layers.InMemoryChannelLayer",
         },
-    },
-}
+    }
+else:
+    # Production Render configuration
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [os.getenv("REDIS_URL", "redis://localhost:6379")],
+            },
+        },
+    }
+
 CSRF_TRUSTED_ORIGINS = [
     "https://local-service-nu.vercel.app",
     "https://local-service-git-main-adarsh-k75s-projects.vercel.app",

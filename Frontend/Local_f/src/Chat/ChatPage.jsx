@@ -17,7 +17,7 @@ export default function ChatPage() {
   const fileRef = useRef(null);
   const [reciver,setreciver]=useState("")
   const [userStatus, setUserStatus] = useState("offline");
-
+const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
   useEffect(() => {
      const token = localStorage.getItem("access_token");
 
@@ -29,9 +29,9 @@ export default function ChatPage() {
       setCurrentUserId(response.data.current_user);
       setreciver(response.data.reciver)
     });
+  const wsScheme = isLocal ? "ws" : "wss";
+  const backendHost = isLocal ? "127.0.0.1:8000" : "local-service-lmek.onrender.com";
 
-    const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
-  const backendHost = "local-service-lmek.onrender.com";
   socket = new WebSocket(
     `${wsScheme}://${backendHost}/ws/chat/${id}/?token=${token}`
   );
@@ -143,9 +143,11 @@ export default function ChatPage() {
                   {m.message}
                     {m.image && (
                <img 
-    src={m.image.startsWith('http') ? m.image : `https://local-service-lmek.onrender.com${m.image}`} 
+   src={m.image.startsWith('http') 
+        ? m.image 
+        : `${isLocal ? 'http://127.0.0.1:8000' : 'https://local-service-lmek.onrender.com'}${m.image}`} 
     alt="chat-attachment"
-    style={{ width: "200px", borderRadius: "10px" }} 
+    style={{ width: "200px", borderRadius: "10px" }}
   />
                    )}
                   <span className="message-time">{m.timestamp}</span>
