@@ -40,7 +40,7 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 SECRET_KEY = 'django-insecure-+lb+!#%v!y-6sipvtlxha9^7!fzhzdqg+%a37sjblsfctmthb_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['sureserve.duckdns.org', '13.48.70.152', 'localhost', '127.0.0.1']
 
@@ -168,8 +168,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # 👈 ADD THIS LINE HERE
+STATIC_URL = '/static/'
+STATIC_ROOT = '/app/staticfiles/'
 AUTH_USER_MODEL = "User.Register"
 
 CORS_ALLOWED_ORIGINS = [
@@ -231,6 +231,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://local-service-nu.vercel.app",
     "https://local-service-git-main-adarsh-k75s-projects.vercel.app",
     "https://local-service-lmek.onrender.com",
+    "https://sureserve.duckdns.org"
 ]
 
 REST_FRAMEWORK = {
