@@ -6,7 +6,7 @@ const isLocal = window.location.hostname === "localhost" || window.location.host
 // Fallback to your live AWS EC2 Public IP when deployed on Vercel
 const BASE_URL = isLocal 
   ? "http://localhost:8000/api/" 
-  : "http://13.48.70.152:8000/api/";
+  : "https://sureserve.duckdns.org/api/";
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -27,7 +27,7 @@ api.interceptors.response.use(
         // Dynamic path for the token refresh endpoint too
         const refreshUrl = isLocal 
           ? "http://localhost:8000/api/refresh/" 
-          : "http://13.48.70.152:8000/api/refresh/";
+          : "https://sureserve.duckdns.org/api/refresh/";
 
         await axios.post(
           refreshUrl,

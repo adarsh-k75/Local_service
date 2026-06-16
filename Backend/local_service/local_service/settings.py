@@ -42,7 +42,7 @@ SECRET_KEY = 'django-insecure-+lb+!#%v!y-6sipvtlxha9^7!fzhzdqg+%a37sjblsfctmthb_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['13.48.70.152', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['sureserve.duckdns.org', '13.48.70.152', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -175,7 +175,8 @@ AUTH_USER_MODEL = "User.Register"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     'https://local-service-nu.vercel.app',
-    "https://local-service-git-main-adarsh-k75s-projects.vercel.app"
+    "https://local-service-git-main-adarsh-k75s-projects.vercel.app",
+    "https://sureserve.duckdns.org"
 ]
 CORS_ALLOW_CREDENTIALS = True
 
