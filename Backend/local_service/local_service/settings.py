@@ -176,7 +176,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     'https://local-service-nu.vercel.app',
     "https://local-service-git-main-adarsh-k75s-projects.vercel.app",
-    "https://sureserve.duckdns.org"
+    "https://sureserve.duckdns.org",
+    'https://local-service-1.onrender.com'
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -231,7 +232,8 @@ CSRF_TRUSTED_ORIGINS = [
     "https://local-service-nu.vercel.app",
     "https://local-service-git-main-adarsh-k75s-projects.vercel.app",
     "https://local-service-lmek.onrender.com",
-    "https://sureserve.duckdns.org"
+    "https://sureserve.duckdns.org",
+    'https://local-service-1.onrender.com'
 ]
 
 REST_FRAMEWORK = {
