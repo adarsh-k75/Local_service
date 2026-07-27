@@ -30,7 +30,7 @@ const isLocal = window.location.hostname === "localhost" || window.location.host
       setreciver(response.data.reciver)
     });
   const wsScheme = isLocal ? "ws" : "wss";
-  const backendHost = isLocal ? "127.0.0.1:8000" : "local-service-lmek.onrender.com";
+  const backendHost = isLocal ? "127.0.0.1:8000" : "local-service-3.onrender.com";
 
   socket = new WebSocket(
     `${wsScheme}://${backendHost}/ws/chat/${id}/?token=${token}`
