@@ -128,7 +128,7 @@ DATABASES = {
         'HOST': os.getenv("DB_HOST"),
         'PORT': os.getenv("DB_PORT", "5432"),
           'OPTIONS': {
-            'sslmode': 'require',  # VERY IMPORTANT for Render Postgres
+            'sslmode': 'disable',  # VERY IMPORTANT for Render Postgres
         }
     }
 }
