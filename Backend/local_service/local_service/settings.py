@@ -118,20 +118,28 @@ WSGI_APPLICATION = 'local_service.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+import dj_database_url
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_NAME"),
-        'USER': os.getenv("DB_USER"),
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': os.getenv("DB_HOST"),
-        'PORT': os.getenv("DB_PORT", "5432"),
-          'OPTIONS': {
-            'sslmode': 'disable',  # VERY IMPORTANT for Render Postgres
+if os.getenv("DATABASE_URL"):
+    # Running on Render
+    DATABASES = {
+        "default": dj_database_url.parse(os.getenv("DATABASE_URL"))
+    }
+else:
+    # Running locally
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("DB_NAME"),
+            "USER": os.getenv("DB_USER"),
+            "PASSWORD": os.getenv("DB_PASSWORD"),
+            "HOST": os.getenv("DB_HOST"),
+            "PORT": os.getenv("DB_PORT", "5432"),
+            "OPTIONS": {
+                "sslmode": "disable",
+            },
         }
     }
-}
 
 
 # Password validation
@@ -177,7 +185,8 @@ CORS_ALLOWED_ORIGINS = [
     'https://local-service-nu.vercel.app',
     "https://local-service-git-main-adarsh-k75s-projects.vercel.app",
     "https://sureserve.duckdns.org",
-    'https://local-service-1.onrender.com'
+    'https://local-service-1.onrender.com',
+    'https://local-service-3.onrender.com'
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -233,7 +242,8 @@ CSRF_TRUSTED_ORIGINS = [
     "https://local-service-git-main-adarsh-k75s-projects.vercel.app",
     "https://local-service-lmek.onrender.com",
     "https://sureserve.duckdns.org",
-    'https://local-service-1.onrender.com'
+    'https://local-service-1.onrender.com',
+    'https://local-service-3.onrender.com'
 ]
 
 REST_FRAMEWORK = {
