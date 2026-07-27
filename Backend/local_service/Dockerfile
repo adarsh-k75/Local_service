@@ -26,4 +26,4 @@ COPY . /app/
 EXPOSE 8000
 
 # Run Daphne using your specific project configurations
-CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "local_service.asgi:application"]
+CMD ["sh", "-c", "python manage.py migrate && daphne -b 0.0.0.0 -p 8000 local_service.asgi:application"]
