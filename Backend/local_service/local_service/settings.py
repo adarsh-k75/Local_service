@@ -42,7 +42,7 @@ SECRET_KEY = 'django-insecure-+lb+!#%v!y-6sipvtlxha9^7!fzhzdqg+%a37sjblsfctmthb_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['sureserve.duckdns.org', '13.48.70.152', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['sureserve.duckdns.org', '13.48.70.152', 'localhost', '127.0.0.1', "local-service-3.onrender.com",]
 
 
 # Application definition
