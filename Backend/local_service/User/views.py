@@ -243,7 +243,23 @@ class Profileaddres(APIView):
            serializer = UserProfileSerializer(profile,data=request.data,partial=True)
 
         if serializer.is_valid():
-            serializer.save()
+            profile = serializer.save(user=user)
+            
+            # Save latitude and longitude if they are present in request
+            latitude = request.data.get("latitude")
+            longitude = request.data.get("longitude")
+            if latitude is not None and latitude != "":
+                try:
+                    profile.latitude = float(latitude)
+                except ValueError:
+                    pass
+            if longitude is not None and longitude != "":
+                try:
+                    profile.longitude = float(longitude)
+                except ValueError:
+                    pass
+            profile.save()
+            
             return Response({"message":"upadte succesfully"},status=status.HTTP_200_OK)
         return Response({"error": "Invalid data"},status=status.HTTP_400_BAD_REQUEST)
 
