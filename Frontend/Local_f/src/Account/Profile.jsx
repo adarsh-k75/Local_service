@@ -15,6 +15,7 @@ function Profile(){
   let Navigater = useNavigate();
   const [isloading, setisloading] = useState(false);
 const [profileImage, setProfileImage] = useState(null);
+  const [images, setimage] = useState(null);
   let [profile, setprofile] = useState({});
   let [services, setservices] = useState([]);
   let [bookinview, setbookingview] = useState([]);
@@ -77,9 +78,12 @@ const [profileImage, setProfileImage] = useState(null);
      newdata.append("address",inputs.address)
      newdata.append("pincode",inputs.pincode)
      newdata.append("phone",inputs.phone)
-     newdata.append("id_card",images)
      newdata.append("latitude", position.coords.latitude);
      newdata.append("longitude", position.coords.longitude);
+
+     if (images) {
+       newdata.append("id_card", images);
+     }
 
       if (profileImage) {
       newdata.append("bio", profileImage);
