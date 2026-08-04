@@ -70,23 +70,24 @@ const [isSearching, setIsSearching] = useState(false);
 
  },[])
 
- useEffect(()=>{
-        if (catId) {
-    setid_catgrory(catId);
+ useEffect(() => {
+    if (catId) {
+      setid_catgrory(catId);
 
 
-        if (subId) {
-          idsetprovider(subId);
-          api.get(`user_provider_view/${subId}/`)
-            .then((res) => setprovider(res.data))
-            .catch((err)=>{
-                console.log("provider no")
-            });
-           
-        }
+      if (subId) {
+        idsetprovider(subId);
+        setprovider([]);
+        api.get(`user_provider_view/${subId}/`)
+          .then((res) => setprovider(res.data))
+          .catch((err) => {
+            console.log("provider no")
+          });
+
+      }
       ;
-  }
- },[catId,subId])
+    }
+  }, [catId, subId])
 
  function catagory_click(C){
    setid_catgrory(C)
@@ -97,19 +98,20 @@ const [isSearching, setIsSearching] = useState(false);
    })
  }
 
- function provider(P){
-  idsetprovider(P)
-  setIsSearching(true)
+ function provider(P) {
+    idsetprovider(P)
+    setprovider([])
+    setIsSearching(true)
     const startTime = Date.now();
 
-  api.get(`user_provider_view/${P}/`)
-  .then((res)=>{
-    setprovider(res.data)
-    console.log("hello",res.data)
-  })
-  .catch((err)=>{
-     toast.error(err.response?.data?.error|| "Something went wrong")
-  })
+    api.get(`user_provider_view/${P}/`)
+      .then((res) => {
+        setprovider(res.data)
+        console.log(res.data)
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.error || "Something went wrong")
+      })
   
     .finally(()=>{
       const elapsed = Date.now() - startTime;

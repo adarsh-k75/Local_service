@@ -64,7 +64,7 @@ class Get_near_provider(APIView):
         user=request.user
         user_profile=UserProfile.objects.filter(user=user).first()
         if not user_profile or not user_profile.latitude:
-            return Response({"error":"First Update your profile"})
+            return Response({"error":"First Update your profile"}, status=status.HTTP_400_BAD_REQUEST)
         providers=ProviderService.objects.filter(service_id=id).select_related("provider__userprofile")
 
         if not providers:
