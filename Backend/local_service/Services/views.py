@@ -39,10 +39,10 @@ class ProviderServices(APIView):
         serlizer=ProvideSerliazer(objects,many=True)
         return Response(serlizer.data,status=status.HTTP_200_OK)
     def post(self,request):
-        profile = UserProfile.objects.filter(user=request.user).first()
+        # profile = UserProfile.objects.filter(user=request.user).first()
 
-        if not profile or not profile.phone or not profile.address or not profile.pincode:
-            return Response({"error": "Complete your profile first"}, status=400)
+        # if not profile or not profile.phone or not profile.address or not profile.pincode:
+        #     return Response({"error": "Complete your profile first"}, status=400)
         
         serlizer=ProvideSerliazer(data=request.data)
         if serlizer.is_valid():
