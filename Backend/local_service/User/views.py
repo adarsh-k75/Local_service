@@ -261,7 +261,17 @@ class Profileaddres(APIView):
             profile.save()
             
             return Response({"message":"upadte succesfully"},status=status.HTTP_200_OK)
-        return Response({"error": "Invalid data"},status=status.HTTP_400_BAD_REQUEST)
+        
+        # Return specific validation errors if present
+        error_msg = "Invalid data"
+        if serializer.errors:
+            first_field = list(serializer.errors.keys())[0]
+            first_err = serializer.errors[first_field]
+            if isinstance(first_err, list):
+                error_msg = f"{first_field}: {first_err[0]}"
+            else:
+                error_msg = f"{first_field}: {first_err}"
+        return Response({"error": error_msg},status=status.HTTP_400_BAD_REQUEST)
 
 from django.contrib.auth import get_user_model
 import requests
