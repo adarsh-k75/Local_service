@@ -87,7 +87,7 @@ const [categories, setCategories] = useState([]);
       window.location.reload();
   })
   .catch((err) => {
-    toast.error("ERROR:", err.response?.data?.error);
+    toast.error(err.response?.data?.error || "Error adding service");
   })
 
   .finally(()=>{
