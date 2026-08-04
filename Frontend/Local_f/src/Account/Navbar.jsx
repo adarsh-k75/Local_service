@@ -32,8 +32,11 @@ function Navbar() {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+    const wsScheme = isLocal ? "ws" : "wss";
+    const backendHost = isLocal ? "127.0.0.1:8000" : "local-service-3.onrender.com";
 
-  const socket = new WebSocket(`ws://127.0.0.1:8000/ws/notifications/?token=${token}`);
+    const socket = new WebSocket(`${wsScheme}://${backendHost}/ws/notifications/?token=${token}`);
 
   socket.onmessage = (e) => {
     const data = JSON.parse(e.data);

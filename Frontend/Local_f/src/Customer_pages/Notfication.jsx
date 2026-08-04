@@ -33,9 +33,13 @@ function Notfication(){
 
   // ✅ LIVE WEBSOCKET
   useEffect(() => {
-   let  token=localStorage.getItem("access_token")
+    let token = localStorage.getItem("access_token");
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+    const wsScheme = isLocal ? "ws" : "wss";
+    const backendHost = isLocal ? "127.0.0.1:8000" : "local-service-3.onrender.com";
+
     socketRef.current = new WebSocket(
-      `ws://127.0.0.1:8000/ws/notifications/?token=${token}`
+      `${wsScheme}://${backendHost}/ws/notifications/?token=${token}`
     );
 
     socketRef.current.onmessage = (e) => {

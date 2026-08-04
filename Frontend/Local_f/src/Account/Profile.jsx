@@ -9,6 +9,8 @@ import { AuthContext } from "./Authcontext"
 import './Profile.css'
 import Loading from "../Loading/Loading"
 function Profile(){
+  const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+  const mediaBase = isLocal ? "http://127.0.0.1:8000" : "https://local-service-3.onrender.com";
   let {setUser}=useContext(AuthContext)
   let Navigater = useNavigate();
   const [isloading, setisloading] = useState(false);
@@ -112,7 +114,7 @@ const [profileImage, setProfileImage] = useState(null);
         <aside className="profile-sidebar">
           <div className="profile-card">
             <div className="profile-header">
-              <div className="profile-avatar"><img  src={`http://127.0.0.1:8000${addres.profile.bio}`}/></div>
+              <div className="profile-avatar"><img  src={`${mediaBase}${addres.profile.bio}`}/></div>
               <h2>User Profile</h2>
             </div>
 
@@ -220,7 +222,7 @@ const [profileImage, setProfileImage] = useState(null);
          <aside className="profile-sidebar">
             <div className="profile-card provider-variant">
               <div className="profile-header">
-                <div className="profile-avatar employee-avatar"><img  src={`http://127.0.0.1:8000${addres.profile.bio}`}/></div>
+                <div className="profile-avatar employee-avatar"><img  src={`${mediaBase}${addres.profile.bio}`}/></div>
                 <h2>Employee Panel</h2>
               </div>
 

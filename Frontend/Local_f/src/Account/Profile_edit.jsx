@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../api/axios"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import './Profile_edit.css'
@@ -9,7 +9,7 @@ let [inputs,setinputs]=useState({
     email:""
 })
   useEffect(()=>{
-     axios.get('http://localhost:8000/api/profile/',{
+     api.get('profile/',{
         withCredentials:true
      })
      .then((res)=>{
@@ -22,7 +22,7 @@ let [inputs,setinputs]=useState({
  }
  const onsubmit=(e)=>{
     e.preventDefault()
-      axios.patch('http://localhost:8000/api/profile/',inputs,{
+      api.patch('profile/',inputs,{
         withCredentials:true
       })
       .then((res)=>{

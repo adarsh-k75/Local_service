@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import api from "../api/axios"
 import "./Provider_verification.css"
 function Provider_verification(){
+  const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+  const mediaBase = isLocal ? "http://127.0.0.1:8000" : "https://local-service-3.onrender.com";
   let [idshow,setidshow]=useState(null)
     let [verifaction,setverifaction]=useState([])
     useEffect(()=>{
@@ -54,8 +56,8 @@ return (<>
         <div key={data.user} className="verify-card">
           
           <div className="id-image-section">
-            <img  onClick={()=>setidshow(`http://127.0.0.1:8000${data.id_card}`)}
-              src={`http://127.0.0.1:8000${data.id_card}`} 
+            <img  onClick={()=>setidshow(`${mediaBase}${data.id_card}`)}
+              src={`${mediaBase}${data.id_card}`} 
               alt="Verification ID" 
               className="id-card-display"
             />

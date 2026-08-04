@@ -142,10 +142,10 @@ const isLocal = window.location.hostname === "localhost" || window.location.host
                 <div className={`message-bubble ${isMe ? "me" : "other"}`}>
                   {m.message}
                     {m.image && (
-               <img 
+                <img 
    src={m.image.startsWith('http') 
         ? m.image 
-        : `${isLocal ? 'http://127.0.0.1:8000' : 'https://local-service-lmek.onrender.com'}${m.image}`} 
+        : `${isLocal ? 'http://127.0.0.1:8000' : 'https://local-service-3.onrender.com'}${m.image}`} 
     alt="chat-attachment"
     style={{ width: "200px", borderRadius: "10px" }}
   />

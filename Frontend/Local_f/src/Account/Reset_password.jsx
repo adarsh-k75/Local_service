@@ -1,4 +1,4 @@
-import axios from "axios"
+import api from "../api/axios"
 import { useState } from "react"
 import './rest.css'
 import { useNavigate } from "react-router-dom"
@@ -15,7 +15,7 @@ function Reset_password(){
 
     function onsubmit(e){
       e.preventDefault()
-        axios.post('http://localhost:8000/api/rsetpassword/',inputs,{
+        api.post('rsetpassword/',inputs,{
             withCredentials:true
         })
         .then((res)=>{
