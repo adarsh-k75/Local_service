@@ -105,6 +105,7 @@ const [isSearching, setIsSearching] = useState(false);
   api.get(`user_provider_view/${P}/`)
   .then((res)=>{
     setprovider(res.data)
+    console.log("hello",res.data)
   })
   .catch((err)=>{
      toast.error(err.response?.data?.error|| "Something went wrong")
