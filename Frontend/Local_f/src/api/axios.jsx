@@ -29,11 +29,16 @@ api.interceptors.response.use(
           ? "http://localhost:8000/api/refresh/" 
           : "https://local-service-3.onrender.com/api/refresh/";
 
-        await axios.post(
+        const res = await axios.post(
           refreshUrl,
           {},
           { withCredentials: true }
         );
+
+        const newAccess = res.data?.access;
+        if (newAccess) {
+          localStorage.setItem("access_token", newAccess);
+        }
 
         console.log("Refresh successful! Retrying original request...");
         return api(originalRequest);

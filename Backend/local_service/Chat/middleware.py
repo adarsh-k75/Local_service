@@ -28,13 +28,24 @@ class JWTAuthMiddleware:
         query_params = parse_qs(query_string)
 
         token_list = query_params.get("token")
+        token = token_list[0] if token_list else None
 
-        if not token_list:
+        # Fallback to cookies if token query param is missing, null, or undefined
+        if not token or token == "null" or token == "undefined":
+            headers = dict(scope.get("headers", []))
+            cookie_header = headers.get(b"cookie", b"").decode()
+            cookies = {}
+            for cookie in cookie_header.split(";"):
+                if "=" in cookie:
+                    k, v = cookie.strip().split("=", 1)
+                    cookies[k] = v
+            token = cookies.get("access_token")
+
+        if not token:
             scope["user"] = AnonymousUser()
             return await self.app(scope, receive, send)
 
         try:
-            token = token_list[0]
             access_token = AccessToken(token)
             user_id = access_token["user_id"]
 

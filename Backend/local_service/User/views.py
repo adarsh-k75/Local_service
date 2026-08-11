@@ -164,7 +164,10 @@ class Refrsh_token(APIView):
             refresh = RefreshToken(refresh_token)
             new_access_token = str(refresh.access_token)
 
-            response = Response({"message":"token refreshed"})
+            response = Response({
+                "message": "token refreshed",
+                "access": new_access_token
+            })
 
             response.set_cookie(
                 key="access_token",
