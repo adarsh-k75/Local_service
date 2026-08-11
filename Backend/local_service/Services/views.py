@@ -63,8 +63,6 @@ class Get_near_provider(APIView):
     def get(self,request,id):
         user=request.user
         user_profile=UserProfile.objects.filter(user=user).first()
-        if not user_profile or not user_profile.latitude:
-            return Response({"error":"First Update your profile"}, status=status.HTTP_400_BAD_REQUEST)
         providers=ProviderService.objects.filter(service_id=id).select_related("provider__userprofile")
 
         if not providers:
@@ -74,16 +72,24 @@ class Get_near_provider(APIView):
 
         for p in providers:
             provider_profile=UserProfile.objects.filter(user=p.provider).first()
-            if provider_profile and provider_profile.latitude:
+            data=ProvideSerliazer(p).data
+            
+            # Check if user profile coordinates and provider coordinates are both available
+            if user_profile and user_profile.latitude and provider_profile and provider_profile.latitude:
                 user_log=(user_profile.latitude,user_profile.longitude)
                 provider_log=(provider_profile.latitude,provider_profile.longitude)
                 
                 distance=geodesic(user_log,provider_log).km
-                if distance <= 10:
-                    data=ProvideSerliazer(p).data
-                    data["distance"]=distance
-                    near_by.append(data)
-        near_by.sort(key=lambda x: x["distance"])
+                data["distance"]=distance
+                data["is_nearby"] = distance <= 10
+            else:
+                data["distance"]=None
+                data["is_nearby"]=False
+                
+            near_by.append(data)
+            
+        # Sort so that nearby ones are first, and ones without distance info are last
+        near_by.sort(key=lambda x: (x["distance"] is None, x["distance"]))
         return Response(near_by)
 
 

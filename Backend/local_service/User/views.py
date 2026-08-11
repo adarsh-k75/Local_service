@@ -169,7 +169,9 @@ class Refrsh_token(APIView):
             response.set_cookie(
                 key="access_token",
                 value=new_access_token,
-                httponly=True
+                httponly=True,
+                secure=True,
+                samesite="None",
             )
 
             return response
@@ -346,8 +348,8 @@ class GoogleLoginAPIView(APIView):
             }
         })
 
-        response.set_cookie("access_token", str(refresh.access_token), httponly=True)
-        response.set_cookie("refresh_token", str(refresh), httponly=True)
+        response.set_cookie("access_token", str(refresh.access_token), httponly=True, secure=True, samesite="None")
+        response.set_cookie("refresh_token", str(refresh), httponly=True, secure=True, samesite="None")
 
         return response
 
