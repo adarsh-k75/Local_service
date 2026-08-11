@@ -118,7 +118,7 @@ const [profileImage, setProfileImage] = useState(null);
         <aside className="profile-sidebar">
           <div className="profile-card">
             <div className="profile-header">
-              <div className="profile-avatar"><img  src={`${mediaBase}${addres.profile.bio}`}/></div>
+              <div className="profile-avatar"><img  src={addres?.profile?.bio && addres.profile.bio !== "null" ? `${mediaBase}${addres.profile.bio}` : "/default-avatar.png"} alt="profile-avatar"/></div>
               <h2>User Profile</h2>
             </div>
 
@@ -226,7 +226,7 @@ const [profileImage, setProfileImage] = useState(null);
          <aside className="profile-sidebar">
             <div className="profile-card provider-variant">
               <div className="profile-header">
-                <div className="profile-avatar employee-avatar"><img  src={`${mediaBase}${addres.profile.bio}`}/></div>
+                <div className="profile-avatar employee-avatar"><img  src={addres?.profile?.bio && addres.profile.bio !== "null" ? `${mediaBase}${addres.profile.bio}` : "/default-avatar.png"} alt="profile-avatar"/></div>
                 <h2>Employee Panel</h2>
               </div>
 

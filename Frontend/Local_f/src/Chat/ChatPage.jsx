@@ -141,7 +141,7 @@ const isLocal = window.location.hostname === "localhost" || window.location.host
 
                 <div className={`message-bubble ${isMe ? "me" : "other"}`}>
                   {m.message}
-                    {m.image && (
+                    {m.image && m.image !== "null" && m.image !== "undefined" && m.image !== "" && (
                 <img 
    src={m.image.startsWith('http') 
         ? m.image 

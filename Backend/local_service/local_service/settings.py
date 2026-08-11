@@ -218,21 +218,20 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 ASGI_APPLICATION = "local_service.asgi.application"
 
-
-if DEBUG:
-    # Local laptop configuration (No Redis/Docker needed)
+if DEBUG or not os.getenv("REDIS_URL"):
+    # Fallback to InMemoryChannelLayer if running locally or if REDIS_URL is not set on Render
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels.layers.InMemoryChannelLayer",
         },
     }
 else:
-    # Production Render configuration
+    # Production Render configuration with Redis
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
             "CONFIG": {
-                "hosts": [os.getenv("REDIS_URL", "redis://localhost:6379")],
+                "hosts": [os.getenv("REDIS_URL")],
             },
         },
     }
