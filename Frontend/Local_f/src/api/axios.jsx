@@ -4,9 +4,7 @@ import axios from "axios";
 const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
 
 // Fallback to your live AWS EC2 Public IP when deployed on Vercel
-const BASE_URL = isLocal 
-  ? "http://localhost:8000/api/" 
-  : "http://16.171.53.68:8000/api/";
+const BASE_URL = "https://localservice1.duckdns.org/api/";
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -25,9 +23,7 @@ api.interceptors.response.use(
         console.log("Access token expired. Attempting refresh...");
         
         // Dynamic path for the token refresh endpoint too
-        const refreshUrl = isLocal 
-          ? "http://localhost:8000/api/refresh/" 
-          : "http://16.171.53.68:8000//api/refresh/";
+        const refreshUrl = "https://localservice1.duckdns.org/api/refresh/";
 
         const res = await axios.post(
           refreshUrl,
