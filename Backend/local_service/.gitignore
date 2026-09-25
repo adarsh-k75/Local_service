@@ -20,3 +20,9 @@ db.sqlite3
 venv/
 env/
 media/
+# Local / generated files
+venv311/
+venv312/
+staticfiles/
+*.dump
+s3-test.txt
