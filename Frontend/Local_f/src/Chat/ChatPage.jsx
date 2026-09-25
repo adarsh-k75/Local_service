@@ -30,7 +30,7 @@ const isLocal = window.location.hostname === "localhost" || window.location.host
       setreciver(response.data.reciver)
     });
   const wsScheme = isLocal ? "ws" : "wss";
-  const backendHost = isLocal ? "127.0.0.1:8000" : "local-service-3.onrender.com";
+  const backendHost = isLocal ? "127.0.0.1:8000" : "localservice1.duckdns.org";
 
   socket = new WebSocket(
     `${wsScheme}://${backendHost}/ws/chat/${id}/?token=${token}`
@@ -145,7 +145,7 @@ const isLocal = window.location.hostname === "localhost" || window.location.host
                 <img 
    src={m.image.startsWith('http') 
         ? m.image 
-        : `${isLocal ? 'http://127.0.0.1:8000' : 'https://local-service-3.onrender.com'}${m.image}`} 
+        : `${isLocal ? 'http://127.0.0.1:8000' : 'https://localservice1.duckdns.org'}${m.image}`} 
     alt="chat-attachment"
     style={{ width: "200px", borderRadius: "10px" }}
   />
