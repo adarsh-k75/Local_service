@@ -31,18 +31,29 @@ CLOUDINARY_STORAGE = {
     "API_SECRET": os.getenv("API_SECRET"),
 }
 
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "eu-north-1")
+AWS_QUERYSTRING_AUTH = True
+AWS_S3_FILE_OVERWRITE = False
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+lb+!#%v!y-6sipvtlxha9^7!fzhzdqg+%a37sjblsfctmthb_'
-
-# SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = os.getenv("SECRET_KEY")# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['sureserve.duckdns.org', '13.48.70.152', 'localhost', '127.0.0.1', "local-service-3.onrender.com",]
+
+ALLOWED_HOSTS = [ 'localservice1.duckdns.org','16.171.53.68','sureserve.duckdns.org', '13.48.70.152', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -77,7 +88,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'drf_yasg',
      "channels",
-     
+     "storages"
 ]
 SITE_ID = 1
 
@@ -177,7 +188,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/app/staticfiles/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 AUTH_USER_MODEL = "User.Register"
 
 CORS_ALLOWED_ORIGINS = [
@@ -187,17 +198,18 @@ CORS_ALLOWED_ORIGINS = [
     "https://sureserve.duckdns.org",
     'https://local-service-1.onrender.com',
     'https://local-service-3.onrender.com'
+
 ]
 CORS_ALLOW_CREDENTIALS = True
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
 
-EMAIL_HOST=os.getenv('EMAIL_HOST')
-EMAIL_PORT=os.getenv("EMAIL_PORT")
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS")
+AWS_SES_REGION_NAME = os.getenv("AWS_SES_REGION_NAME")
+AWS_SES_REGION_ENDPOINT = os.getenv("AWS_SES_REGION_ENDPOINT")
 
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+AWS_SES_FROM_EMAIL = os.getenv("AWS_SES_FROM_EMAIL")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
+USE_SES_V2 = os.getenv("USE_SES_V2") == "True"
 import os
 
 MEDIA_URL = "/media/"
@@ -218,23 +230,16 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 ASGI_APPLICATION = "local_service.asgi.application"
 
-if DEBUG or not os.getenv("REDIS_URL"):
-    # Fallback to InMemoryChannelLayer if running locally or if REDIS_URL is not set on Render
-    CHANNEL_LAYERS = {
-        "default": {
-            "BACKEND": "channels.layers.InMemoryChannelLayer",
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.getenv("REDIS_URL")],
         },
-    }
-else:
-    # Production Render configuration with Redis
-    CHANNEL_LAYERS = {
-        "default": {
-            "BACKEND": "channels_redis.core.RedisChannelLayer",
-            "CONFIG": {
-                "hosts": [os.getenv("REDIS_URL")],
-            },
-        },
-    }
+    },
+}
 
 CSRF_TRUSTED_ORIGINS = [
     "https://local-service-nu.vercel.app",
@@ -243,6 +248,9 @@ CSRF_TRUSTED_ORIGINS = [
     "https://sureserve.duckdns.org",
     'https://local-service-1.onrender.com',
     'https://local-service-3.onrender.com'
+        "http://16.171.53.68:8000",
+              "https://localservice1.duckdns.org",
+
 ]
 
 REST_FRAMEWORK = {
@@ -258,9 +266,9 @@ REST_FRAMEWORK = {
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = 'None'
-CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SAMESITE = "None"
 
 # Tell Django it is behind an HTTPS proxy so it builds secure links
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
