@@ -49,10 +49,10 @@ AWS_S3_FILE_OVERWRITE = False
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+lb+!#%v!y-6sipvtlxha9^7!fzhzdqg+%a37sjblsfctmthb_'# SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = os.getenv("SECRET_KEY")# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['16.171.53.68','sureserve.duckdns.org', '13.48.70.152', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [ 'localservice1.duckdns.org','16.171.53.68','sureserve.duckdns.org', '13.48.70.152', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -186,7 +186,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     'https://local-service-nu.vercel.app',
     "https://local-service-git-main-adarsh-k75s-projects.vercel.app",
-    "https://sureserve.duckdns.org"
+    "https://sureserve.duckdns.org",
+
 ]
 CORS_ALLOW_CREDENTIALS = True
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
@@ -234,6 +235,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://local-service-lmek.onrender.com",
     "https://sureserve.duckdns.org",
         "http://16.171.53.68:8000",
+              "https://localservice1.duckdns.org",
 
 ]
 
@@ -248,10 +250,10 @@ REST_FRAMEWORK = {
 }
 
 
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SAMESITE = "Lax"
-CSRF_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SAMESITE = "None"
 
 # Tell Django it is behind an HTTPS proxy so it builds secure links
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
