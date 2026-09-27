@@ -1,6 +1,6 @@
 from django.db import models
 from User.models import Register
-
+#test
 class ServiceCategory(models.Model):
     name=models.CharField(max_length=30)
 
