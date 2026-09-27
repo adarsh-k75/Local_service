@@ -3,7 +3,6 @@ import api from "../api/axios"
 import "./Provider_verification.css"
 function Provider_verification(){
   const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-  const mediaBase = isLocal ? "http://127.0.0.1:8000" : "https://local-service-3.onrender.com";
   let [idshow,setidshow]=useState(null)
     let [verifaction,setverifaction]=useState([])
     useEffect(()=>{
@@ -56,11 +55,12 @@ return (<>
         <div key={data.user} className="verify-card">
           
           <div className="id-image-section">
-            <img  onClick={()=>setidshow(`${mediaBase}${data.id_card}`)}
-              src={`${mediaBase}${data.id_card}`} 
-              alt="Verification ID" 
-              className="id-card-display"
-            />
+            <img
+    onClick={() => setidshow(data.id_card)}
+    src={data.id_card}
+    alt="Verification ID"
+    className="id-card-display"
+  />
             <div className="status-badge">Pending Review</div>
           </div>
 

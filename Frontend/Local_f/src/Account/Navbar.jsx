@@ -34,7 +34,7 @@ function Navbar() {
     const token = localStorage.getItem("access_token");
     const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
     const wsScheme = isLocal ? "ws" : "wss";
-    const backendHost = isLocal ? "127.0.0.1:8000" : "local-service-3.onrender.com";
+    const backendHost = isLocal ? "127.0.0.1:8000" : "https://localservice1.duckdns.org";
 
     const socket = new WebSocket(`${wsScheme}://${backendHost}/ws/notifications/?token=${token}`);
 
