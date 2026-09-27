@@ -197,7 +197,9 @@ CORS_ALLOWED_ORIGINS = [
     "https://local-service-git-main-adarsh-k75s-projects.vercel.app",
     "https://sureserve.duckdns.org",
     'https://local-service-1.onrender.com',
-    'https://local-service-3.onrender.com'
+    'https://local-service-3.onrender.com',
+    "https://localservice1.duckdns.org",
+
 
 ]
 CORS_ALLOW_CREDENTIALS = True
