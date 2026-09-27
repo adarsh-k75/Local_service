@@ -10,7 +10,7 @@ import './Profile.css'
 import Loading from "../Loading/Loading"
 function Profile(){
   const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-  const mediaBase = isLocal ? "http://127.0.0.1:8000" : "https://local-service-3.onrender.com";
+  const mediaBase = "https://localservice1.duckdns.org";
   let {setUser}=useContext(AuthContext)
   let Navigater = useNavigate();
   const [isloading, setisloading] = useState(false);
@@ -118,14 +118,7 @@ const [profileImage, setProfileImage] = useState(null);
         <aside className="profile-sidebar">
           <div className="profile-card">
             <div className="profile-header">
-              <div className="profile-avatar"> <img
-    src={
-      addres?.profile?.bio && addres.profile.bio !== "null"
-        ? addres.profile.bio
-        : "/default-avatar.png"
-    }
-    alt="profile-avatar"
-  /></div>
+              <div className="profile-avatar"><img  src={addres?.profile?.bio && addres.profile.bio !== "null" ? `${mediaBase}${addres.profile.bio}` : "/default-avatar.png"} alt="profile-avatar"/></div>
               <h2>User Profile</h2>
             </div>
 
@@ -233,14 +226,7 @@ const [profileImage, setProfileImage] = useState(null);
          <aside className="profile-sidebar">
             <div className="profile-card provider-variant">
               <div className="profile-header">
-                <div className="profile-avatar employee-avatar"><img
-    src={
-      addres?.profile?.bio && addres.profile.bio !== "null"
-        ? addres.profile.bio
-        : "/default-avatar.png"
-    }
-    alt="profile-avatar"
-  /></div>
+                <div className="profile-avatar employee-avatar"><img  src={addres?.profile?.bio && addres.profile.bio !== "null" ? `${mediaBase}${addres.profile.bio}` : "/default-avatar.png"} alt="profile-avatar"/></div>
                 <h2>Employee Panel</h2>
               </div>
 
